@@ -208,5 +208,47 @@ class ProductController extends Controller
 		return Excel::download(new ProductExports , 'Product.xlsx');
 	}
 
+	public function tag(request $request, $product_tag)
+	{
+
+		$slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
+
+		$all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+
+		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
+		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
+		
+		// $details_product = Product::where('product_slug',$product_slug)
+		// ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
+		// ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')->get();
+
+		// foreach($details_product as $key => $value){
+		// 	$category_id = $value->category_id;
+		// 	$product_id = $value->product_id;
+		// 	$product_cate = $value->category_name;
+		// 	$cate_slug = $value->slug_category_product;
+  //               //seo 
+			$meta_desc = 'tag';
+			$meta_keywords = 'tag';
+			$meta_title = 'tag';
+			$url_canonical = $request->url();
+  //               //--seo
+		// }
+
+		//Gallery
+		// $gallery = Gallery::where('product_id',$product_id)->get();
+
+		// $related_product = DB::table('tbl_product')
+		// ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
+		// ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')->where('tbl_category_product.category_id',$category_id)->wherenotin('tbl_product.product_slug',[$product_slug])->orderby(DB::raw('RAND()'))->paginate(3);
+
+		$tags = str_replace('-',' ',$product_tag);
+
+		$pro_tag = Product::where('product_status',1)->where('product_name','LIKE','%'.$tags.'%')->orWhere('product_slug','LIKE','%'.$tags.'%')->orWhere('product_tags','LIKE','%'.$tags.'%')->get();
+
+		
+		return view('pages.tag.tag')->with(compact('slider','all_category_post','cate_product','brand_product','meta_desc','meta_keywords','meta_title','url_canonical','pro_tag'));
+	}
+
 
 }
