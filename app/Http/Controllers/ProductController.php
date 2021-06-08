@@ -228,9 +228,9 @@ class ProductController extends Controller
 		// 	$product_cate = $value->category_name;
 		// 	$cate_slug = $value->slug_category_product;
   //               //seo 
-			$meta_desc = 'tag';
-			$meta_keywords = 'tag';
-			$meta_title = 'tag';
+			$meta_desc = 'Tags tìm kiếm:'.$product_tag;
+			$meta_keywords = 'Tags tìm kiếm:'.$product_tag;
+			$meta_title = 'Tags tìm kiếm:'.$product_tag;
 			$url_canonical = $request->url();
   //               //--seo
 		// }
@@ -247,7 +247,7 @@ class ProductController extends Controller
 		$pro_tag = Product::where('product_status',1)->where('product_name','LIKE','%'.$tags.'%')->orWhere('product_slug','LIKE','%'.$tags.'%')->orWhere('product_tags','LIKE','%'.$tags.'%')->get();
 
 		
-		return view('pages.tag.tag')->with(compact('slider','all_category_post','cate_product','brand_product','meta_desc','meta_keywords','meta_title','url_canonical','pro_tag'));
+		return view('pages.tag.tag')->with(compact('slider','all_category_post','cate_product','brand_product','meta_desc','meta_keywords','meta_title','url_canonical','pro_tag','tags'));
 	}
 
 

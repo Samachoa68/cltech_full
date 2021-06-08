@@ -48,7 +48,7 @@
 
 @section('content')
 <div class="features_items"><!--features_items-->
-    <h2 class="title text-center">Tag</h2>
+    <h2 class="title text-center">Tag: {{$tags}}</h2>
 
     @foreach($pro_tag as $key => $pro)
     <div class="col-sm-4">
