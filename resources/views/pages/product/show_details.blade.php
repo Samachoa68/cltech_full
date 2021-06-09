@@ -4,8 +4,16 @@
 
 @foreach($details_product as $key => $detail_pro)
 <div class="product-details"><!--product-details-->
-	<div class="col-sm-5">	
 
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background: none">
+			<li class="breadcrumb-item"><a href="{{URL::to('/trang-chu')}}">Trang chủ</a></li>
+			<li class="breadcrumb-item"><a href="{{URL::to('/danh-muc-san-pham/'.$cate_slug)}}">{{$product_cate}}</a></li>
+			<li class="breadcrumb-item active" aria-current="page">{{$detail_pro->product_name}}</li>
+		</ol>
+	</nav>
+
+	<div class="col-sm-5">
 		<ul id="imageGallery">
 			@foreach($gallery as $key => $gal)
 			<li data-thumb="{{url('upload/gallery/'.$gal->gallery_image)}}" data-src="{{URL('upload/gallery/'.$gal->gallery_image)}}">
@@ -17,7 +25,8 @@
 	</div>
 
 	<div class="col-sm-7">
-		
+
+
 		
 		<div class="product-information"><!--/product-information-->
 			<img src="images/product-details/new.jpg" class="newarrival" alt="" />

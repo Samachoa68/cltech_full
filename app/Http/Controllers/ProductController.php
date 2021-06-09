@@ -195,7 +195,7 @@ class ProductController extends Controller
 		->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')->where('tbl_category_product.category_id',$category_id)->wherenotin('tbl_product.product_slug',[$product_slug])->orderby(DB::raw('RAND()'))->paginate(3);
 
 		
-		return view('pages.product.show_details')->with(compact('slider','all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','details_product','related_product','gallery'));
+		return view('pages.product.show_details')->with(compact('slider','all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','details_product','related_product','gallery','product_cate','cate_slug'));
 	}
 
 	public function import_csv_pro(Request $request){
