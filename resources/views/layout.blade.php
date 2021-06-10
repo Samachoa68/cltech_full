@@ -203,11 +203,12 @@
             </div>
           </div>
           <div class="col-sm-3">
-            <form action="{{URL::to('/search')}}" method="POST" accept-charset="utf-8">
-             {{csrf_field()}}
+            <form action="{{URL::to('/search')}}" autocomplete="off" method="POST">
+             @csrf
 
              <div class="search_product">
-              <input type="text" name="keywords_submit" placeholder="Tìm kiếm sản phẩm">
+              <input type="text" style="width: 100%" name="keywords_submit" id="keywords" placeholder="Tìm kiếm sản phẩm">
+              <div id="search_ajax"></div>
               <input  type="submit" style="margin-top: 0" name="search_items" class="btn btn-primary btn-sm" value="Search">
             </div>
           </form>
@@ -504,6 +505,32 @@
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="KE5XKvUX"></script>
 
 <script type="text/javascript">
+  $('#keywords').keyup(function(){
+    var query = $(this).val();
+    if(query != ''){
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        url : '{{url('/autocomplete-ajax')}}',
+        method: 'POST',
+        data:{query:query,_token:_token},
+        success:function(data){
+          $('#search_ajax').fadeIn();
+         $('#search_ajax').html(data);     
+       }
+     });
+    }else{
+      $('#search_ajax').fadeOut();
+    }
+  });
+
+  $(document).on('click', '.li_search_ajax', function(){  
+        $('#keywords').val($(this).text());  
+        $('#search_ajax').fadeOut();  
+    });
+
+</script>
+
+<script type="text/javascript">
 
   $(document).on('click','.watch_video',function(){    
 
@@ -516,7 +543,7 @@
       dataType:"JSON",               
       data:{video_id:video_id,_token:_token},                
       success:function(data){
-       
+
 
         $('#video_title').html(data.video_title);
         $('#video_link').html(data.video_link);

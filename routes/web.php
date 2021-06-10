@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','HomeController@index');
 Route::get('trang-chu', 'HomeController@index');
 Route::post('search','HomeController@search');
+Route::post('autocomplete-ajax','HomeController@autocomplete_ajax');
+
 
 //Danh muc san pham trang chu
 Route::get('danh-muc-san-pham/{slug_category_product}','CategoryProduct@show_category_home');

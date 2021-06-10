@@ -7,6 +7,7 @@ use DB;
 use Session;
 use App\Http\Requests;
 use App\Models\Slider;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\CategoryPost;
 use Carbon\Carbon;
@@ -36,6 +37,10 @@ class HomeController extends Controller
     public function search(request $request)
     {
 
+        $slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
+
+        $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+
         $meta_desc = "Tìm kiếm sản phẩm";
         $meta_keywords = "Tìm kiếm sản phẩm";
         $meta_title = "Tìm kiếm sản phẩm";
@@ -49,6 +54,27 @@ class HomeController extends Controller
         $result_search = DB::table('tbl_product')->where('product_status','1')
         ->where('tbl_product.product_name','like','%'.$keywords.'%')->get();		
 
-        return view('pages.product.search')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','keywords','result_search'));
+        return view('pages.product.search')->with(compact('slider','all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','keywords','result_search'));
+    }
+
+        public function autocomplete_ajax(request $request)
+    {
+
+        $data = $request->all();
+
+        if($data['query']){
+            $product = Product::where('product_status','1')->where('product_name','LIKE','%'.$data['query'].'%')->get();
+        }
+
+            $output = '
+            <ul class="dropdown-menu" style="display:block; position:relative">';
+
+            foreach($product as $key => $val){
+               $output .= '
+               <li class="li_search_ajax"><a href="#">'.$val->product_name.'</a></li>';
+            }
+
+            $output .= '</ul>';
+            echo $output;
     }
 }

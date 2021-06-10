@@ -7,7 +7,7 @@
    
 
     @foreach($result_search as $key => $search_result)
-    <a href="{{URL::to('details-product/'.$search_result->product_id)}}">
+    <a href="{{URL::to('details-product/'.$search_result->product_slug)}}">
     <div class="col-sm-4">
         <div class="product-image-wrapper">
             <div class="single-products">
