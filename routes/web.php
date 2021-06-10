@@ -94,6 +94,8 @@ Route::post('update-product/{product_id}','ProductController@update_product');
 Route::post('export-csv-pro','ProductController@export_csv_pro');
 Route::post('import-csv-pro','ProductController@import_csv_pro');
 
+Route::post('product-quickview','ProductController@product_quickview');
+
 //Category Post
 Route::get('add-cate-post','CategoryPostController@add_cate_post');
 Route::get('all-cate-post','CategoryPostController@all_cate_post');

@@ -228,10 +228,10 @@ class ProductController extends Controller
 		// 	$product_cate = $value->category_name;
 		// 	$cate_slug = $value->slug_category_product;
   //               //seo 
-			$meta_desc = 'Tags tìm kiếm:'.$product_tag;
-			$meta_keywords = 'Tags tìm kiếm:'.$product_tag;
-			$meta_title = 'Tags tìm kiếm:'.$product_tag;
-			$url_canonical = $request->url();
+		$meta_desc = 'Tags tìm kiếm:'.$product_tag;
+		$meta_keywords = 'Tags tìm kiếm:'.$product_tag;
+		$meta_title = 'Tags tìm kiếm:'.$product_tag;
+		$url_canonical = $request->url();
   //               //--seo
 		// }
 
@@ -250,5 +250,26 @@ class ProductController extends Controller
 		return view('pages.tag.tag')->with(compact('slider','all_category_post','cate_product','brand_product','meta_desc','meta_keywords','meta_title','url_canonical','pro_tag','tags'));
 	}
 
+	public function product_quickview(Request $request){
+		$product_id = $request->pro_id;
+		$product = Product::find($product_id);
+
+		$gallery = Gallery::where('product_id',$product_id)->get();
+		$output['product_gallery'] = '';
+		foreach($gallery as $key => $gal){
+			$output['product_gallery'] .= '<img src="{{URL::to(upload/product/'.$gal->gallery_image.')}}" alt="" />';
+		}
+
+		$output['product_name'] = $product->product_name;
+		$output['product_id'] = $product->product_id;
+		$output['product_desc'] = $product->product_desc;
+		$output['product_content'] = $product->product_content;
+		$output['product_price'] = number_format($product->product_price,0,',','.').'VNĐ';
+		$output['product_image'] = '<p><img width="100%" src="upload/product/'.$product->product_image.'"></p>';
+
+		$output['product_button'] = '<input type="button" value="Mua ngay" class="btn btn-primary btn-sm add-to-cart-quickview" id="buy_quickview" data-id_product="'.$product->product_id.'"  name="add-to-cart">';
+		echo json_encode($output);
+
+	}
 
 }

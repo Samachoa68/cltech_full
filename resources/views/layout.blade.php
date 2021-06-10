@@ -505,6 +505,31 @@
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="KE5XKvUX"></script>
 
 <script type="text/javascript">
+  $('.xemnhanh').click(function(){ 
+    var pro_id = $(this).data('id_product');
+    var _token = $('input[name="_token"]').val();
+    $.ajax({
+      url:"{{url('/product-quickview')}}",
+      method:"POST",
+      dataType:"JSON",               
+      data:{pro_id:pro_id,_token:_token},                
+      success:function(data){
+        $('#product_quickview_title').html(data.product_name);
+        $('#product_quickview_id').html(data.product_id);
+        $('#product_quickview_price').html(data.product_price);
+        $('#product_quickview_image').html(data.product_image);
+        $('#product_quickview_gallery').html(data.product_gallery);
+        $('#product_quickview_desc').html(data.product_desc);
+        $('#product_quickview_content').html(data.product_content);
+        $('#product_quickview_value').html(data.product_quickview_value);
+        $('#product_quickview_button').html(data.product_button);
+      }
+  });
+
+  });
+</script>
+
+<script type="text/javascript">
   $('#keywords').keyup(function(){
     var query = $(this).val();
     if(query != ''){
@@ -515,18 +540,18 @@
         data:{query:query,_token:_token},
         success:function(data){
           $('#search_ajax').fadeIn();
-         $('#search_ajax').html(data);     
-       }
-     });
+          $('#search_ajax').html(data);     
+        }
+      });
     }else{
       $('#search_ajax').fadeOut();
     }
   });
 
   $(document).on('click', '.li_search_ajax', function(){  
-        $('#keywords').val($(this).text());  
-        $('#search_ajax').fadeOut();  
-    });
+    $('#keywords').val($(this).text());  
+    $('#search_ajax').fadeOut();  
+  });
 
 </script>
 
@@ -543,7 +568,6 @@
       dataType:"JSON",               
       data:{video_id:video_id,_token:_token},                
       success:function(data){
-
 
         $('#video_title').html(data.video_title);
         $('#video_link').html(data.video_link);
