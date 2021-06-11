@@ -6,6 +6,7 @@ use DB;
 use Session;
 use App\Http\Requests;
 use App\Models\Category;
+use App\Models\CategoryPost;
 use App\Models\Brand;
 use App\Models\Slider;
 use Carbon\Carbon;
@@ -17,6 +18,8 @@ class CartController extends Controller
 {
     public function cart(request $request)
     {
+        $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+
         $meta_desc = "Giỏ hàng ";
         $meta_keywords = "Giỏ hàng";
         $meta_title = "Giỏ hàng";
@@ -24,7 +27,7 @@ class CartController extends Controller
 
         $cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
         $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
-        return view('pages.cart.cart_ajax')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product'));
+        return view('pages.cart.cart_ajax')->with(compact('all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product'));
     }
 
     public function add_cart_ajax(Request $request){

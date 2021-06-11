@@ -218,29 +218,14 @@ class ProductController extends Controller
 		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
 		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
 		
-		// $details_product = Product::where('product_slug',$product_slug)
-		// ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-		// ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')->get();
 
-		// foreach($details_product as $key => $value){
-		// 	$category_id = $value->category_id;
-		// 	$product_id = $value->product_id;
-		// 	$product_cate = $value->category_name;
-		// 	$cate_slug = $value->slug_category_product;
   //               //seo 
 		$meta_desc = 'Tags tìm kiếm:'.$product_tag;
 		$meta_keywords = 'Tags tìm kiếm:'.$product_tag;
 		$meta_title = 'Tags tìm kiếm:'.$product_tag;
 		$url_canonical = $request->url();
   //               //--seo
-		// }
-
-		//Gallery
-		// $gallery = Gallery::where('product_id',$product_id)->get();
-
-		// $related_product = DB::table('tbl_product')
-		// ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-		// ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')->where('tbl_category_product.category_id',$category_id)->wherenotin('tbl_product.product_slug',[$product_slug])->orderby(DB::raw('RAND()'))->paginate(3);
+		
 
 		$tags = str_replace('-',' ',$product_tag);
 
@@ -268,6 +253,15 @@ class ProductController extends Controller
 		$output['product_image'] = '<p><img width="100%" src="upload/product/'.$product->product_image.'"></p>';
 
 		$output['product_button'] = '<input type="button" value="Mua ngay" class="btn btn-primary btn-sm add-to-cart-quickview" id="buy_quickview" data-id_product="'.$product->product_id.'"  name="add-to-cart">';
+
+		$output['product_quickview_value'] = '
+		<input type="hidden" value="'.$product->product_id.'" class="cart_product_id_'.$product->product_id.'">
+		<input type="hidden" value="'.$product->product_name.'" class="cart_product_name_'.$product->product_id.'">
+		<input type="hidden" value="'.$product->product_quantity.'" class="cart_product_quantity_'.$product->product_id.'">
+		<input type="hidden" value="'.$product->product_image.'" class="cart_product_image_'.$product->product_id.'">
+		<input type="hidden" value="'.$product->product_price.'" class="cart_product_price_'.$product->product_id.'">
+		<input type="hidden" value="1" class="cart_product_qty_'.$product->product_id.'">';
+
 		echo json_encode($output);
 
 	}
