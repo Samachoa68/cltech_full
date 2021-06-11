@@ -88,19 +88,19 @@
 <div class="category-tab shop-details-tab"><!--category-tab-->
 	<div class="col-sm-12">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#product_desc" data-toggle="tab">Mô tả</a></li>
+			<li><a href="#product_desc" data-toggle="tab">Mô tả</a></li>
 			<li><a href="#details" data-toggle="tab">Chi tiết sản phẩm</a></li>
 			<li><a href="#tag" data-toggle="tab">Tag</a></li>
-			<li><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
+			<li class="active"><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
-		<div class="tab-pane fade active in" id="product_desc" >
+		<div class="tab-pane fade " id="product_desc" >
 			
 			<p>{!!$detail_pro->product_desc!!}</p>
 
 		</div>
-		<div class="tab-pane fade active in" id="details" >
+		<div class="tab-pane fade" id="details" >
 			
 			<p>{!!$detail_pro->product_content!!}</p>
 
@@ -122,14 +122,27 @@
 			
 		</div>
 
-		<div class="tab-pane fade" id="reviews" >
-			<div class="col-sm-12">
+		<div class="tab-pane fade active in" id="reviews" >
+			<div class="col-sm-12 active in">
 				<ul>
 					<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
 					<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
 					<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
 				</ul>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+
+				<div class="row style-comment">				
+
+					<div class="col-md-2">
+						<img width="100%" src="{{url('upload/avatar/avatar.png')}}" class="img img-responsive img-thumbnail" alt="">
+						
+					</div>
+					<div class="col-md-10">						
+						<p style="color: green;">@LGT</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+					</div>
+				</div>
+				<p></p>
+				
 				<p><b>Write Your Review</b></p>
 
 				<form action="#">

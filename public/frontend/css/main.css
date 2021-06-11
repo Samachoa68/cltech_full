@@ -2555,3 +2555,9 @@ a.tags_style {
 a.tags_style:hover {
   background: black;
 }
+
+.style-comment {    
+    border: 1px solid #ddd;
+    background: #F0F0E9;
+    border-radius: 10px;
+}
