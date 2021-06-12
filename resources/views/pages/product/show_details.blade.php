@@ -130,31 +130,29 @@
 					<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
 				</ul>
 
-				<div class="row style-comment">				
+								
+					<form>
+						@csrf
+						<input type="hidden" name="comment_product_id" class="comment-product-id" value="{{$detail_pro->product_id}}">
 
-					<div class="col-md-2">
-						<img width="100%" src="{{url('upload/avatar/avatar.png')}}" class="img img-responsive img-thumbnail" alt="">
-						
-					</div>
-					<div class="col-md-10">						
-						<p style="color: green;">@LGT</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-					</div>
-				</div>
+						<div id="comment_show"></div>			
+					</form>
+							
 				<p></p>
-				
 				<p><b>Write Your Review</b></p>
 
-				<form action="#">
+				<form>
+					@csrf
 					<span>
-						<input type="text" placeholder="Your Name"/>
-						<input type="email" placeholder="Email Address"/>
+						<input style="margin: 0px" type="text" placeholder="Your Name" class="comment_name" />
 					</span>
-					<textarea name="" ></textarea>
+					<textarea placeholder="Nội dung bình luận" class="comment" name="" ></textarea>
+					<div id="notify_comment_send"></div>
 					<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-					<button type="button" class="btn btn-default pull-right">
-						Submit
+					<button type="button" class="btn btn-default pull-right send-comment">
+						Gửi bình luận
 					</button>
+					
 				</form>
 			</div>
 		</div>

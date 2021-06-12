@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\CategoryPost;
 use App\Models\Brand;
+use App\Models\CommentM;
 use App\Models\Product;
 use App\Http\Requests;
 use Carbon\Carbon;
@@ -264,6 +265,35 @@ class ProductController extends Controller
 
 		echo json_encode($output);
 
+	}
+
+	public function load_comment(Request $request){
+		$product_id = $request->product_id;
+		$comment = CommentM::where('comment_product_id',$product_id)->get();
+		$output = '';
+		foreach($comment as $key => $v_comment)
+			$output .='<div class="row style-comment">
+		<div class="col-md-2">
+		<img width="100%" src="'.url('upload/avatar/avatar.png').'" class="img img-responsive img-thumbnail" alt="">
+		</div>
+		<div class="col-md-10">						
+		<p style="color: green;">@'.$v_comment->comment_name.'</p>
+		<p style="color:#000;">'.$v_comment->comment_date.'</p>
+		<p>'.$v_comment->comment.'</p>
+		</div>
+		</div>
+		<p></p>
+		';
+		echo $output;
+	}
+
+	public function insert_comment(Request $request){
+		$product_id = $request->product_id;
+		$comment = new CommentM();
+		$comment['comment_name'] = $request->comment_name;
+		$comment['comment'] = $request->comment;
+		$comment['comment_product_id'] = $request->product_id;
+		$comment->save();
 	}
 
 }

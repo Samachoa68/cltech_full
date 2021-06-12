@@ -31,34 +31,34 @@
     <meta property="og:title"              content="{{$meta_title}}" />
     <meta property="og:site_name" content="{{$meta_title}}"/>
     <meta property="og:description"        content="{{$meta_desc}}" />
-  -->
-  <!--//-------Seo---------> 
+-->
+<!--//-------Seo---------> 
 
-  <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/font.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/font-awesome.min.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/font-awesome.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/prettyPhoto.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/price-range.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/animate.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/main.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/sweetalert.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/font.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/font-awesome.min.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/font-awesome.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/prettyPhoto.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/price-range.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/animate.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/main.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/sweetalert.css')}}" rel="stylesheet">
 
-  <link href="{{asset('frontend/css/vlite.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/vlite.css')}}" rel="stylesheet">
 
-  <link href="{{asset('frontend/css/lightslider.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/prettify.css')}}" rel="stylesheet">
-  <link href="{{asset('frontend/css/lightgallery.min.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/lightslider.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/prettify.css')}}" rel="stylesheet">
+<link href="{{asset('frontend/css/lightgallery.min.css')}}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
-  <![endif]-->       
-  <link rel="shortcut icon" href="images/ico/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+<![endif]-->       
+<link rel="shortcut icon" href="images/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 
 <body>
@@ -191,389 +191,375 @@
 								</li> 
 								<li class="dropdown"><a href="#">Tin tức<i class="fa fa-angle-down"></i></a>
 									<ul role="menu" class="sub-menu">
-                    @foreach($all_category_post as $key => $v_cate_post)
-                    <li><a href="{{URL::to('/danh-muc-bai-viet/'.$v_cate_post->cate_post_slug)}}">{{$v_cate_post->cate_post_name}}</a></li>
-                    @endforeach
-                  </ul>
-                </li> 
-                <li><a href="404.html">Giỏ hàng</a></li>
-                <li><a href="{{URL::to('/show-video')}}">Video</a></li>
-                <li><a href="contact-us.html">Liên hệ</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <form action="{{URL::to('/search')}}" autocomplete="off" method="POST">
-             @csrf
+										@foreach($all_category_post as $key => $v_cate_post)
+										<li><a href="{{URL::to('/danh-muc-bai-viet/'.$v_cate_post->cate_post_slug)}}">{{$v_cate_post->cate_post_name}}</a></li>
+										@endforeach
+									</ul>
+								</li> 
+								<li><a href="404.html">Giỏ hàng</a></li>
+								<li><a href="{{URL::to('/show-video')}}">Video</a></li>
+								<li><a href="contact-us.html">Liên hệ</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<form action="{{URL::to('/search')}}" autocomplete="off" method="POST">
+							@csrf
 
-             <div class="search_product">
-              <input type="text" style="width: 100%" name="keywords_submit" id="keywords" placeholder="Tìm kiếm sản phẩm">
-              <div id="search_ajax"></div>
-              <input  type="submit" style="margin-top: 0" name="search_items" class="btn btn-primary btn-sm" value="Search">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div><!--/header-bottom-->
-</header><!--/header-->
-
-
-<section id="slider"><!--slider-->
-  @yield('slider')
-</section><!--/slider-->
-
-<section>
-  <div class="container">
-   <div class="row">
-    <div class="col-sm-3">
-     <div class="left-sidebar">
-      <h2>Danh mục sản phẩm</h2>
-      <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-
-       @foreach($cate_product as $key => $cate_pro)
+							<div class="search_product">
+								<input type="text" style="width: 100%" name="keywords_submit" id="keywords" placeholder="Tìm kiếm sản phẩm">
+								<div id="search_ajax"></div>
+								<input  type="submit" style="margin-top: 0" name="search_items" class="btn btn-primary btn-sm" value="Search">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
 
 
-       <div class="panel panel-default">
-        @if($cate_pro->category_parent == 0)
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordian" href="#{{$cate_pro->slug_category_product}}">
-              <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-              <a href="{{URL::to('danh-muc-san-pham/'.$cate_pro->slug_category_product)}}">{{$cate_pro->category_name}}</a>
-            </a>
-          </h4>
-        </div>
-        <div id="{{$cate_pro->slug_category_product}}" class="panel-collapse collapse">
-          <div class="panel-body">                                        
+	<section id="slider"><!--slider-->
+		@yield('slider')
+	</section><!--/slider-->
 
-            @foreach($cate_product as $key => $v_category)
-            <ul>
-              @if($v_category->category_parent == $cate_pro->category_id)
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Danh mục sản phẩm</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
 
-              <li><a href="{{URL::to('danh-muc-san-pham/'.$v_category->slug_category_product)}}">{{$v_category->category_name}}</a></li>
-
-              @endif
-            </ul>
-            @endforeach                  
+							@foreach($cate_product as $key => $cate_pro)
 
 
-          </div>
-        </div>
-        @endif
-      </div>
+							<div class="panel panel-default">
+								@if($cate_pro->category_parent == 0)
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordian" href="#{{$cate_pro->slug_category_product}}">
+											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+											<a href="{{URL::to('danh-muc-san-pham/'.$cate_pro->slug_category_product)}}">{{$cate_pro->category_name}}</a>
+										</a>
+									</h4>
+								</div>
+								<div id="{{$cate_pro->slug_category_product}}" class="panel-collapse collapse">
+									<div class="panel-body">                                        
+
+										@foreach($cate_product as $key => $v_category)
+										<ul>
+											@if($v_category->category_parent == $cate_pro->category_id)
+
+											<li><a href="{{URL::to('danh-muc-san-pham/'.$v_category->slug_category_product)}}">{{$v_category->category_name}}</a></li>
+
+											@endif
+										</ul>
+										@endforeach                  
 
 
-      @endforeach
-
-    </div><!--/category-products-->
-
-    <div class="brands_products"><!--brands_products-->
-     <h2>Thương hiệu</h2>
-     <div class="brands-name">
-
-      <ul class="nav nav-pills nav-stacked">
-       @foreach($brand_product as $key => $brand_pro)
-       <li><a href="{{URL::to('thuong-hieu-san-pham/'.$brand_pro->brand_slug)}}"> <span class="pull-right">(50)</span>{{$brand_pro->brand_name}}</a></li>
-       @endforeach
-     </ul>
-
-   </div>
- </div><!--/brands_products-->
-
- <div class="price-range"><!--price-range-->
-   <h2>Price Range</h2>
-   <div class="well text-center">
-    <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
-    <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
-  </div>
-</div><!--/price-range-->
-
-<div class="shipping text-center"><!--shipping-->
- <img src="images/home/shipping.jpg" alt="" />
-</div><!--/shipping-->
-
-</div>
-</div>
-
-<div class="col-sm-9 padding-right">
-
- @yield('content')
+									</div>
+								</div>
+								@endif
+							</div>
 
 
-</div>
-</div>
-</div>
-</section>
+							@endforeach
 
-<footer id="footer"><!--Footer-->
- <div class="footer-top">
-  <div class="container">
-   <div class="row">
-    <div class="col-sm-2">
-     <div class="companyinfo">
-      <h2><span>e</span>-shopper</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
-    </div>
-  </div>
-  <div class="col-sm-7">
-   <div class="col-sm-3">
-    <div class="video-gallery text-center">
-     <a href="#">
-      <div class="iframe-img">
-       <img src="images/home/iframe1.png" alt="" />
-     </div>
-     <div class="overlay-icon">
-       <i class="fa fa-play-circle-o"></i>
-     </div>
-   </a>
-   <p>Circle of Hands</p>
-   <h2>24 DEC 2014</h2>
- </div>
-</div>
+						</div><!--/category-products-->
 
-<div class="col-sm-3">
-  <div class="video-gallery text-center">
-   <a href="#">
-    <div class="iframe-img">
-     <img src="images/home/iframe2.png" alt="" />
-   </div>
-   <div class="overlay-icon">
-     <i class="fa fa-play-circle-o"></i>
-   </div>
- </a>
- <p>Circle of Hands</p>
- <h2>24 DEC 2014</h2>
-</div>
-</div>
+						<div class="brands_products"><!--brands_products-->
+							<h2>Thương hiệu</h2>
+							<div class="brands-name">
 
-<div class="col-sm-3">
-  <div class="video-gallery text-center">
-   <a href="#">
-    <div class="iframe-img">
-     <img src="images/home/iframe3.png" alt="" />
-   </div>
-   <div class="overlay-icon">
-     <i class="fa fa-play-circle-o"></i>
-   </div>
- </a>
- <p>Circle of Hands</p>
- <h2>24 DEC 2014</h2>
-</div>
-</div>
+								<ul class="nav nav-pills nav-stacked">
+									@foreach($brand_product as $key => $brand_pro)
+									<li><a href="{{URL::to('thuong-hieu-san-pham/'.$brand_pro->brand_slug)}}"> <span class="pull-right">(50)</span>{{$brand_pro->brand_name}}</a></li>
+									@endforeach
+								</ul>
 
-<div class="col-sm-3">
-  <div class="video-gallery text-center">
-   <a href="#">
-    <div class="iframe-img">
-     <img src="images/home/iframe4.png" alt="" />
-   </div>
-   <div class="overlay-icon">
-     <i class="fa fa-play-circle-o"></i>
-   </div>
- </a>
- <p>Circle of Hands</p>
- <h2>24 DEC 2014</h2>
-</div>
-</div>
-</div>
-<div class="col-sm-3">
- <div class="address">
-  <img src="images/home/map.png" alt="" />
-  <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+							</div>
+						</div><!--/brands_products-->
 
-<div class="footer-widget">
-  <div class="container">
-   <div class="row">
-    <div class="col-sm-2">
-     <div class="single-widget">
-      <h2>Service</h2>
-      <ul class="nav nav-pills nav-stacked">
-       <li><a href="#">Online Help</a></li>
-       <li><a href="#">Contact Us</a></li>
-       <li><a href="#">Order Status</a></li>
-       <li><a href="#">Change Location</a></li>
-       <li><a href="#">FAQ’s</a></li>
-     </ul>
-   </div>
- </div>
- <div class="col-sm-2">
-   <div class="single-widget">
-    <h2>Quock Shop</h2>
-    <ul class="nav nav-pills nav-stacked">
-     <li><a href="#">T-Shirt</a></li>
-     <li><a href="#">Mens</a></li>
-     <li><a href="#">Womens</a></li>
-     <li><a href="#">Gift Cards</a></li>
-     <li><a href="#">Shoes</a></li>
-   </ul>
- </div>
-</div>
-<div class="col-sm-2">
- <div class="single-widget">
-  <h2>Policies</h2>
-  <ul class="nav nav-pills nav-stacked">
-   <li><a href="#">Terms of Use</a></li>
-   <li><a href="#">Privecy Policy</a></li>
-   <li><a href="#">Refund Policy</a></li>
-   <li><a href="#">Billing System</a></li>
-   <li><a href="#">Ticket System</a></li>
- </ul>
-</div>
-</div>
-<div class="col-sm-2">
- <div class="single-widget">
-  <h2>About Shopper</h2>
-  <ul class="nav nav-pills nav-stacked">
-   <li><a href="#">Company Information</a></li>
-   <li><a href="#">Careers</a></li>
-   <li><a href="#">Store Location</a></li>
-   <li><a href="#">Affillate Program</a></li>
-   <li><a href="#">Copyright</a></li>
- </ul>
-</div>
-</div>
-<div class="col-sm-3 col-sm-offset-1">
- <div class="single-widget">
-  <h2>About Shopper</h2>
-  <form action="#" class="searchform">
-   <input type="text" placeholder="Your email address" />
-   <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-   <p>Get the most recent updates from <br />our site and be updated your self...</p>
- </form>
-</div>
-</div>
+						<div class="price-range"><!--price-range-->
+							<h2>Price Range</h2>
+							<div class="well text-center">
+								<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+								<b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+							</div>
+						</div><!--/price-range-->
 
-</div>
-</div>
-</div>
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/home/shipping.jpg" alt="" />
+						</div><!--/shipping-->
 
-<div class="footer-bottom">
-  <div class="container">
-   <div class="row">
-    <p class="pull-left">Copyright © 2021 LamGia. All rights reserved.</p>
-    <p class="pull-right">Designed by <span><a target="_blank" href="">Samachoa</a></span></p>
-  </div>
-</div>
-</div>
+					</div>
+				</div>
 
-</footer><!--/Footer-->
+				<div class="col-sm-9 padding-right">
+
+					@yield('content')
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-shopper</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+						</div>
+					</div>
+					<div class="col-sm-7">
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="images/home/iframe1.png" alt="" />
+									</div>
+									<div class="overlay-icon">
+										<i class="fa fa-play-circle-o"></i>
+									</div>
+								</a>
+								<p>Circle of Hands</p>
+								<h2>24 DEC 2014</h2>
+							</div>
+						</div>			
+
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							<img src="images/home/map.png" alt="" />
+							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-widget">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Service</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Online Help</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">Order Status</a></li>
+								<li><a href="#">Change Location</a></li>
+								<li><a href="#">FAQ’s</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Quock Shop</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">T-Shirt</a></li>
+								<li><a href="#">Mens</a></li>
+								<li><a href="#">Womens</a></li>
+								<li><a href="#">Gift Cards</a></li>
+								<li><a href="#">Shoes</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Policies</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Privecy Policy</a></li>
+								<li><a href="#">Refund Policy</a></li>
+								<li><a href="#">Billing System</a></li>
+								<li><a href="#">Ticket System</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="single-widget">
+							<h2>About Shopper</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="#">Company Information</a></li>
+								<li><a href="#">Careers</a></li>
+								<li><a href="#">Store Location</a></li>
+								<li><a href="#">Affillate Program</a></li>
+								<li><a href="#">Copyright</a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2021 LamGia. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="">Samachoa</a></span></p>
+				</div>
+			</div>
+		</div>
+
+	</footer><!--/Footer-->
 
 
 
-<script src="{{asset('frontend/js/jquery.js')}}"></script>
-<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('frontend/js/jquery.scrollUp.min.js')}}"></script>
-<script src="{{asset('frontend/js/price-range.js')}}"></script>
-<script src="{{asset('frontend/js/jquery.prettyPhoto.js')}}"></script>
-<script src="{{asset('frontend/js/main.js')}}"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="{{asset('frontend/js/sweetalert.min.js')}}"></script>
+	<script src="{{asset('frontend/js/jquery.js')}}"></script>
+	<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('frontend/js/jquery.scrollUp.min.js')}}"></script>
+	<script src="{{asset('frontend/js/price-range.js')}}"></script>
+	<script src="{{asset('frontend/js/jquery.prettyPhoto.js')}}"></script>
+	<script src="{{asset('frontend/js/main.js')}}"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script src="{{asset('frontend/js/sweetalert.min.js')}}"></script>
 
-<script src="{{asset('frontend/js/vlite.js')}}"></script>
-<script src="{{asset('frontend/js/youtube.js')}}"></script>
+	<script src="{{asset('frontend/js/vlite.js')}}"></script>
+	<script src="{{asset('frontend/js/youtube.js')}}"></script>
 
-<script src="{{asset('frontend/js/lightslider.js')}}"></script>
-<script src="{{asset('frontend/js/lightgallery-all.min.js')}}"></script>
-<script src="{{asset('frontend/js/prettify.js')}}"></script>
+	<script src="{{asset('frontend/js/lightslider.js')}}"></script>
+	<script src="{{asset('frontend/js/lightgallery-all.min.js')}}"></script>
+	<script src="{{asset('frontend/js/prettify.js')}}"></script>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#imageGallery').lightSlider({
-      gallery:true,
-      item:1,
-      loop:true,
-      thumbItem:3,
-      slideMargin:0,
-      enableDrag: false,
-      currentPagerPosition:'left',
-      onSliderLoad: function(el) {
-        el.lightGallery({
-          selector: '#imageGallery .lslide'
-        });
-      }   
-    });  
-  });
-</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#imageGallery').lightSlider({
+				gallery:true,
+				item:1,
+				loop:true,
+				thumbItem:3,
+				slideMargin:0,
+				enableDrag: false,
+				currentPagerPosition:'left',
+				onSliderLoad: function(el) {
+					el.lightGallery({
+						selector: '#imageGallery .lslide'
+					});
+				}   
+			});  
+		});
+	</script>
 
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="KE5XKvUX"></script>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="KE5XKvUX"></script>
 
-<script type="text/javascript">
-  $('.xemnhanh').click(function(){ 
-    var pro_id = $(this).data('id_product');
-    var _token = $('input[name="_token"]').val();
-    $.ajax({
-      url:"{{url('/product-quickview')}}",
-      method:"POST",
-      dataType:"JSON",               
-      data:{pro_id:pro_id,_token:_token},
-      success:function(data){
-        $('#product_quickview_title').html(data.product_name);
-        $('#product_quickview_id').html(data.product_id);
-        $('#product_quickview_price').html(data.product_price);
-        $('#product_quickview_image').html(data.product_image);
-        $('#product_quickview_gallery').html(data.product_gallery);
-        $('#product_quickview_desc').html(data.product_desc);
-        $('#product_quickview_content').html(data.product_content);
-        $('#product_quickview_value').html(data.product_quickview_value);
-        $('#product_quickview_button').html(data.product_button);
-      }
-    });
+	<script type="text/javascript">
+		$('.xemnhanh').click(function(){ 
+			var pro_id = $(this).data('id_product');
+			var _token = $('input[name="_token"]').val();
+			$.ajax({
+				url:"{{url('/product-quickview')}}",
+				method:"POST",
+				dataType:"JSON",               
+				data:{pro_id:pro_id,_token:_token},
+				success:function(data){
+					$('#product_quickview_title').html(data.product_name);
+					$('#product_quickview_id').html(data.product_id);
+					$('#product_quickview_price').html(data.product_price);
+					$('#product_quickview_image').html(data.product_image);
+					$('#product_quickview_gallery').html(data.product_gallery);
+					$('#product_quickview_desc').html(data.product_desc);
+					$('#product_quickview_content').html(data.product_content);
+					$('#product_quickview_value').html(data.product_quickview_value);
+					$('#product_quickview_button').html(data.product_button);
+				}
+			});
 
-  });
-</script>
+		});
+	</script>
 
-<script type="text/javascript">
-  $('#keywords').keyup(function(){
-    var query = $(this).val();
-    if(query != ''){
-      var _token = $('input[name="_token"]').val();
-      $.ajax({
-        url : '{{url('/autocomplete-ajax')}}',
-        method: 'POST',
-        data:{query:query,_token:_token},
-        success:function(data){
-          $('#search_ajax').fadeIn();
-          $('#search_ajax').html(data);     
-        }
-      });
-    }else{
-      $('#search_ajax').fadeOut();
-    }
-  });
+	<script type="text/javascript"> 
 
-  $(document).on('click', '.li_search_ajax', function(){  
-    $('#keywords').val($(this).text());  
-    $('#search_ajax').fadeOut();  
-  });
+		$(document).ready(function (){
 
-</script>
+			comment_load();
+			function comment_load(){
+				var product_id = $('.comment-product-id').val();				
+				var _token = $('input[name="_token"]').val();		
 
-<script type="text/javascript">
+				$.ajax({
+					url : '{{url('/load-comment')}}',
+					method: 'POST',
+					data:{product_id:product_id,_token:_token},
+					success:function(data){
+						$('#comment_show').html(data);						  
+					}
+				});
+			}; 
+			$('.send-comment').click(function(){
+				var comment_name = $('.comment_name').val();
+				var comment = $('.comment').val();
+				var product_id = $('.comment-product-id').val();
+				var _token = $('input[name="_token"]').val();
+				$.ajax({
+					url : '{{url('/insert-comment')}}',
+					method: 'POST',
+					data:{product_id:product_id,_token:_token,comment:comment,comment_name:comment_name},
+					success:function(data){
+						comment_load();
+						$('#notify_comment_send').html('<span class="text text-success"> Bình luận đang chờ duyệt</span>');
+						$('.comment_name').val('');
+						$('.comment').val('');
+						$('#notify_comment_send').fadeOut(9000);
+					}
+				});
+			});
+		});
 
-  $(document).on('click','.watch_video',function(){    
+	</script>
 
-    var video_id = $(this).attr('id');
-    var _token = $('input[name="_token"]').val();       
+	<script type="text/javascript">
+		$('#keywords').keyup(function(){
+			var query = $(this).val();
+			if(query != ''){
+				var _token = $('input[name="_token"]').val();
+				$.ajax({
+					url : '{{url('/autocomplete-ajax')}}',
+					method: 'POST',
+					data:{query:query,_token:_token},
+					success:function(data){
+						$('#search_ajax').fadeIn();
+						$('#search_ajax').html(data);     
+					}
+				});
+			}else{
+				$('#search_ajax').fadeOut();
+			}
+		});
 
-    $.ajax({
-      url:"{{url('/watch-video')}}",
-      method:"POST",
-      dataType:"JSON",               
-      data:{video_id:video_id,_token:_token},                
-      success:function(data){
+		$(document).on('click', '.li_search_ajax', function(){  
+			$('#keywords').val($(this).text());  
+			$('#search_ajax').fadeOut();  
+		});
 
-        $('#video_title').html(data.video_title);
-        $('#video_link').html(data.video_link);
-        var playerYT = new vlitejs({
-          selector: '#my_yt_video',
-          options: {
+	</script>
+
+	<script type="text/javascript">
+
+		$(document).on('click','.watch_video',function(){    
+
+			var video_id = $(this).attr('id');
+			var _token = $('input[name="_token"]').val();       
+
+			$.ajax({
+				url:"{{url('/watch-video')}}",
+				method:"POST",
+				dataType:"JSON",               
+				data:{video_id:video_id,_token:_token},                
+				success:function(data){
+
+					$('#video_title').html(data.video_title);
+					$('#video_link').html(data.video_link);
+					var playerYT = new vlitejs({
+						selector: '#my_yt_video',
+						options: {
                           // auto play
                           autoplay: false,
 
@@ -606,204 +592,204 @@
 
                           // keeps native controls for touch devices
                           nativeControlsForTouch: false
-                        },
-                        onReady: (player) => {
+                      },
+                      onReady: (player) => {
                           // callback function here
-                        }
-                      });
+                      }
+                  });
 
-      }
-    });      
-    
-  });
+				}
+			});      
 
-  $("#modal_video").on('hidden.bs.modal', function (e) {
-    $("#my_yt_video").attr("src", $("#my_yt_video").attr("src"));
-  });
+		});
 
-</script>
+		$("#modal_video").on('hidden.bs.modal', function (e) {
+			$("#my_yt_video").attr("src", $("#my_yt_video").attr("src"));
+		});
 
-<script type="text/javascript">
+	</script>
 
- $(document).ready(function(){
+	<script type="text/javascript">
 
-  $('.send_order').click(function(){
+		$(document).ready(function(){
 
-    swal({
-      title: "Bạn có chắc muốn đặt hàng?",
-      text: "Bạn sẽ không thể hủy đơn sau khi đã đặt",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonClass: "btn-danger",
-      confirmButtonText: "Cảm ơn, đặt hàng",
-      cancelButtonText: "Không, chưa mua",
-      closeOnConfirm: false,
-      closeOnCancel: false
-    },
-    function(isConfirm) {
-      if (isConfirm) {
-       var shipping_name = $('.shipping_name').val();
-       var shipping_email = $('.shipping_email').val();
-       var shipping_phone = $('.shipping_phone').val();
-       var shipping_address = $('.shipping_address').val();
-       var shipping_notes = $('.shipping_notes').val();
-       var shipping_method = $('.payment_select').val();
-       var order_fee = $('.order_fee').val();
-       var order_coupon = $('.order_coupon').val();
-       var _token = $('input[name="_token"]').val();
-       $.ajax({
-        url: '{{url('/confirm-order')}}',
-        method: 'POST',
-        data:{shipping_name:shipping_name,shipping_email:shipping_email,shipping_phone:shipping_phone,shipping_address:shipping_address,shipping_notes:shipping_notes,_token:_token,order_fee:order_fee,order_coupon:order_coupon,shipping_method:shipping_method},
-        success:function(){
-         swal("Đơn hàng", "Đặt hàng thành công", "success");
-       }
-     });
+			$('.send_order').click(function(){
 
-     } else {
-       swal("Đóng", "Bạn chưa đặt hàng", "error");
-     }
-   }); 
+				swal({
+					title: "Bạn có chắc muốn đặt hàng?",
+					text: "Bạn sẽ không thể hủy đơn sau khi đã đặt",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "Cảm ơn, đặt hàng",
+					cancelButtonText: "Không, chưa mua",
+					closeOnConfirm: false,
+					closeOnCancel: false
+				},
+				function(isConfirm) {
+					if (isConfirm) {
+						var shipping_name = $('.shipping_name').val();
+						var shipping_email = $('.shipping_email').val();
+						var shipping_phone = $('.shipping_phone').val();
+						var shipping_address = $('.shipping_address').val();
+						var shipping_notes = $('.shipping_notes').val();
+						var shipping_method = $('.payment_select').val();
+						var order_fee = $('.order_fee').val();
+						var order_coupon = $('.order_coupon').val();
+						var _token = $('input[name="_token"]').val();
+						$.ajax({
+							url: '{{url('/confirm-order')}}',
+							method: 'POST',
+							data:{shipping_name:shipping_name,shipping_email:shipping_email,shipping_phone:shipping_phone,shipping_address:shipping_address,shipping_notes:shipping_notes,_token:_token,order_fee:order_fee,order_coupon:order_coupon,shipping_method:shipping_method},
+							success:function(){
+								swal("Đơn hàng", "Đặt hàng thành công", "success");
+							}
+						});
 
-
-  });
-});
+					} else {
+						swal("Đóng", "Bạn chưa đặt hàng", "error");
+					}
+				}); 
 
 
-</script>
-
-<script  type="text/javascript" >
- $(document).ready(function(){
-  $('.add-to-cart').click(function(){
-   var id = $(this).data('id_product');
-   var cart_product_id = $('.cart_product_id_' + id).val();
-   var cart_product_name = $('.cart_product_name_' + id).val();
-   var cart_product_quantity = $('.cart_product_quantity_' + id).val();
-   var cart_product_price = $('.cart_product_price_' + id).val();
-   var cart_product_image = $('.cart_product_image_' + id).val();
-   var cart_product_qty = $('.cart_product_qty_' + id).val();
-   var _token = $('input[name="_token"]').val();
-
-   if(parseInt(cart_product_qty)>parseInt(cart_product_quantity)){
-    alert('Số lượng đặt hàng vượt quá số lượng kho (Còn ' + cart_product_quantity + ')');
-  }else{
-
-   $.ajax({
-    url: '{{url('/add-cart-ajax')}}',
-    method: 'POST',
-    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token, cart_product_quantity:cart_product_quantity},
-    success:function(data){
-     swal({
-      title: "Đã thêm sản phẩm vào giỏ hàng",
-      text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
-      showCancelButton: true,
-      cancelButtonText: "Xem tiếp",
-      confirmButtonClass: "btn-success",
-      confirmButtonText: "Đi đến giỏ hàng",
-      closeOnConfirm: false
-    },
-    function() {
-      window.location.href = "{{url('/cart')}}";
-    });
-
-   }
- });
- }
-});
-});
-
-</script>
+			});
+		});
 
 
-<script  type="text/javascript" >
- $(document).ready(function(){
-  $(document).on('click','.add-to-cart-quickview',function(){
-   var id = $(this).data('id_product');
-   var cart_product_id = $('.cart_product_id_' + id).val();
-   var cart_product_name = $('.cart_product_name_' + id).val();
-   var cart_product_quantity = $('.cart_product_quantity_' + id).val();
-   var cart_product_price = $('.cart_product_price_' + id).val();
-   var cart_product_image = $('.cart_product_image_' + id).val();
-   var cart_product_qty = $('.cart_product_qty_' + id).val();
-   var _token = $('input[name="_token"]').val();
+	</script>
 
-   if(parseInt(cart_product_qty)>parseInt(cart_product_quantity)){
-    alert('Số lượng đặt hàng vượt quá số lượng kho (Còn ' + cart_product_quantity + ')');
-  }else{
+	<script  type="text/javascript" >
+		$(document).ready(function(){
+			$('.add-to-cart').click(function(){
+				var id = $(this).data('id_product');
+				var cart_product_id = $('.cart_product_id_' + id).val();
+				var cart_product_name = $('.cart_product_name_' + id).val();
+				var cart_product_quantity = $('.cart_product_quantity_' + id).val();
+				var cart_product_price = $('.cart_product_price_' + id).val();
+				var cart_product_image = $('.cart_product_image_' + id).val();
+				var cart_product_qty = $('.cart_product_qty_' + id).val();
+				var _token = $('input[name="_token"]').val();
 
-   $.ajax({
-    url: '{{url('/add-cart-ajax')}}',
-    method: 'POST',
-    data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token, cart_product_quantity:cart_product_quantity},
-    beforeSend:function(){
-      $("#beforesend_quickview").html("<p class='text text-success'>Đang thêm sản phẩm vào giỏ hàng</p>");
-    },
-    success:function(data){
-      $("#beforesend_quickview").html("<p class='text text-success'>Sản phẩm đã thêm vào giỏ hàng</p>");
-    }
-  });
- }
-});
-});
+				if(parseInt(cart_product_qty)>parseInt(cart_product_quantity)){
+					alert('Số lượng đặt hàng vượt quá số lượng kho (Còn ' + cart_product_quantity + ')');
+				}else{
 
- $(document).on('click','.redirect-cart',function(){
-  window.location.href = "{{url('/cart')}}";
-});
+					$.ajax({
+						url: '{{url('/add-cart-ajax')}}',
+						method: 'POST',
+						data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token, cart_product_quantity:cart_product_quantity},
+						success:function(data){
+							swal({
+								title: "Đã thêm sản phẩm vào giỏ hàng",
+								text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+								showCancelButton: true,
+								cancelButtonText: "Xem tiếp",
+								confirmButtonClass: "btn-success",
+								confirmButtonText: "Đi đến giỏ hàng",
+								closeOnConfirm: false
+							},
+							function() {
+								window.location.href = "{{url('/cart')}}";
+							});
 
-</script>
+						}
+					});
+				}
+			});
+		});
 
-<script type="text/javascript"> 
+	</script>
 
- $(document).ready(function (){
-  $('.choose').on('change',function(){
-   var action = $(this).attr('id');
-   var ma_id = $(this).val();
-   var _token = $('input[name="_token"]').val();
-   var result = '';
 
-   if(action=='city'){
-    result = 'province';
-  }else{
-    result = 'wards';
-  }
-  $.ajax({
-    url : '{{url('/select-delivery-home')}}',
-    method: 'POST',
-    data:{action:action,ma_id:ma_id,_token:_token},
-    success:function(data){
-     $('#'+result).html(data);     
-   }
- });
-}); 
-});
+	<script  type="text/javascript" >
+		$(document).ready(function(){
+			$(document).on('click','.add-to-cart-quickview',function(){
+				var id = $(this).data('id_product');
+				var cart_product_id = $('.cart_product_id_' + id).val();
+				var cart_product_name = $('.cart_product_name_' + id).val();
+				var cart_product_quantity = $('.cart_product_quantity_' + id).val();
+				var cart_product_price = $('.cart_product_price_' + id).val();
+				var cart_product_image = $('.cart_product_image_' + id).val();
+				var cart_product_qty = $('.cart_product_qty_' + id).val();
+				var _token = $('input[name="_token"]').val();
 
-</script>
+				if(parseInt(cart_product_qty)>parseInt(cart_product_quantity)){
+					alert('Số lượng đặt hàng vượt quá số lượng kho (Còn ' + cart_product_quantity + ')');
+				}else{
 
-<script type="text/javascript">
- $(document).ready(function (){
-  $('.calculate_delivery').click(function(){
+					$.ajax({
+						url: '{{url('/add-cart-ajax')}}',
+						method: 'POST',
+						data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token, cart_product_quantity:cart_product_quantity},
+						beforeSend:function(){
+							$("#beforesend_quickview").html("<p class='text text-success'>Đang thêm sản phẩm vào giỏ hàng</p>");
+						},
+						success:function(data){
+							$("#beforesend_quickview").html("<p class='text text-success'>Sản phẩm đã thêm vào giỏ hàng</p>");
+						}
+					});
+				}
+			});
+		});
 
-   var matp = $('.city').val();
-   var maqh = $('.province').val();
-   var xaid = $('.wards').val();
-   var _token = $('input[name="_token"]').val();
-   if(matp=='' && maqh=='' && xaid==''){
-    alert('Làm ơn chọn để tính phí vận chuyển')
-  }else{
+		$(document).on('click','.redirect-cart',function(){
+			window.location.href = "{{url('/cart')}}";
+		});
 
-    $.ajax({
-     url : '{{url('/calculate-fee')}}',
-     method: 'POST',
-     data:{matp:matp, maqh:maqh, _token:_token, xaid:xaid},
-     success:function(){
-      location.reload(); 
-    }
-  });
+	</script>
 
-  }
-});
-});
-</script>
+	<script type="text/javascript"> 
+
+		$(document).ready(function (){
+			$('.choose').on('change',function(){
+				var action = $(this).attr('id');
+				var ma_id = $(this).val();
+				var _token = $('input[name="_token"]').val();
+				var result = '';
+
+				if(action=='city'){
+					result = 'province';
+				}else{
+					result = 'wards';
+				}
+				$.ajax({
+					url : '{{url('/select-delivery-home')}}',
+					method: 'POST',
+					data:{action:action,ma_id:ma_id,_token:_token},
+					success:function(data){
+						$('#'+result).html(data);     
+					}
+				});
+			}); 
+		});
+
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function (){
+			$('.calculate_delivery').click(function(){
+
+				var matp = $('.city').val();
+				var maqh = $('.province').val();
+				var xaid = $('.wards').val();
+				var _token = $('input[name="_token"]').val();
+				if(matp=='' && maqh=='' && xaid==''){
+					alert('Làm ơn chọn để tính phí vận chuyển')
+				}else{
+
+					$.ajax({
+						url : '{{url('/calculate-fee')}}',
+						method: 'POST',
+						data:{matp:matp, maqh:maqh, _token:_token, xaid:xaid},
+						success:function(){
+							location.reload(); 
+						}
+					});
+
+				}
+			});
+		});
+	</script>
 
 
 </body>

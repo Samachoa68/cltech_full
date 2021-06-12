@@ -13,11 +13,11 @@ class TblComment extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_coment', function (Blueprint $table) {
+        Schema::create('tbl_comment', function (Blueprint $table) {
             $table->increments('comment_id');
             $table->string('comment_name');
             $table->string('comment');
-            $table->date('comment_date');
+            $table->timestamps('comment_date');
             $table->integer('comment_product_id');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class TblComment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_coment');
+        Schema::dropIfExists('tbl_comment');
     }
 }
