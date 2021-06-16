@@ -217,5 +217,8 @@ Route::post('watch-video','VideoController@watch_video');
 Route::get('tag/{pro_tag}','ProductController@tag');
 
 //Comment
-Route::post('load-comment','ProductController@load_comment');
-Route::post('insert-comment','ProductController@insert_comment');
+Route::get('list-comment','CommentController@list_comment');
+Route::post('load-comment','CommentController@load_comment');
+Route::post('insert-comment','CommentController@insert_comment');
+Route::post('approve-comment','CommentController@approve_comment');
+Route::post('reply-comment','CommentController@reply_comment');

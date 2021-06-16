@@ -17,6 +17,8 @@ class TblComment extends Migration
             $table->increments('comment_id');
             $table->string('comment_name');
             $table->string('comment');
+            $table->integer('comment_status');
+            $table->integer('comment_parent_comment');
             $table->timestamps('comment_date');
             $table->integer('comment_product_id');
             $table->timestamps();
