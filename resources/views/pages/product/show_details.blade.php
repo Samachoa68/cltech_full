@@ -128,6 +128,7 @@
 					<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
 					<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
 					<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
+					
 				</ul>
 
 								
@@ -135,11 +136,37 @@
 						@csrf
 						<input type="hidden" name="comment_product_id" class="comment-product-id" value="{{$detail_pro->product_id}}">
 
-						<div id="comment_show"></div>			
+						<div id="comment_show"></div>		
+							
 					</form>
+
+					
 							
 				<p></p>
 				<p><b>Write Your Review</b></p>
+
+				<ul class="list-inline rating"  title="Average Rating">
+					@for($count=1; $count<=5; $count++)
+						@php
+							if($count<=$rating_avg){
+								$color = 'color:#ffcc00;';
+							}
+							else {
+								$color = 'color:#ccc;';
+							}
+						
+						@endphp
+					
+					<li title="star_rating" 
+					id="{{$detail_pro->product_id}}-{{$count}}" 
+					data-index="{{$count}}"  
+					data-product_id="{{$detail_pro->product_id}}" 
+					data-rating="{{$rating_avg}}" 
+					class="rating" 
+					style="cursor:pointer; {{$color}} font-size:30px;">&#9733;</li>
+					@endfor
+
+				</ul>
 
 				<form>
 					@csrf
@@ -148,7 +175,7 @@
 					</span>
 					<textarea placeholder="Nội dung bình luận" class="comment" name="" ></textarea>
 					<div id="notify_comment_send"></div>
-					<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
+					
 					<button type="button" class="btn btn-default pull-right send-comment">
 						Gửi bình luận
 					</button>

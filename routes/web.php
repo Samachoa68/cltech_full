@@ -222,3 +222,6 @@ Route::post('load-comment','CommentController@load_comment');
 Route::post('insert-comment','CommentController@insert_comment');
 Route::post('approve-comment','CommentController@approve_comment');
 Route::post('reply-comment','CommentController@reply_comment');
+
+//Rating
+Route::post('insert-rating','ProductController@insert_rating');

@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\CategoryPost;
 use App\Models\Brand;
+use App\Models\RatingM;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -182,11 +183,14 @@ class ProductController extends Controller
 		//Gallery
 		$gallery = Gallery::where('product_id', $product_id)->get();
 
+		$rating = RatingM::where('product_id', $product_id)->avg('rating');
+		$rating_avg = round($rating);
+
 		$related_product = Product::join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id')
 			->join('tbl_brand_product', 'tbl_brand_product.brand_id', '=', 'tbl_product.brand_id')->where('tbl_category_product.category_id', $category_id)->wherenotin('tbl_product.product_slug', [$product_slug])->orderby(DB::raw('RAND()'))->paginate(3);
 
 
-		return view('pages.product.show_details')->with(compact('slider', 'all_category_post', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'cate_product', 'brand_product', 'details_product', 'related_product', 'gallery', 'product_cate', 'cate_slug'));
+		return view('pages.product.show_details')->with(compact('slider', 'all_category_post', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'cate_product', 'brand_product', 'details_product', 'related_product', 'gallery', 'product_cate', 'cate_slug','rating_avg'));
 	}
 
 	public function import_csv_pro(Request $request)
@@ -257,5 +261,15 @@ class ProductController extends Controller
 		<input type="hidden" value="1" class="cart_product_qty_' . $product->product_id . '">';
 
 		echo json_encode($output);
+	}
+
+	public function insert_rating(Request $request)
+	{
+		$data = $request->all();
+		$rating = new RatingM();
+		$rating->product_id = $data['product_id'];
+		$rating->rating = $data['index'];
+		$rating->save();
+		echo 'done';
 	}
 }
