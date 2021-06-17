@@ -220,10 +220,11 @@
                             <span class="username">
 
                                 <?php
-
                                 $name = Auth::user()->admin_name;
                                 if ($name) {
                                     echo $name;
+                                }else{
+                                    
                                 }
                                 ?>
 
