@@ -409,6 +409,13 @@
                         </li>
                         @endimpersonate
 
+                        <li class="sub-menu">
+                            <a href="{{URL::to('/add-contact')}}">
+                                <i class="fa fa-book"></i>
+                                <span>Liên hệ</span>
+                            </a>
+                            
+                        </li>
 
                         <li class="sub-menu">
                             <a href="javascript:;">

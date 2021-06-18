@@ -224,7 +224,7 @@
                                 </li>
                                 <li><a href="404.html">Giỏ hàng</a></li>
                                 <li><a href="{{ URL::to('/show-video') }}">Video</a></li>
-                                <li><a href="contact-us.html">Liên hệ</a></li>
+                                <li><a href="{{ URL::to('/contact')}}">Liên hệ</a></li>
                             </ul>
                         </div>
                     </div>
@@ -561,7 +561,7 @@
                 $('#' + product_id + '-' + count).css('color', '#ffcc00');
             }
         });
-		
+
         //click đánh giá sao
         $(document).on('click', '.rating', function() {
             var index = $(this).data("index");

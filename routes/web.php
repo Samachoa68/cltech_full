@@ -225,3 +225,9 @@ Route::post('reply-comment','CommentController@reply_comment');
 
 //Rating
 Route::post('insert-rating','ProductController@insert_rating');
+
+//Contact
+Route::get('contact','ContactController@contact');
+Route::get('add-contact','ContactController@add_contact');
+Route::post('save-contact','ContactController@save_contact');
+Route::post('update-contact','ContactController@update_contact');

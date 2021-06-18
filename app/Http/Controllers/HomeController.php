@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Session;
-use App\Http\Requests;
 use App\Models\Slider;
 use App\Models\Product;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryPost;
 use Carbon\Carbon;
@@ -28,8 +28,8 @@ class HomeController extends Controller
         $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
 
         $cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
-        $brand_product = DB::table('tbl_brand_product')->where('brand_status','1')->orderby('brand_id','desc')->get();
-        $all_product = DB::table('tbl_product')->where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
+        $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
+        $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
 
         return view('pages.home')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post'));
     }
