@@ -224,7 +224,7 @@
                                 </li>
                                 <li><a href="404.html">Giỏ hàng</a></li>
                                 <li><a href="{{ URL::to('/show-video') }}">Video</a></li>
-                                <li><a href="{{ URL::to('/contact')}}">Liên hệ</a></li>
+                                <li><a href="{{ URL::to('/contact') }}">Liên hệ</a></li>
                             </ul>
                         </div>
                     </div>
@@ -502,6 +502,50 @@
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0"
         nonce="KE5XKvUX"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var cate_id = $('.tabs_pro').data('id');
+            var _token = $('input[name="_token"]').val();
+            //alert(cate_id);
+            $.ajax({
+                url: '{{ url('/product-tabs') }}',
+                method: "POST",
+                data: {
+                    cate_id: cate_id,
+                    _token: _token
+                },
+                success: function(data) {
+                    $('#tabs_product').html(data);
+                }
+
+            });
+
+            $('.tabs_pro').click(function() {
+
+                var cate_id = $(this).data('id');
+                // alert(cate_id);
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{ url('/product-tabs') }}',
+                    method: "POST",
+                    data: {
+                        cate_id: cate_id,
+                        _token: _token
+                    },
+
+                    success: function(data) {
+                        $('#tabs_product').html(data);
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
 
     <script type="text/javascript">
         $('.xemnhanh').click(function() {

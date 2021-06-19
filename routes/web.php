@@ -57,8 +57,12 @@ Route::get('unactive-category-product/{category_product_id}','CategoryProduct@un
 Route::post('save-category-product','CategoryProduct@save_category_product');
 Route::post('update-category-product/{category_product_id}','CategoryProduct@update_category_product');
 
+Route::post('arrange-category','CategoryProduct@arrange_category');
+
 Route::post('export-csv-cate','CategoryProduct@export_csv_cate');
 Route::post('import-csv-cate','CategoryProduct@import_csv_cate');
+
+Route::post('product-tabs','CategoryProduct@product_tabs');
 
 
 //Brand Product
@@ -95,6 +99,7 @@ Route::post('export-csv-pro','ProductController@export_csv_pro');
 Route::post('import-csv-pro','ProductController@import_csv_pro');
 
 Route::post('product-quickview','ProductController@product_quickview');
+
 
 //Category Post
 Route::get('add-cate-post','CategoryPostController@add_cate_post');

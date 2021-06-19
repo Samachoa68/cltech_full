@@ -56,9 +56,9 @@
             <th style="width:30px;"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="category_order">
           @foreach($all_category_product as $key => $cate_pro)
-          <tr>
+          <tr id="{{$cate_pro->category_id}}">
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$cate_pro->category_name}}</td>
             <td>

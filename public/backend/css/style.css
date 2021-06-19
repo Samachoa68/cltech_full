@@ -4004,3 +4004,11 @@ ul.list_reply li {
     color: blue;
     margin: 5px 40px;
 }
+
+#category_order .ui-state-highlight {
+    padding: 24px;
+    background-color: #ffffcc;
+    border: 1px dotted #ccc;
+    cursor: move;
+    margin-top: 12px;
+}

@@ -43,8 +43,7 @@
     <script src="js/raphael-min.js"></script>
     <script src="js/morris.js"></script>
 
-    <script src="js/bootstrap-tagsinput.min.js"></script>
-    
+    <script src="js/bootstrap-tagsinput.min.js"></script>    
     
 
 </head>
@@ -522,6 +521,9 @@
     </script>
 
     <script src="ckeditor/ckeditor.js"></script>
+
+    <script src="js/jquery-ui.min.js"></script>
+
     <script>
         CKEDITOR.replace('ckeditor_1',{
             filebrowserImageUploadUrl : "{{ url('uploads-ckeditor?_token='.csrf_token()) }}",
@@ -533,15 +535,39 @@
         CKEDITOR.replace('ckeditor_4');
     </script>
 
-
     <script type="text/javascript">
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
 
+<script>
+    $(document).ready(function(){
+        $('#category_order').sortable({
+            placeholder: 'ui-state-highlight',
+             update  : function(event, ui)
+              {
+                var page_id_array = new Array();
+                var _token = $('input[name="_token"]').val();
 
+                $('#category_order tr').each(function(){
+                    page_id_array.push($(this).attr("id"));
+                });
+                
+                $.ajax({
+                        url:"{{url('/arrange-category')}}",
+                        method:"POST",
+                        data:{page_id_array:page_id_array,_token:_token},
+                        success:function(data)
+                        {
+                            alert(data);
+                        }
+                });
 
+              }
+        });
+    });
+</script>
     <script type="text/javascript">
         $(document).ready(function() {
             load_video();

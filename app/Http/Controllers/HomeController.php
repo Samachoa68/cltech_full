@@ -27,11 +27,14 @@ class HomeController extends Controller
 
         $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
 
-        $cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
+        $cate_product = Category::where('category_status','1')->orderBy('category_order','ASC')->get();
+
+        $cate_pro_tabs = Category::where('category_status','1')->where('category_parent','<>',0)->orderBy('category_order','ASC')->get();
+
         $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
         $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
 
-        return view('pages.home')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post'));
+        return view('pages.home')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs'));
     }
 
     public function search(request $request)
