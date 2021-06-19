@@ -44,10 +44,8 @@
     <script src="js/morris.js"></script>
 
     <script src="js/bootstrap-tagsinput.min.js"></script>
-
-
-
-
+    
+    
 
 </head>
 
@@ -525,7 +523,11 @@
 
     <script src="ckeditor/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace('ckeditor_1');
+        CKEDITOR.replace('ckeditor_1',{
+            filebrowserImageUploadUrl : "{{ url('uploads-ckeditor?_token='.csrf_token()) }}",
+            filebrowserBrowseUrl : "{{ url('file-browser?_token='.csrf_token()) }}",
+            filebrowserUploadMethod: 'form'
+        });
         CKEDITOR.replace('ckeditor_2');
         CKEDITOR.replace('ckeditor_3');
         CKEDITOR.replace('ckeditor_4');
