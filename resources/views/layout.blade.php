@@ -51,6 +51,7 @@
     <link href="{{ asset('frontend/css/lightslider.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/prettify.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/lightgallery.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/jquery-ui.min.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -340,7 +341,7 @@
                             <h2>Sản phẩm yêu thích</h2>
                             <div class="brands-name ">
 
-                                <div id="row_wishlist" class="row">    
+                                <div id="row_wishlist" class="row">
 
                                 </div>
 
@@ -490,6 +491,9 @@
     <script src="{{ asset('frontend/js/lightgallery-all.min.js') }}"></script>
     <script src="{{ asset('frontend/js/prettify.js') }}"></script>
 
+    <script src="{{ asset('frontend/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/simple.money.format.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#imageGallery').lightSlider({
@@ -513,6 +517,45 @@
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0"
         nonce="KE5XKvUX"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#slider-range").slider({
+                range: true,
+               
+                min: {{ $min_price_range }},
+                max: {{ $max_price_range }},
+
+                steps: 10000,
+                values: [{{ $min_price }}, {{ $max_price }}],
+
+                slide: function(event, ui) {
+                    $("#amount").val(ui.values[0] + "đ" + " - " + ui.values[1] + "đ");
+                    $("#start_price").val(ui.values[0]);
+                    $("#end_price").val(ui.values[1]);
+                }
+            });
+            $("#amount").val($("#slider-range").slider("values", 0) + "đ" +
+                " - " + $("#slider-range").slider("values", 1) + "đ");
+        });
+
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#sort').on('change', function() {
+                var url = $(this).val();
+                if (url) {
+                    window.location = url;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+    </script>
 
     <script type="text/javascript">
         function view() {
