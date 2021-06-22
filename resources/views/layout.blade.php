@@ -524,20 +524,21 @@
             $("#slider-range").slider({
                 range: true,
                
-                min: {{ $min_price_range }},
+                min: 0,
                 max: {{ $max_price_range }},
 
                 steps: 10000,
-                values: [{{ $min_price }}, {{ $max_price }}],
+                values: [{{ $min_price_range }}, {{ $max_price }}],
 
                 slide: function(event, ui) {
-                    $("#amount").val(ui.values[0] + "đ" + " - " + ui.values[1] + "đ");
+                    $("#amount").val(ui.values[0]).simpleMoneyFormat() +"VND";
+                    $("#amount1").val(ui.values[1]).simpleMoneyFormat() +"VND";
                     $("#start_price").val(ui.values[0]);
                     $("#end_price").val(ui.values[1]);
                 }
             });
-            $("#amount").val($("#slider-range").slider("values", 0) + "đ" +
-                " - " + $("#slider-range").slider("values", 1) + "đ");
+            $("#amount").val($("#slider-range").slider("values", 0)).simpleMoneyFormat()+"VND";
+            $("#amount1").val($("#slider-range").slider("values", 1)).simpleMoneyFormat();
         });
 
     </script>

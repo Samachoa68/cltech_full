@@ -27,12 +27,17 @@
                 </form>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">           
+                
+                
                 
                 <form>
                     <p>
-                        <label for="amount">Lọc giá:</label>
-                        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                       <label for="amount">Lọc giá:</label>
+                       <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        <input type="text" id="amount1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                      
+                        
                         <input type="hidden" name="start_price" id="start_price">
                         <input type="hidden" name="end_price" id="end_price">
                     </p>

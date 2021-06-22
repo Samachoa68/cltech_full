@@ -25,15 +25,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // view()->composer('*', function ($view) {
+        view()->composer('*', function ($view) {
 
-        //     $min_price = Product::min('product_price');
-        //     $max_price = Product::max('product_price');
+            $min_price = Product::min('product_price');
+            $max_price = Product::max('product_price');
 
-        //     $min_price_range = $min_price + 500000;
-        //     $max_price_range = $max_price + 10000000;
+            $min_price_range = $min_price + 5000000;
+            $max_price_range = $max_price + 10000000;
 
-        //     $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range'));
-        // });
+            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range'));
+        });
     }
 }

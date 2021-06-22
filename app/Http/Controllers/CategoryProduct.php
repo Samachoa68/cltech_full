@@ -140,7 +140,7 @@ class CategoryProduct extends Controller
 		$min_price = Product::min('product_price');
         $max_price = Product::max('product_price');
 
-        $min_price_range = $min_price + 500000;
+        $min_price_range = $min_price + 5000000;
         $max_price_range = $max_price + 10000000;
 
 		if (isset($_GET['sort_by'])) {
@@ -160,12 +160,12 @@ class CategoryProduct extends Controller
 			$min_price = $_GET['start_price'];
 			$max_price = $_GET['end_price'];
 		
-			$category_by_id = Product::with('category')->whereBetween('product_price',[$min_price,$max_price])->orderBy('product_price','ASC')->paginate(6);
+			$category_by_id = Product::with('category')->where('category_id', $category_id)->whereBetween('product_price',[$min_price,$max_price])->orderBy('product_price','ASC')->paginate(6);
 		} else {
 			$category_by_id = Product::with('category')->where('category_id', $category_id)->where('product_status', '1')->orderBy('product_id', 'ASC')->paginate(6);
 		}
 
-		$cate_name_product = DB::table('tbl_category_product')->where('category_id', $category_id)->limit(1)->get();
+		$cate_name_product = Category::where('category_id', $category_id)->limit(1)->get();
 
 
 		return view('pages.category.show_category')->with(compact('slider', 'all_category_post', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'cate_product', 'brand_product', 'category_by_id', 'cate_name_product','min_price','max_price','min_price_range','max_price_range'));
