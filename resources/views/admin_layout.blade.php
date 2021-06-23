@@ -16,9 +16,9 @@
         }
     </script>
 
-    <base href="{{asset('backend')}}/">
+    <base href="{{ asset('backend') }}/">
 
-    <meta name="csrf-token" content="{{csrf_token()}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- //bootstrap-css -->
@@ -26,7 +26,9 @@
     <link href="css/style.css" rel='stylesheet' type='text/css' />
     <link href="css/style-responsive.css" rel="stylesheet" />
     <!-- font CSS -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link
+        href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
     <!-- font-awesome icons -->
     <link rel="stylesheet" href="css/font.css" type="text/css" />
     <link href="css/font-awesome.css" rel="stylesheet">
@@ -38,13 +40,17 @@
 
     <link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
     <!-- //font-awesome icons -->
     <script src="js/jquery2.0.3.min.js"></script>
     <script src="js/raphael-min.js"></script>
     <script src="js/morris.js"></script>
 
-    <script src="js/bootstrap-tagsinput.min.js"></script>    
-    
+    <script src="js/bootstrap-tagsinput.min.js"></script>
+
 
 </head>
 
@@ -88,7 +94,7 @@
                                     </div>
                                 </a>
                             </li>
-                            
+
 
 
 
@@ -219,9 +225,8 @@
                                 <?php
                                 $name = Auth::user()->admin_name;
                                 if ($name) {
-                                    echo $name;
-                                }else{
-                                    
+                                echo $name;
+                                } else {
                                 }
                                 ?>
 
@@ -232,7 +237,7 @@
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                            <li><a href="{{URL::to('/logout-auth')}}"><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a href="{{ URL::to('/logout-auth') }}"><i class="fa fa-key"></i> Log Out</a></li>
                         </ul>
                     </li>
                     <!-- user login dropdown end -->
@@ -249,9 +254,9 @@
                 <div class="leftside-navigation">
                     <ul class="sidebar-menu" id="nav-accordion">
                         <li>
-                            <a class="active" href="index.html">
+                            <a class="active" href="{{ URL::to('/dashboard') }}">
                                 <i class="fa fa-dashboard"></i>
-                                <span>Dashboard test change </span>
+                                <span>Dashboard</span>
                             </a>
                         </li>
 
@@ -262,7 +267,7 @@
                                 <span>Đơn hàng</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/manage-order')}}">Quản lý đơn hàng</a></li>
+                                <li><a href="{{ URL::to('/manage-order') }}">Quản lý đơn hàng</a></li>
 
                             </ul>
                         </li>
@@ -273,8 +278,8 @@
                                 <span>Slider</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-slider')}}">Thêm slider</a></li>
-                                <li><a href="{{URL::to('/list-slider')}}">List slider</a></li>
+                                <li><a href="{{ URL::to('/add-slider') }}">Thêm slider</a></li>
+                                <li><a href="{{ URL::to('/list-slider') }}">List slider</a></li>
                             </ul>
                         </li>
 
@@ -285,8 +290,9 @@
                                 <span>Danh mục Sản Phẩm</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-category-product')}}">Thêm danh mục sản phẩm</a></li>
-                                <li><a href="{{URL::to('/all-category-product')}}">Liệt kê danh mục sản phẩm</a></li>
+                                <li><a href="{{ URL::to('/add-category-product') }}">Thêm danh mục sản phẩm</a></li>
+                                <li><a href="{{ URL::to('/all-category-product') }}">Liệt kê danh mục sản phẩm</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -296,8 +302,9 @@
                                 <span>Thương hiệu</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-brand-product')}}">Thêm hiệu sản phẩm</a></li>
-                                <li><a href="{{URL::to('/all-brand-product')}}">Liệt kê thương hiệu sản phẩm</a></li>
+                                <li><a href="{{ URL::to('/add-brand-product') }}">Thêm hiệu sản phẩm</a></li>
+                                <li><a href="{{ URL::to('/all-brand-product') }}">Liệt kê thương hiệu sản phẩm</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -307,8 +314,8 @@
                                 <span>Sản Phẩm</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li>
-                                <li><a href="{{URL::to('/all-product')}}">Liệt kê sản phẩm</a></li>
+                                <li><a href="{{ URL::to('/add-product') }}">Thêm sản phẩm</a></li>
+                                <li><a href="{{ URL::to('/all-product') }}">Liệt kê sản phẩm</a></li>
 
                             </ul>
                         </li>
@@ -319,8 +326,8 @@
                                 <span>Danh mục bài viết</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-cate-post')}}">Thêm danh mục bài viết</a></li>
-                                <li><a href="{{URL::to('/all-cate-post')}}">Liệt kê danh mục bài viết</a></li>
+                                <li><a href="{{ URL::to('/add-cate-post') }}">Thêm danh mục bài viết</a></li>
+                                <li><a href="{{ URL::to('/all-cate-post') }}">Liệt kê danh mục bài viết</a></li>
 
                             </ul>
                         </li>
@@ -330,8 +337,8 @@
                                 <span>Bài viết</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-post')}}">Thêm bài viết</a></li>
-                                <li><a href="{{URL::to('/all-post')}}">Liệt kê bài viết</a></li>
+                                <li><a href="{{ URL::to('/add-post') }}">Thêm bài viết</a></li>
+                                <li><a href="{{ URL::to('/all-post') }}">Liệt kê bài viết</a></li>
 
                             </ul>
                         </li>
@@ -342,7 +349,7 @@
                                 <span>Comment</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/list-comment')}}">Danh sách bình luận</a></li>
+                                <li><a href="{{ URL::to('/list-comment') }}">Danh sách bình luận</a></li>
 
                             </ul>
                         </li>
@@ -353,8 +360,8 @@
                                 <span>Mã giảm giá</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/insert-coupon')}}">Thêm mã giảm giá</a></li>
-                                <li><a href="{{URL::to('/list-coupon')}}">Liệt kê mã giảm giá</a></li>
+                                <li><a href="{{ URL::to('/insert-coupon') }}">Thêm mã giảm giá</a></li>
+                                <li><a href="{{ URL::to('/list-coupon') }}">Liệt kê mã giảm giá</a></li>
 
                             </ul>
                         </li>
@@ -365,7 +372,7 @@
                                 <span>Vận chuyển</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/delivery')}}">Quản lý vận chuyển</a></li>
+                                <li><a href="{{ URL::to('/delivery') }}">Quản lý vận chuyển</a></li>
 
                             </ul>
                         </li>
@@ -376,7 +383,7 @@
                                 <span>Video</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/video')}}">List video</a></li>
+                                <li><a href="{{ URL::to('/video') }}">List video</a></li>
 
                             </ul>
                         </li>
@@ -390,8 +397,8 @@
                                 <span>User</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{URL::to('/add-users')}}">Thêm User</a></li>
-                                <li><a href="{{URL::to('/users')}}">Danh sách User</a></li>
+                                <li><a href="{{ URL::to('/add-users') }}">Thêm User</a></li>
+                                <li><a href="{{ URL::to('/users') }}">Danh sách User</a></li>
 
                             </ul>
                         </li>
@@ -399,7 +406,7 @@
 
                         @impersonate
                         <li class="sub-menu">
-                            <a href="{{URL::to('/impersonate-destroy')}}">
+                            <a href="{{ URL::to('/impersonate-destroy') }}">
                                 <i class="fa fa-book"></i>
                                 <span>Stop chuyển quyền</span>
                             </a>
@@ -407,11 +414,11 @@
                         @endimpersonate
 
                         <li class="sub-menu">
-                            <a href="{{URL::to('/add-contact')}}">
+                            <a href="{{ URL::to('/add-contact') }}">
                                 <i class="fa fa-book"></i>
                                 <span>Liên hệ</span>
                             </a>
-                            
+
                         </li>
 
                         <li class="sub-menu">
@@ -513,7 +520,7 @@
     <script src="js/jquery.nicescroll.js"></script>
     <script src="js/jquery.form-validator.min.js"></script>
 
-    <script src="{{asset('backend/js/slug.js')}}"></script>
+    <script src="{{ asset('backend/js/slug.js') }}"></script>
     <script src="js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
@@ -523,11 +530,15 @@
     <script src="ckeditor/ckeditor.js"></script>
 
     <script src="js/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
     <script>
-        CKEDITOR.replace('ckeditor_1',{
-            filebrowserImageUploadUrl : "{{ url('uploads-ckeditor?_token='.csrf_token()) }}",
-            filebrowserBrowseUrl : "{{ url('file-browser?_token='.csrf_token()) }}",
+        CKEDITOR.replace('ckeditor_1', {
+            filebrowserImageUploadUrl: "{{ url('uploads-ckeditor?_token=' . csrf_token()) }}",
+            filebrowserBrowseUrl: "{{ url('file-browser?_token=' . csrf_token()) }}",
             filebrowserUploadMethod: 'form'
         });
         CKEDITOR.replace('ckeditor_2');
@@ -541,40 +552,100 @@
         });
     </script>
 
-<script>
-    $(document).ready(function(){
-        $('#category_order').sortable({
-            placeholder: 'ui-state-highlight',
-             update  : function(event, ui)
-              {
-                var page_id_array = new Array();
+    <script>
+        $(function() {
+            $("#datepicker").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "yy-mm-dd",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+                duration: "slow"
+            });
+            $("#datepicker2").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "yy-mm-dd",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+                duration: "slow"
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            var chart = new Morris.Bar({
+
+                element: 'chart',
+                //option chart
+                lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', '#766B56'],
+                parseTime: false,
+                hideHover: 'auto',
+                xkey: 'period',
+                ykeys: ['order', 'sales', 'profit', 'quantity'],
+                labels: ['đơn hàng', 'doanh số', 'lợi nhuận', 'số lượng']
+
+            });
+
+            $('#btn-filter-dashboard').click(function() {
                 var _token = $('input[name="_token"]').val();
 
-                $('#category_order tr').each(function(){
-                    page_id_array.push($(this).attr("id"));
-                });
-                
+                var from_date = $('#datepicker').val();
+                var to_date = $('#datepicker2').val();
+
                 $.ajax({
-                        url:"{{url('/arrange-category')}}",
-                        method:"POST",
-                        data:{page_id_array:page_id_array,_token:_token},
-                        success:function(data)
-                        {
+                    url: "{{ url('/filter-by-date') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        from_date: from_date,
+                        to_date: to_date,
+                        _token: _token
+                    },
+
+                    success: function(data) {
+                        chart.setData(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#category_order').sortable({
+                placeholder: 'ui-state-highlight',
+                update: function(event, ui) {
+                    var page_id_array = new Array();
+                    var _token = $('input[name="_token"]').val();
+
+                    $('#category_order tr').each(function() {
+                        page_id_array.push($(this).attr("id"));
+                    });
+
+                    $.ajax({
+                        url: "{{ url('/arrange-category') }}",
+                        method: "POST",
+                        data: {
+                            page_id_array: page_id_array,
+                            _token: _token
+                        },
+                        success: function(data) {
                             alert(data);
                         }
-                });
+                    });
 
-              }
+                }
+            });
         });
-    });
-</script>
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             load_video();
 
             function load_video() {
                 $.ajax({
-                    url: "{{url('/select-video')}}",
+                    url: "{{ url('/select-video') }}",
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -605,7 +676,7 @@
                 }
 
                 $.ajax({
-                    url: "{{url('/update-video')}}",
+                    url: "{{ url('/update-video') }}",
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -617,7 +688,9 @@
                     },
                     success: function(data) {
                         load_video();
-                        $('#notify').html('<span class="text text-success">Cập nhật video thành công</span>');
+                        $('#notify').html(
+                            '<span class="text text-success">Cập nhật video thành công</span>'
+                        );
                     }
                 });
 
@@ -640,7 +713,7 @@
                 form_data.append("video_link", video_link);
 
                 $.ajax({
-                    url: "{{url('/insert-video')}}",
+                    url: "{{ url('/insert-video') }}",
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -651,7 +724,8 @@
                     processData: false,
                     success: function(data) {
                         load_video();
-                        $('#notify').html('<span class="text-danger">Thêm video thành công</span>');
+                        $('#notify').html(
+                            '<span class="text-danger">Thêm video thành công</span>');
                     }
                 });
 
@@ -668,7 +742,7 @@
                 form_data.append("vid_id", vid_id);
 
                 $.ajax({
-                    url: "{{url('/update-video-image')}}",
+                    url: "{{ url('/update-video-image') }}",
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -680,7 +754,9 @@
                     processData: false,
                     success: function(data) {
                         load_video();
-                        $('#notify').html('<span class="text-danger">Cập nhật hình ảnh video thành công</span>');
+                        $('#notify').html(
+                            '<span class="text-danger">Cập nhật hình ảnh video thành công</span>'
+                        );
                     }
                 });
 
@@ -691,7 +767,7 @@
                 var video_id = $(this).data('video_id');
                 if (confirm('Bạn muốn xóa video này không?')) {
                     $.ajax({
-                        url: "{{url('/delete-video')}}",
+                        url: "{{ url('/delete-video') }}",
                         method: "POST",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -701,7 +777,8 @@
                         },
                         success: function(data) {
                             load_video();
-                            $('#notify').html('<span class="text-danger">Xóa video thành công</span>');
+                            $('#notify').html(
+                                '<span class="text-danger">Xóa video thành công</span>');
                         }
                     });
                 }
@@ -722,7 +799,7 @@
                 // alert(pro_id);
 
                 $.ajax({
-                    url: "{{url('/select-gallery')}}",
+                    url: "{{ url('/select-gallery') }}",
                     method: "POST",
                     data: {
                         pro_id: pro_id,
@@ -761,7 +838,7 @@
                 var _token = $('input[name="_token"]').val();
 
                 $.ajax({
-                    url: "{{url('/update-gallery-name')}}",
+                    url: "{{ url('/update-gallery-name') }}",
                     method: "POST",
                     data: {
                         gal_id: gal_id,
@@ -770,7 +847,9 @@
                     },
                     success: function(data) {
                         load_gallery();
-                        $('#error_gallery').html('<span class="text-danger">Cập nhật tên hình ảnh thành công</span>');
+                        $('#error_gallery').html(
+                            '<span class="text-danger">Cập nhật tên hình ảnh thành công</span>'
+                        );
                     }
 
                 });
@@ -782,7 +861,7 @@
                 var _token = $('input[name="_token"]').val();
                 if (confirm('Bạn muốn xóa hình ảnh này không?')) {
                     $.ajax({
-                        url: "{{url('/delete-gallery')}}",
+                        url: "{{ url('/delete-gallery') }}",
                         method: "POST",
                         data: {
                             gal_id: gal_id,
@@ -790,7 +869,8 @@
                         },
                         success: function(data) {
                             load_gallery();
-                            $('#error_gallery').html('<span class="text-danger">Xóa hình ảnh thành công</span>');
+                            $('#error_gallery').html(
+                                '<span class="text-danger">Xóa hình ảnh thành công</span>');
                         }
                     });
                 }
@@ -807,7 +887,7 @@
                 form_data.append("gal_id", gal_id);
 
                 $.ajax({
-                    url: "{{url('/update-gallery')}}",
+                    url: "{{ url('/update-gallery') }}",
                     method: "POST",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -819,7 +899,8 @@
                     processData: false,
                     success: function(data) {
                         load_gallery();
-                        $('#error_gallery').html('<span class="text-danger">Cập nhật hình ảnh thành công</span>');
+                        $('#error_gallery').html(
+                            '<span class="text-danger">Cập nhật hình ảnh thành công</span>');
                     }
                 });
 
@@ -863,47 +944,55 @@
     </script>
 
     <script>
-        $('.comment-duyet-btn').click(function(){
+        $('.comment-duyet-btn').click(function() {
             var comment_status = $(this).data('comment_status');
             var comment_id = $(this).data('comment_id');
-            if(comment_status == 0){
+            if (comment_status == 0) {
                 var tb = 'Bỏ duyệt bình luận thành công';
-            }else{
+            } else {
                 var tb = 'Duyệt bình luận thành công';
             }
             $.ajax({
-                    url: "{{url('/approve-comment')}}",
-                    method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {comment_status:comment_status,comment_id:comment_id},
-                    success: function(data) {
-                       location.reload();
-                        $('#notify_comment').html('<span class="text-success">' + tb + '</span>');
-                    }
-                });
-            
+                url: "{{ url('/approve-comment') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    comment_status: comment_status,
+                    comment_id: comment_id
+                },
+                success: function(data) {
+                    location.reload();
+                    $('#notify_comment').html('<span class="text-success">' + tb + '</span>');
+                }
+            });
+
         });
 
-        $('.reply-comment-btn').click(function(){            
+        $('.reply-comment-btn').click(function() {
             var comment_id = $(this).data('comment_id');
-            var comment = $('.reply_comment_'+comment_id).val();
+            var comment = $('.reply_comment_' + comment_id).val();
             var comment_product_id = $(this).data('product_id');
-           
+
             $.ajax({
-                    url: "{{url('/reply-comment')}}",
-                    method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {comment_id:comment_id,comment:comment,comment_product_id:comment_product_id},
-                    success: function(data) {   
-                        $('.reply_comment_'+comment_id).val('');       
-                        $('#notify_comment').html('<span class="text-success">Trả lời bình luận thành công</span>');
-                    }
-                });
-            
+                url: "{{ url('/reply-comment') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    comment_id: comment_id,
+                    comment: comment,
+                    comment_product_id: comment_product_id
+                },
+                success: function(data) {
+                    $('.reply_comment_' + comment_id).val('');
+                    $('#notify_comment').html(
+                        '<span class="text-success">Trả lời bình luận thành công</span>');
+                }
+            });
+
         });
     </script>
 
@@ -917,7 +1006,7 @@
             // alert(order_qty);
             // alert(order_code);
             $.ajax({
-                url: '{{url(' /update-qty')}}',
+                url: '{{ url(' /update-qty') }}',
                 method: 'POST',
                 data: {
                     _token: _token,
@@ -967,7 +1056,7 @@
             }
             if (j == 0) {
                 $.ajax({
-                    url: '{{url('/update-order-qty')}}',
+                    url: '{{ url('/update-order-qty') }}',
                     method: 'POST',
                     data: {
                         _token: _token,
@@ -995,7 +1084,7 @@
             function fetch_delivery() {
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url:'{{url('/select-feeship')}}',
+                    url: '{{ url('/select-feeship') }}',
                     method: 'POST',
                     data: {
                         _token: _token
@@ -1011,7 +1100,7 @@
                 var fee_value = $(this).text();
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: '{{url('/update-delivery')}}',
+                    url: '{{ url('/update-delivery') }}',
                     method: 'POST',
                     data: {
                         feeship_id: feeship_id,
@@ -1033,7 +1122,7 @@
                 var _token = $('input[name="_token"]').val();
 
                 $.ajax({
-                    url: '{{url('/insert-delivery')}}',
+                    url: '{{ url('/insert-delivery') }}',
                     method: 'POST',
                     data: {
                         city: city,
@@ -1065,7 +1154,7 @@
                     result = 'wards';
                 }
                 $.ajax({
-                    url: '{{url('/select-delivery')}}',
+                    url: '{{ url('/select-delivery') }}',
                     method: 'POST',
                     data: {
                         action: action,

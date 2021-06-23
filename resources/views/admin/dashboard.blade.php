@@ -3,6 +3,39 @@
 
 @section('admin_content')
 
+		<div class="row">
+			<div class="panel-body">
+				<div class="col-md-12 w3ls-graph">
+			<div class="agileinfo-grap">
+				<div class="agileits-box">
+					<header class="agileits-box-header clearfix">
+						<h3>Thống kê doanh số</h3>
+							<div class="toolbar"></div>
+					</header>
+					<div class="agileits-box-body clearfix">
+						<form autocomplete="off">
+							@csrf
+							<div class="col-md-2">
+								<p>Từ ngày: <input type="text" id="datepicker" class="form-control"></p>
+								<input type="button" class="btn btn-primary btn-sm" id="btn-filter-dashboard" value="Lọc kết quả">
+							</div>
+							<div class="col-md-2">
+								<p>Đến ngày: <input type="text" id="datepicker2" class="form-control"></p>
+							</div>
+							<div class="col-md-12">
+								<div id="chart" style="height: 250px;"></div>
+							</div>
+							
+						</form>
+						
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+
+		</div>
+
 		<!-- //market-->
 		<div class="market-updates">
 			<div class="col-md-3 market-update-gd">
