@@ -10,7 +10,7 @@ class PostM extends Model
 {
     use HasFactory;
     protected $fillable = [
-    	'post_id','cate_post_id','post_slug','post_title','post_desc','post_content','post_meta_desc','post_meta_keywords','post_image','product_status'
+    	'post_id','cate_post_id','post_slug','post_title','post_desc','post_content','post_meta_desc','post_meta_keywords','post_image','product_status','post_views'
     ];
     protected $primaryKey = 'post_id';
     protected $table = 'tbl_posts';

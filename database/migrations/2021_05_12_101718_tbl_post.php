@@ -18,6 +18,7 @@ class TblPost extends Migration
             $table->integer('cate_post_id');
             $table->string('post_slug');
             $table->string('post_title');
+            $table->string('post_views');
             $table->text('post_desc');
             $table->text('post_content');
             $table->string('post_meta_desc');

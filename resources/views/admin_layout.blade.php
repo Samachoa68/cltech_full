@@ -21,6 +21,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap5.min.css">
     <!-- //bootstrap-css -->
     <!-- Custom CSS -->
     <link href="css/style.css" rel='stylesheet' type='text/css' />
@@ -571,8 +572,49 @@
         });
     </script>
 
+   
+    <script>
+        var colorDanger = "#FF1744";
+        Morris.Donut({
+            element: 'donut',
+            resize: true,
+            colors: [
+                '#a8328e',
+                '#61a1ce',
+                '#ce8f61',
+                '#f5b942',
+                '#4842f5'
+            ],
+            //labelColor:"#cccccc", // text color
+            //backgroundColor: '#333333', // border color
+            data: [{
+                    label: "San pham",
+                    value: <?php echo $app_product; ?>
+                },
+                {
+                    label: "Bai viet",
+                    value: <?php echo $app_post; ?>
+                },
+                {
+                    label: "Don hang",
+                    value: <?php echo $app_order; ?>
+                },
+                {
+                    label: "Video",
+                    value: <?php echo $app_video; ?>
+                },
+                {
+                    label: "Khach hang",
+                    value: <?php echo $app_customer; ?>
+                }
+            ]
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
+
+            filter30_days();
 
             var chart = new Morris.Bar({
 
@@ -586,6 +628,23 @@
                 labels: ['đơn hàng', 'doanh số', 'lợi nhuận', 'số lượng']
 
             });
+
+            function filter30_days() {
+                var _token = $('input[name="_token"]').val();
+
+                $.ajax({
+                    url: "{{ url('/filter30-days') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token
+                    },
+
+                    success: function(data) {
+                        chart.setData(data);
+                    }
+                });
+            }
 
             $('#btn-filter-dashboard').click(function() {
                 var _token = $('input[name="_token"]').val();
@@ -608,6 +667,26 @@
                     }
                 });
             });
+
+            $('.dashboard-filter').change(function() {
+                var _token = $('input[name="_token"]').val();
+
+                var filter_value = $(this).val();
+                $.ajax({
+                    url: "{{ url('/dashboard-filter') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        filter_value: filter_value,
+                        _token: _token
+                    },
+
+                    success: function(data) {
+                        chart.setData(data);
+                    }
+                });
+            });
+
         });
     </script>
 

@@ -43,7 +43,8 @@ Route::get('dashboard','AdminController@show_dashboard');
 Route::get('logout','AdminController@logout');
 Route::post('admin-dashboard','AdminController@dashboard');
 Route::post('filter-by-date','AdminController@filter_by_date');
-
+Route::post('filter30-days','AdminController@filter30_days');
+Route::post('dashboard-filter','AdminController@dashboard_filter');
 
 
 //Category Product

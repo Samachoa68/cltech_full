@@ -4012,3 +4012,11 @@ ul.list_reply li {
     cursor: move;
     margin-top: 12px;
 }
+
+ol.list_views {
+    margin: 10px 0;
+}
+
+ol.list_views a {
+    font-weight: 300;
+}

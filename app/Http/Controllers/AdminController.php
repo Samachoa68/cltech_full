@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Login;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\PostM;
+use App\Models\Customer;
+use App\Models\Video;
+use App\Models\VisitorM;
 use App\Models\Social;
 use App\Models\StatisticalM;
+use Illuminate\Support\Carbon;
 use Socialite;
 use Session;
 use Illuminate\Support\Facades\Redirect;
@@ -128,10 +135,61 @@ class AdminController extends Controller
         return view('admin-login');
     }
 
-    public function show_dashboard()
+    public function show_dashboard(Request $request)
     {
         $this->AuthLogin();
-        return view('admin.dashboard');
+
+        //get ip address
+        $user_ip_address = $request->ip();
+
+        $early_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+
+        $end_of_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+
+        $early_this_month = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+
+        $oneyears = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+        //total last month
+        $visitor_of_lastmonth = VisitorM::whereBetween('date_visitor', [$early_last_month, $end_of_last_month])->get();
+        $visitor_last_month_count = $visitor_of_lastmonth->count();
+
+        //total this month
+        $visitor_of_thismonth = VisitorM::whereBetween('date_visitor', [$early_this_month, $now])->get();
+        $visitor_this_month_count = $visitor_of_thismonth->count();
+
+        //total in one year
+        $visitor_of_year = VisitorM::whereBetween('date_visitor', [$oneyears, $now])->get();
+        $visitor_year_count = $visitor_of_year->count();
+
+        //total VisitorM
+        $visitors = VisitorM::all();
+        $visitors_total = $visitors->count();
+
+        //current online
+        $VisitorM_current = VisitorM::where('ip_address', $user_ip_address)->get();
+        $visitor_count = $VisitorM_current->count();
+
+        if ($visitor_count < 1) {
+            $visitor = new VisitorM();
+            $visitor->ip_address = $user_ip_address;
+            $visitor->date_visitor = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+            $visitor->save();
+        }
+
+        //total 
+        $app_product = Product::all()->count();
+            $app_post = PostM::all()->count();
+            $app_order = Order::all()->count();
+            $app_video = Video::all()->count();
+            $app_customer = Customer::all()->count();
+
+        $product_views = Product::orderBy('product_views', 'DESC')->take(20)->get();
+        $post_views = PostM::orderBy('post_views', 'DESC')->take(20)->get();
+
+        return view('admin.dashboard')->with(compact('visitors_total', 'visitor_count', 'visitor_last_month_count', 'visitor_this_month_count', 'visitor_year_count','visitors_total', 'app_product', 'app_post', 'app_order', 'app_video', 'app_customer','product_views','post_views'));
     }
 
     public function dashboard(Request $request)
@@ -167,6 +225,72 @@ class AdminController extends Controller
 
         $get = StatisticalM::whereBetween('order_date', [$from_date, $to_date])->orderBy('order_date', 'ASC')->get();
 
+        foreach ($get as $key => $val) {
+
+            $chart_data[] = array(
+
+                'period' => $val->order_date,
+                'order' => $val->total_order,
+                'sales' => $val->sales,
+                'profit' => $val->profit,
+                'quantity' => $val->quantity
+            );
+        }
+
+        echo $data = json_encode($chart_data);
+    }
+
+    public function dashboard_filter(Request $request)
+    {
+        $data = $request->all();
+
+
+
+        $dauthangnay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+        $dauthangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+        $cuoithangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+        $cuoithangnay = Carbon::now('Asia/Ho_Chi_Minh')->endOfMonth()->toDateString();
+
+        $sub7days =  Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();
+        $sub365days =  Carbon::now('Asia/Ho_Chi_Minh')->subDays(365)->toDateString();
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+
+
+        if ($data['filter_value'] == '7days') {
+            $get = StatisticalM::whereBetween('order_date', [$sub7days, $now])->orderBy('order_date', 'ASC')->get();
+        } elseif ($data['filter_value'] == 'lastmonth') {
+            $get = StatisticalM::whereBetween('order_date', [$dauthangtruoc, $cuoithangtruoc])->orderBy('order_date', 'ASC')->get();
+        } elseif ($data['filter_value'] == 'thismonth') {
+            $get = StatisticalM::whereBetween('order_date', [$dauthangnay, $cuoithangnay])->orderBy('order_date', 'ASC')->get();
+        } elseif ($data['filter_value'] == '365days') {
+            $get = StatisticalM::whereBetween('order_date', [$sub365days, $now])->orderBy('order_date', 'ASC')->get();
+        } else {
+            $get = StatisticalM::whereBetween('order_date', [$sub365days, $now])->orderBy('order_date', 'ASC')->get();
+        }
+
+        foreach ($get as $key => $val) {
+
+            $chart_data[] = array(
+
+                'period' => $val->order_date,
+                'order' => $val->total_order,
+                'sales' => $val->sales,
+                'profit' => $val->profit,
+                'quantity' => $val->quantity
+            );
+        }
+
+        echo $data = json_encode($chart_data);
+    }
+
+    public function filter30_days()
+    {
+        $sub30days =  Carbon::now('Asia/Ho_Chi_Minh')->subDays(365)->toDateString();
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        $get = StatisticalM::whereBetween('order_date', [$sub30days, $now])->orderBy('order_date', 'ASC')->get();
         foreach ($get as $key => $val) {
 
             $chart_data[] = array(
