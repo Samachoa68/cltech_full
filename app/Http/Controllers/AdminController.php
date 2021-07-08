@@ -181,15 +181,15 @@ class AdminController extends Controller
 
         //total 
         $app_product = Product::all()->count();
-            $app_post = PostM::all()->count();
-            $app_order = Order::all()->count();
-            $app_video = Video::all()->count();
-            $app_customer = Customer::all()->count();
+        $app_post = PostM::all()->count();
+        $app_order = Order::all()->count();
+        $app_video = Video::all()->count();
+        $app_customer = Customer::all()->count();
 
         $product_views = Product::orderBy('product_views', 'DESC')->take(20)->get();
         $post_views = PostM::orderBy('post_views', 'DESC')->take(20)->get();
 
-        return view('admin.dashboard')->with(compact('visitors_total', 'visitor_count', 'visitor_last_month_count', 'visitor_this_month_count', 'visitor_year_count','visitors_total', 'app_product', 'app_post', 'app_order', 'app_video', 'app_customer','product_views','post_views'));
+        return view('admin.dashboard')->with(compact('visitors_total', 'visitor_count', 'visitor_last_month_count', 'visitor_this_month_count', 'visitor_year_count', 'visitors_total', 'app_product', 'app_post', 'app_order', 'app_video', 'app_customer', 'product_views', 'post_views'));
     }
 
     public function dashboard(Request $request)

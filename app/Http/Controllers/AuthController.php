@@ -52,7 +52,6 @@ class AuthController extends Controller
 
 	}
 
-
 	public function validation($request){
 		return $this->validate($request,[
 			'admin_name' => 'required|max:255', 
@@ -60,6 +59,5 @@ class AuthController extends Controller
 			'admin_password' => 'required|max:255', 
 		]);
 	}
-
 
 }

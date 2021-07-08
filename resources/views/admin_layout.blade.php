@@ -231,7 +231,6 @@
                                 }
                                 ?>
 
-
                             </span>
                             <b class="caret"></b>
                         </a>
@@ -572,7 +571,7 @@
         });
     </script>
 
-   
+
     <script>
         var colorDanger = "#FF1744";
         Morris.Donut({
@@ -1085,7 +1084,7 @@
             // alert(order_qty);
             // alert(order_code);
             $.ajax({
-                url: '{{ url(' /update-qty') }}',
+                url: '{{ url('/update-qty') }}',
                 method: 'POST',
                 data: {
                     _token: _token,

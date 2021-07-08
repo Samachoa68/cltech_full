@@ -175,28 +175,17 @@
                 @csrf
                 <select class="form-control order_details ">
                   <option id="{{$v_order->order_id}}" selected value="1">Chưa xử lý</option>
-                  <option id="{{$v_order->order_id}}" value="2">Đã xử lý - Đã giao hàng</option>
-                  <option id="{{$v_order->order_id}}" value="3">Đơn hàng hủy</option>          
+                  <option id="{{$v_order->order_id}}" value="2">Đã xử lý - Đã giao hàng</option>       
                 </select>
               </form>
-              @elseif($v_order->order_status==2)
+              @else($v_order->order_status==2)
               <form >
                 @csrf
                 <select  class="form-control order_details ">
                   <option id="{{$v_order->order_id}}"  value="1">Chưa xử lý</option>
-                  <option id="{{$v_order->order_id}}" selected value="2">Đã xử lý - Đã giao hàng</option>
-                  <option id="{{$v_order->order_id}}" value="3">Đơn hàng hủy</option>          
+                  <option id="{{$v_order->order_id}}" selected value="2">Đã xử lý - Đã giao hàng</option>   
                 </select>
-              </form>
-              @else
-              <form >
-                @csrf
-                <select class="form-control order_details ">
-                  <option id="{{$v_order->order_id}}" value="1">Chưa xử lý</option>
-                  <option id="{{$v_order->order_id}}" value="2">Đã xử lý - Đã giao hàng</option>
-                  <option id="{{$v_order->order_id}}" selected value="3">Đơn hàng hủy</option>          
-                </select>
-              </form>
+              </form>            
               @endif                      
               @endforeach
             </td>

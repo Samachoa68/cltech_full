@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Feeship;
+use App\Models\StatisticalM;
 use App\Models\Shipping;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Customer;
 use App\Models\Coupon;
 use App\Models\Product;
-use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 use PDF;
 
 
@@ -19,7 +20,7 @@ class OrderController extends Controller
 {
 	public function AuthLogin()
 	{
-		$admin_id = Session::get('admin_id');
+		$admin_id = Auth::id();
 		if ($admin_id) {
 			return Redirect::to('/dashboard');
 		}else{
@@ -241,14 +242,31 @@ class OrderController extends Controller
 		$data = $request->all();			
 		$order = Order::find($data['order_id']);
 		$order->order_status = $data['order_status'];
-		$order->save();				
+		$order->save();		
+		
+		//order date
+		$order_date = $order->order_date;	
+		$statistic = StatisticalM::where('order_date',$order_date)->get();
+		if($statistic){
+			$statistic_count = $statistic->count();	
+		}else{
+			$statistic_count = 0;
+		}
 		
 		//Cập nhật số lượng kho
 		if($order->order_status==2){
+			$total_order = 0;
+			$sales = 0;
+			$profit = 0;
+			$quantity = 0;
 			foreach($data['order_product_id'] as $key => $v_product_id){
 				$product = Product::find($v_product_id);
 				$product_quantity = $product->product_quantity;
 				$product_sold = $product->product_sold;
+
+				$product_price = $product->product_price;
+				$product_cost = $product->price_cost;
+				$now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
 				foreach($data['quantity'] as $key2 => $v_qty){
 					if($key==$key2){
@@ -256,23 +274,34 @@ class OrderController extends Controller
 						$product->product_quantity = $pro_qty_store;
 						$product->product_sold = $product_sold + $v_qty;
 						$product->save();
+
+						//update doanh thu
+						$quantity+=$v_qty;
+						$total_order+=1;
+						$sales+=$product_price*$v_qty;
+						// $profit = $sales - ($product_cost*$v_qty);
+						$profit = $sales;
 					}
 				}
 			}
-		}elseif($order->order_status!=2 && $order->order_status!=3){
-			foreach($data['order_product_id'] as $key => $v_product_id){
-				$product = Product::find($v_product_id);
-				$product_quantity = $product->product_quantity;
-				$product_sold = $product->product_sold;
+			//update doanh so db
+			if($statistic_count>0){
+				$statistic_update = StatisticalM::where('order_date',$order_date)->first();
+				$statistic_update->sales = $statistic_update->sales + $sales;
+				$statistic_update->profit =  $statistic_update->profit + $profit;
+				$statistic_update->quantity =  $statistic_update->quantity + $quantity;
+				$statistic_update->total_order = $statistic_update->total_order + $total_order;
+				$statistic_update->save();
 
-				foreach($data['quantity'] as $key2 => $v_qty){
-					if($key==$key2){
-						$pro_qty_store = $product_quantity + $v_qty;
-						$product->product_quantity = $pro_qty_store;
-						$product->product_sold = $product_sold - $v_qty;
-						$product->save();
-					}
-				}
+			}else{
+
+				$statistic_new = new StatisticalM();
+				$statistic_new->order_date = $order_date;
+				$statistic_new->sales = $sales;
+				$statistic_new->profit =  $profit;
+				$statistic_new->quantity =  $quantity;
+				$statistic_new->total_order = $total_order;
+				$statistic_new->save();
 			}
 		}
 
