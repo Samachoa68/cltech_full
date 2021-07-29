@@ -42,13 +42,14 @@ class ProductController extends Controller
 	{
 
 		$data = array();
+		$product_price = filter_var($request->product_price,FILTER_SANITIZE_NUMBER_INT);
 		$data['product_name'] = $request->product_name;
 		$data['product_slug'] = $request->product_slug;
 		$data['product_tags'] = $request->product_tags;
 		$data['product_quantity'] = $request->product_quantity;
 		$data['product_desc'] = $request->product_desc;
 		$data['product_content'] = $request->product_content;
-		$data['product_price'] = $request->product_price;
+		$data['product_price'] = $product_price;
 		$data['category_id'] = $request->product_cate;
 		$data['brand_id'] = $request->product_brand;
 		$data['product_status'] = $request->product_status;
@@ -56,6 +57,7 @@ class ProductController extends Controller
 
 		$path = 'upload/product/';
 		$path_gallery = 'upload/gallery/';
+		$path_document = 'upload/document/';
 
 		$get_image = $request->file('product_image');
 		if ($get_image) {
@@ -66,6 +68,17 @@ class ProductController extends Controller
 			File::copy($path . $new_image, $path_gallery . $new_image);
 			$data['product_image'] = $new_image;
 		}
+
+		$get_document = $request->file('product_file');
+		if ($get_document) {
+			$get_document_name = $get_document->getClientOriginalName();
+			$document_name = current(explode('.', $get_document_name));
+			$new_document = $document_name . rand('0', '100') . '.' . $get_document->getClientOriginalExtension();
+			$get_document->move($path_document, $new_document);
+			$data['product_file'] = $new_document;
+		}
+
+
 		$pro_id = Product::insertGetId($data);
 
 		$gallery = new Gallery();
@@ -103,13 +116,14 @@ class ProductController extends Controller
 	{
 
 		$data = array();
+		$product_price = filter_var($request->product_price,FILTER_SANITIZE_NUMBER_INT);
 		$data['product_name'] = $request->product_name;
 		$data['product_slug'] = $request->product_slug;
 		$data['product_tags'] = $request->product_tags;
 		$data['product_quantity'] = $request->product_quantity;
 		$data['product_desc'] = $request->product_desc;
 		$data['product_content'] = $request->product_content;
-		$data['product_price'] = $request->product_price;
+		$data['product_price'] = $product_price;
 		$data['category_id'] = $request->product_cate;
 		$data['brand_id'] = $request->product_brand;
 		$data['product_status'] = $request->product_status;
@@ -118,6 +132,21 @@ class ProductController extends Controller
 
 		$path = 'upload/product/';
 		$path_gallery = 'upload/gallery/';
+		$path_document = 'upload/document/';
+
+		$get_document = $request->file('product_file');
+		if ($get_document) {
+			$pro = Product::find($product_id);
+			if($pro->product_file){
+				unlink($path_document . $pro->product_file);
+			}		
+
+			$get_document_name = $get_document->getClientOriginalName();
+			$document_name = current(explode('.', $get_document_name));
+			$new_document = $document_name . rand('0', '100') . '.' . $get_document->getClientOriginalExtension();
+			$get_document->move($path_document, $new_document);
+			$data['product_file'] = $new_document;
+		}
 
 		if ($get_image) {
 			$pro = Product::find($product_id);
@@ -143,6 +172,16 @@ class ProductController extends Controller
 		Product::find($product_id)->update($data);
 		Session::put('message', 'Cập nhật sản phẩm thành công');
 		return Redirect::to('all-product');
+	}
+
+	public function delete_document(Request $request)
+	{	
+		$product_id = $request->product_id;	
+		$path_document = 'upload/document/';
+		$pro = Product::find($product_id);
+		unlink($path_document . $pro->product_file);
+		$pro->product_file = null;
+		$pro->save();
 	}
 
 	public function delete_product($product_id)

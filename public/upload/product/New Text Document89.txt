@@ -1,0 +1,12 @@
+  #######################################################
+ #            MacBookPro13,1 SMBIOS Info               #
+#######################################################
+
+Type:         MacBookPro13,1
+Serial:       C17SNPZQGVC1
+Board Serial: C17645501QXHMHKUE
+SmUUID:       F425EED1-4CD9-4286-8F1E-517E12A71423
+Apple ROM:    C8B5B7D1EC92
+
+Press [enter] to return...
+UlHlt3mckvywbhnMetK3nA

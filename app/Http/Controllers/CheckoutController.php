@@ -18,7 +18,7 @@ use App\Models\Slider;
 use App\Models\Shipping;
 use App\Models\Order;
 use App\Models\OrderDetails;
-
+use App\Models\CategoryPost;
 use Validator;  
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -30,6 +30,7 @@ class CheckoutController extends Controller
 	
 	public function login_checkout(request $request)
 	{
+		$all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
 		$slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
 		$meta_desc = "Chuyên bán và lắp đặt máy tính, camera, phụ kiện máy tính thương hiệu";
 		$meta_keywords = "máy tính, camera, lắp đặt, phụ kiện máy tính";
@@ -39,7 +40,7 @@ class CheckoutController extends Controller
 		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
 		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
 		Session::put('customer_id',null);
-		return view('pages.checkout.login_checkout')->with(compact('slider','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product'));
+		return view('pages.checkout.login_checkout')->with(compact('all_category_post','slider','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product'));
 
 	}
 
@@ -63,7 +64,8 @@ class CheckoutController extends Controller
 		$order->customer_id = Session::get('customer_id');
 		$order->shipping_id = $shipping_id;
 		$order->order_status = 1;
-		$order->order_code = $checkout_code;		
+		$order->order_code = $checkout_code;
+		$order->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');		
 		$order->created_at = Carbon::now('Asia/Ho_Chi_Minh');
 		$order->save();
 
@@ -141,7 +143,7 @@ class CheckoutController extends Controller
 			'customer_email' => 'required',
 			'customer_password' => 'required',
 			'customer_phone' => 'required',
-           'g-recaptcha-response' => new Captcha(), 		//dòng kiểm tra Captcha
+        //    'g-recaptcha-response' => new Captcha(), 		//dòng kiểm tra Captcha
        ]);
 
 		$data['customer_name'] = $request->customer_name;
@@ -159,6 +161,7 @@ class CheckoutController extends Controller
 
 	public function checkout(request $request)
 	{
+		$all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
 		$meta_desc = "Chuyên bán và lắp đặt máy tính, camera, phụ kiện máy tính thương hiệu";
 		$meta_keywords = "máy tính, camera, lắp đặt, phụ kiện máy tính";
 		$meta_title = "Home | LamGiaTech";
@@ -167,7 +170,7 @@ class CheckoutController extends Controller
 		$city = City::orderby('matp','ASC')->get();
 		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
 		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
-		return view('pages.checkout.show_checkout')->with(compact('meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','city'));
+		return view('pages.checkout.show_checkout')->with(compact('all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','city'));
 	}
 
 	public function save_checkout_customer(request $request)

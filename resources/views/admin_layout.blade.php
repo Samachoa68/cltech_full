@@ -520,6 +520,8 @@
     <script src="js/jquery.nicescroll.js"></script>
     <script src="js/jquery.form-validator.min.js"></script>
 
+    <script src="js/simple.money.format.js"></script>
+
     <script src="{{ asset('backend/js/slug.js') }}"></script>
     <script src="js/jquery.dataTables.min.js"></script>
 
@@ -534,6 +536,7 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    
 
     <script>
         CKEDITOR.replace('ckeditor_1', {
@@ -551,6 +554,30 @@
             $('#myTable').DataTable();
         });
     </script>
+
+    <script>
+        $('.price_format').simpleMoneyFormat();
+
+    </script>
+
+    <Script>
+        $('.btn-delete-document').click(function(){
+            var product_id = $(this).data('document_id');
+            var _token = $('input[name="_token"]').val();
+
+                $.ajax({
+                    url: "{{ url('/delete-document') }}",
+                    method: "POST",
+                    data: {
+                        _token: _token,product_id
+                    },
+                    success: function(data) {
+                        alert ("Xóa file document thành công");
+                        location.reload();
+                    }
+                });
+        });
+    </Script>
 
     <script>
         $(function() {

@@ -101,6 +101,7 @@ Route::post('export-csv-pro','ProductController@export_csv_pro');
 Route::post('import-csv-pro','ProductController@import_csv_pro');
 
 Route::post('product-quickview','ProductController@product_quickview');
+Route::post('delete-document','ProductController@delete_document');
 
 
 //Category Post
