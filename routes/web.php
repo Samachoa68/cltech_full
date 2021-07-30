@@ -244,5 +244,18 @@ Route::post('update-contact','ContactController@update_contact');
 Route::post('uploads-ckeditor','CkeditorController@ckeditor_image');
 Route::get('file-browser','CkeditorController@file_browser');
 
-//Folder
+//Drive document
 Route::get('create-document','DocumentController@create_document');
+Route::get('upload-file','DocumentController@upload_file');
+Route::get('upload-image','DocumentController@upload_image');
+Route::get('upload-video','DocumentController@upload_video');
+
+Route::get('download_document/{path}/{name}','DocumentController@download_document');
+Route::get('delete_document/{path}','DocumentController@delete_document');
+
+//Drive folder
+Route::get('list_document','DocumentController@list_document');
+Route::get('rename-folder','DocumentController@rename_folder');
+Route::get('delete-folder','DocumentController@delete_folder');
+
+Route::get('read-data','DocumentController@read_data');

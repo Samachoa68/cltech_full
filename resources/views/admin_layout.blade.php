@@ -260,6 +260,17 @@
                             </a>
                         </li>
 
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Google Drive</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/read-data') }}">List Data</a></li>
+
+                            </ul>
+                        </li>
+
 
                         <li class="sub-menu">
                             <a href="javascript:;">
