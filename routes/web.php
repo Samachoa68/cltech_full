@@ -243,3 +243,6 @@ Route::post('update-contact','ContactController@update_contact');
 //Ckeditor
 Route::post('uploads-ckeditor','CkeditorController@ckeditor_image');
 Route::get('file-browser','CkeditorController@file_browser');
+
+//Folder
+Route::get('create-document','DocumentController@create_document');
