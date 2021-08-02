@@ -12,13 +12,15 @@
 
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
-        <select class="input-sm form-control w-sm inline v-middle">
+        <select class=" form-control w-sm inline v-middle">
           <option value="0">Bulk action</option>
           <option value="1">Delete selected</option>
           <option value="2">Bulk edit</option>
           <option value="3">Export</option>
         </select>
-        <button class="btn btn-sm btn-default">Apply</button>                
+        
+        <button class="btn btn-sm btn-default">Apply</button>    
+        <p><a href="{{url('/send-coupon')}}" class="btn btn-default">Gửi giảm giá khách VIP</a></p>            
       </div>
       <div class="col-sm-4">
       </div>
@@ -51,10 +53,16 @@
             </th>
             <th>Tên mã giảm giá</th>
             <th>Mã giảm giá</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
             <th>Số lượng giảm giá</th>
             <th>Điều kiện giảm giá</th>
             <th>Số giảm</th>
-            <th>Date Update</th>
+            <th>Trạng thái</th>
+            <th>Hết hạn</th>
+            <th>Quản lý</th>
+            <th>Gửi mã</th>
+
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -64,6 +72,8 @@
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$v_coupon->coupon_name}}</td>
             <td>{{$v_coupon->coupon_code}}</td>
+            <td>{{$v_coupon->coupon_date_start}}</td>
+            <td>{{$v_coupon->coupon_date_end}}</td>
             <td>{{$v_coupon->coupon_time}}</td>
             <td><span >
               <?php
@@ -97,13 +107,36 @@
             </span>
           </td>
 
-          <td>{{$v_coupon->updated_at}}</td>
+          <td>     
+            @if ($v_coupon->coupon_status ==1)
+            <span style="color: green">Đang kích hoạt</span>  
+            @else 
+            <span style="color: red">Đã khóa</span>
+            @endif
+          </td>
+
+          <td>     
+            @if (strtotime($v_coupon->coupon_date_end) < strtotime($today))
+            <span style="color: red">Hết hạn</span>  
+            @else 
+            <span style="color: green">Còn hạn</span>
+            @endif
+          </td>
+
           <td>           
 
             <a onclick="return confirm('Are you sure to delete?')" href="{{URL::to('/delete-coupon/'.$v_coupon->coupon_id)}}" class ="active styling-edit" ui-toggle-class="">
               <i class="fa fa-times text-danger text"></i>
             </a>
 
+          </td>
+          <td> @if ($v_coupon->coupon_status ==1 && strtotime($v_coupon->coupon_date_end) >= strtotime($today) )
+            <p><a href="{{url('/send-coupon-vip/'.$v_coupon->coupon_id)}}" class="btn btn-primary" style="margin: 5px 0">Gửi mã cho khách VIP</a></p>
+            <p><a href="{{url('/send-coupon/'.$v_coupon->coupon_id)}}" class="btn btn-default">Gửi mã cho khách thường</a></p>
+            @else 
+            <p>Mã đã khóa hoặc hết hạn</p>
+            @endif
+           
           </td>
         </tr>
         @endforeach

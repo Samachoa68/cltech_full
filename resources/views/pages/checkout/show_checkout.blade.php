@@ -122,7 +122,6 @@
 								@endif
 								
 								
-
 								<div class="form-group">
 									<label for="exampleInputPassword1">Chọn phương thức thanh toán</label>
 									<select name="payment_select" class="form-control input-sm m-bot15 payment_select">

@@ -571,6 +571,25 @@
 
     </script>
 
+<script>
+    $(function() {
+        $("#coupon_start").datepicker({
+            prevText: "Tháng trước",
+            nextText: "Tháng sau",
+            dateFormat: "yy/mm/dd",
+            dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+            duration: "slow"
+        });
+        $("#coupon_end").datepicker({
+            prevText: "Tháng trước",
+            nextText: "Tháng sau",
+            dateFormat: "yy/mm/dd",
+            dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+            duration: "slow"
+        });
+    });
+</script>
+
     <Script>
         $('.btn-delete-document').click(function(){
             var product_id = $(this).data('document_id');

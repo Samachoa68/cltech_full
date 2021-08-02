@@ -86,6 +86,8 @@ return [
     |
     */
 
+    
+
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'itqdcmail@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),

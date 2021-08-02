@@ -14,7 +14,7 @@ use App\Models\Province;
 use App\Models\Wards;
 use App\Models\Feeship;
 use App\Models\Slider;
-
+use App\Models\Coupon;
 use App\Models\Shipping;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -58,6 +58,12 @@ class CheckoutController extends Controller
 		$shipping_id = $shipping->shipping_id;
 
 		$checkout_code = substr(md5(microtime()),rand(0,26),5);
+
+		//coupon
+		$coupon = Coupon::where('coupon_code',$data['order_coupon'])->first();
+		$coupon->coupon_used = $coupon->coupon_used.','.Session::get('customer_id');
+		$coupon->coupon_time = $coupon->coupon_time - 1;
+		$coupon->save();
 
     	//get order
 		$order = new Order;

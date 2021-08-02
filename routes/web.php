@@ -27,6 +27,8 @@ Route::get('details-product/{product_slug}','ProductController@details_product')
 
 //Send Mail
 Route::get('send-mail','MailController@send_mail');
+Route::get('send-coupon/{coupon_id}','MailController@send_coupon');
+Route::get('send-coupon-vip/{coupon_id}','MailController@send_coupon_vip');
 
 //Login facebook
 Route::get('/login-facebook','AdminController@login_facebook');
@@ -257,5 +259,6 @@ Route::get('delete_document/{path}','DocumentController@delete_document');
 Route::get('list_document','DocumentController@list_document');
 Route::get('rename-folder','DocumentController@rename_folder');
 Route::get('delete-folder','DocumentController@delete_folder');
+Route::get('create_folder','DocumentController@create_folder');
 
 Route::get('read-data','DocumentController@read_data');

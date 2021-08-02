@@ -25,8 +25,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Ngày bắt đầu</label>
+                            <input type="text" id="coupon_start" class="form-control" name="coupon_date_start" >
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Ngày kết thúc</label>
+                            <input type="text" id="coupon_end" class="form-control" name="coupon_date_end">
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Mã giảm giá</label>
-                            <input type="text"  class="form-control" name="coupon_code" id="exampleInputEmail1" >
+                            <input type="text" class="form-control" name="coupon_code" id="exampleInputEmail1" >
                         </div>
 
                         <div class="form-group">
@@ -35,7 +43,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tính năng mã</label>
-                            <select name="coupon_condition" class="form-control input-sm m-bot15">
+                            <select name="coupon_condition" class="form-control m-bot15">
                                 <option value="0">---Chọn---</option>
                                 <option value="1">Giảm theo phần trăm %</option>
                                 <option value="2">Giảm theo tiền</option>
