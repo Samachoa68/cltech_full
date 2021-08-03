@@ -13,6 +13,10 @@ use App\Models\Video;
 use App\Models\VisitorM;
 use App\Models\Social;
 use App\Models\StatisticalM;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Slider;
+use App\Models\CategoryPost;
 use Illuminate\Support\Carbon;
 use Socialite;
 use Session;
@@ -239,6 +243,7 @@ class AdminController extends Controller
 
         echo $data = json_encode($chart_data);
     }
+   
 
     public function dashboard_filter(Request $request)
     {

@@ -248,13 +248,6 @@ class CheckoutController extends Controller
 	public function login_customer(request $request)
 	{
 
-/*		    $data = $request->validate([
-            'email_account' => 'required|email',
-            'password_account' => 'required',
-           'g-recaptcha-response' => new Captcha(), 		//dòng kiểm tra Captcha
-       ]);*/
-
-
        $email = $request->email_account;
        $password = md5($request->password_account);
 

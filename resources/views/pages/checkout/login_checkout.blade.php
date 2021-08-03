@@ -5,6 +5,15 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-4 col-sm-offset-1">
+				@if(session()->has('message'))
+				<div class="alert alert-success">
+					{!! session()->get('message') !!}
+				</div>
+				@elseif(session()->has('error'))
+				<div class="alert alert-danger">
+					{!! session()->get('error') !!}
+				</div>
+				@endif
 				<div class="login-form"><!--login form-->
 					<h2>Đăng nhập tài khoản</h2>
 					<form action="{{URL::to('login-customer')}}" method="POST">
@@ -17,15 +26,7 @@
 							<input type="checkbox" class="checkbox"> 
 							Ghi nhớ đăng nhập
 						</span>
-
-<!-- 						<div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
-						<br/>
-						@if($errors->has('g-recaptcha-response'))
-						<span class="invalid-feedback" style="display:block">
-							<strong>{{$errors->first('g-recaptcha-response')}}</strong>
-						</span>
-						@endif -->
-
+						<p><a href="{{url('/forget-pw')}}" style="color: red">Quên mật khẩu?</a></p>
 
 						<button type="submit"  class="btn btn-default">Đăng nhập</button>
 					</form>

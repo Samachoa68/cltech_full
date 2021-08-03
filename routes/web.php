@@ -29,6 +29,7 @@ Route::get('details-product/{product_slug}','ProductController@details_product')
 Route::get('send-mail','MailController@send_mail');
 Route::get('send-coupon/{coupon_id}','MailController@send_coupon');
 Route::get('send-coupon-vip/{coupon_id}','MailController@send_coupon_vip');
+Route::get('/update-new-pass','MailController@update_new_pass');
 
 //Login facebook
 Route::get('/login-facebook','AdminController@login_facebook');
@@ -37,6 +38,11 @@ Route::get('/admin/callback','AdminController@callback_facebook');
 //Login  google
 Route::get('/login-google','AdminController@login_google');
 Route::get('/google/callback','AdminController@callback_google');
+
+//Login
+Route::get('/forget-pw','LoginController@forget_pw');
+Route::post('/recover-pass','LoginController@recover_pass');
+Route::post('/reset-new-pass','LoginController@reset_new_pass');
 
 
 //Backend

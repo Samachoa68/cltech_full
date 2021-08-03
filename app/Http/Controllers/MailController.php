@@ -7,6 +7,11 @@ use Mail;
 use Illuminate\Support\Carbon;
 use App\Models\Coupon;
 use App\Models\Customer;
+use App\Models\CategoryPost;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Slider;
+use App\Models\Product;
 
 class MailController extends Controller
 {
@@ -74,4 +79,24 @@ class MailController extends Controller
 
         return redirect()->back()->with('message', 'Gửi mã khuyến mãi khách thường thành công');
     }
+
+    public function update_new_pass(Request $request){
+
+        $slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
+    	$meta_desc = "Quên mật khẩu";
+    	$meta_keywords = "Quên mật khẩu";
+    	$meta_title = "Home | LamGiaTech";
+    	$url_canonical = $request->url();
+
+        $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+
+        $cate_product = Category::where('category_status','1')->orderBy('category_order','ASC')->get();
+
+        $cate_pro_tabs = Category::where('category_status','1')->where('category_parent','<>',0)->orderBy('category_order','ASC')->get();
+
+        $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
+        $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
+
+        return view('pages.login.new_pw')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs'));
+   }
 }
