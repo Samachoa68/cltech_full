@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblSocial extends Migration
+class CreateTblSocialCustomers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTblSocial extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_social', function (Blueprint $table) {
+        Schema::create('tbl_social_customers', function (Blueprint $table) {
             $table->increments('user_id');
             $table->string('provider_user_id');
             $table->string('provider_user_email');
@@ -30,6 +30,6 @@ class CreateTblSocial extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_social');
+        Schema::dropIfExists('tbl_social_customers');
     }
 }

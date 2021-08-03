@@ -20,6 +20,7 @@ class TblCustomer extends Migration
             $table->string('customer_password');
             $table->string('customer_phone');
             $table->string('customer_token');
+            $table->string('customer_picture');
             $table->integer('customer_vip');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

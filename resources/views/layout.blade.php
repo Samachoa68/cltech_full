@@ -165,14 +165,13 @@
                                 <?php
                                 $customer_id = Session::get('customer_id');
                                 if ($customer_id != null) { ?>
-                                <li><a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng
-                                        xuất</a>
+                                <li><img width="15%" src="{{Session::get('customer_picture')}}"> {{Session::get('customer_name')}}
+                                    <a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng xuất</a>
                                 </li>
 
 
                                 <?php } else { ?>
-                                <li><a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng
-                                        nhập</a>
+                                <li><a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng nhập</a>
                                 </li>
                                 <?php }
                                 ?>
@@ -511,7 +510,6 @@
                 }
             });
         });
-
     </script>
 
     <div id="fb-root"></div>
@@ -523,7 +521,7 @@
         $(document).ready(function() {
             $("#slider-range").slider({
                 range: true,
-               
+
                 min: 0,
                 max: {{ $max_price_range }},
 
@@ -531,16 +529,15 @@
                 values: [{{ $min_price_range }}, {{ $max_price }}],
 
                 slide: function(event, ui) {
-                    $("#amount").val(ui.values[0]).simpleMoneyFormat() +"VND";
-                    $("#amount1").val(ui.values[1]).simpleMoneyFormat() +"VND";
+                    $("#amount").val(ui.values[0]).simpleMoneyFormat() + "VND";
+                    $("#amount1").val(ui.values[1]).simpleMoneyFormat() + "VND";
                     $("#start_price").val(ui.values[0]);
                     $("#end_price").val(ui.values[1]);
                 }
             });
-            $("#amount").val($("#slider-range").slider("values", 0)).simpleMoneyFormat()+"VND";
+            $("#amount").val($("#slider-range").slider("values", 0)).simpleMoneyFormat() + "VND";
             $("#amount1").val($("#slider-range").slider("values", 1)).simpleMoneyFormat();
         });
-
     </script>
 
 
@@ -555,7 +552,6 @@
                 }
             });
         });
-
     </script>
 
     <script type="text/javascript">
@@ -634,7 +630,6 @@
 
 
         }
-
     </script>
 
     <script type="text/javascript">
@@ -678,7 +673,6 @@
             });
 
         });
-
     </script>
 
     <script type="text/javascript">
@@ -707,7 +701,6 @@
             });
 
         });
-
     </script>
 
     <script>
@@ -763,7 +756,6 @@
             });
 
         });
-
     </script>
 
     <script type="text/javascript">
@@ -813,7 +805,6 @@
                 });
             });
         });
-
     </script>
 
     <script type="text/javascript">
@@ -842,7 +833,6 @@
             $('#keywords').val($(this).text());
             $('#search_ajax').fadeOut();
         });
-
     </script>
 
     <script type="text/javascript">
@@ -912,7 +902,6 @@
         $("#modal_video").on('hidden.bs.modal', function(e) {
             $("#my_yt_video").attr("src", $("#my_yt_video").attr("src"));
         });
-
     </script>
 
     <script type="text/javascript">
@@ -969,7 +958,6 @@
 
             });
         });
-
     </script>
 
     <script type="text/javascript">
@@ -1020,7 +1008,6 @@
                 }
             });
         });
-
     </script>
 
 
@@ -1071,7 +1058,6 @@
         $(document).on('click', '.redirect-cart', function() {
             window.location.href = "{{ url('/cart') }}";
         });
-
     </script>
 
     <script type="text/javascript">
@@ -1101,7 +1087,6 @@
                 });
             });
         });
-
     </script>
 
     <script type="text/javascript">
@@ -1133,7 +1118,6 @@
                 }
             });
         });
-
     </script>
 
 

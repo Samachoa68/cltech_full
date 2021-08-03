@@ -44,6 +44,14 @@ Route::get('/forget-pw','LoginController@forget_pw');
 Route::post('/recover-pass','LoginController@recover_pass');
 Route::post('/reset-new-pass','LoginController@reset_new_pass');
 
+//login customer by google
+Route::get('/login-customer-google','LoginController@login_customer_google');
+Route::get('/customer/google/callback','LoginController@callback_customer_google');
+
+//login customer by Facebook
+Route::get('/login-facebook-customer','LoginController@login_facebook_customer');
+Route::get('/customer/facebook/callback','LoginController@callback_facebook_customer');
+
 
 //Backend
 Route::get('admin','AdminController@index');

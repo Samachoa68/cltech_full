@@ -31,15 +31,15 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '751817738834943',  //client face của bạn
-        'client_secret' => '63484a619c6c13b86abd75a625cd9b88',  //client app service face của bạn
-        'redirect' => 'http://localhost:8080/cltech/public/admin/callback' //callback trả về
+        'client_id' => env('FACEBOOK_APP_ID'),
+        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT'),
     ],
-
+    
     'google' => [
-        'client_id' => '110286160891-n9aths9h9kg8dnu1k703ol1hu4c4bkhs.apps.googleusercontent.com',
-        'client_secret' => 'ihjgoZo9vjp3JjLO4D5GhF6y',
-        'redirect' => 'http://localhost:8080/cltech/public/google/callback' 
+        'client_id' => env('GOOGLE_ID'),
+        'client_secret' => env('GOOGLE_SECRET'),
+        'redirect' => env('GOOGLE_URL'),
     ],
 
 

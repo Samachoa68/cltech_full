@@ -17,7 +17,7 @@
 				<div class="login-form"><!--login form-->
 					<h2>Đăng nhập tài khoản</h2>
 					<form action="{{URL::to('login-customer')}}" method="POST">
-						{{csrf_field()}}
+						@csrf
 
 						<input type="text" name="email_account" placeholder="Email" />
 						
@@ -29,7 +29,24 @@
 						<p><a href="{{url('/forget-pw')}}" style="color: red">Quên mật khẩu?</a></p>
 
 						<button type="submit"  class="btn btn-default">Đăng nhập</button>
-					</form>
+						
+					</form>				
+
+					<ul class="list-login">
+
+						<li>
+							<a href="{{url('login-customer-google')}}">
+								<img width="10%" alt="Đăng nhập bằng tài khoản google"  src="{{url('/frontend/images/home/icon_gg.png')}}">
+							</a>
+						</li>
+						
+						<li>
+							<a href="{{url('login-facebook-customer')}}">
+								<img width="10%" alt="Đăng nhập bằng tài khoản facebook"  src="{{url('/frontend/images/home/icon_fb.png')}}">
+							</a>
+						</li>
+					</ul>
+
 				</div><!--/login form-->
 			</div>
 			<div class="col-sm-1">

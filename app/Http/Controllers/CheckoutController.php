@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Session;
-use App\Http\Requests;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Rules\Captcha;
@@ -17,6 +16,7 @@ use App\Models\Slider;
 use App\Models\Coupon;
 use App\Models\Shipping;
 use App\Models\Order;
+use App\Models\Customer;
 use App\Models\OrderDetails;
 use App\Models\CategoryPost;
 use Validator;  
@@ -252,10 +252,12 @@ class CheckoutController extends Controller
        $password = md5($request->password_account);
 
 
-       $result = DB::table('tbl_customers')->where('customer_email',$email)->where('customer_password',$password)->first();
+       $result = Customer::where('customer_email',$email)->where('customer_password',$password)->first();
 
        if ($result) {
        	Session::put('customer_id',$result->customer_id);
+		Session::put('customer_picture',$result->customer_picture);
+		Session::put('customer_name',$result->customer_name);
        	return Redirect::to('/checkout');
        }else{
        	return Redirect::to('login-checkout');

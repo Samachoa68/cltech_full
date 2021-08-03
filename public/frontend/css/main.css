@@ -2503,3 +2503,13 @@ ul.nav.nav-pills.nav-justified i {
 .info_wishlist p {
     margin: 0;
 }
+
+ul.list-login {
+    margin: 10px;
+    padding: 0;
+}
+
+ul.list-login li {
+    display: inline;
+    margin: 5px;
+}
