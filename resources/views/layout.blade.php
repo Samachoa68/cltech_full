@@ -161,23 +161,26 @@
                                 <li><a href="{{ URL::to('cart') }}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a>
                                 </li>
 
-
                                 <?php
                                 $customer_id = Session::get('customer_id');
+                                
                                 if ($customer_id != null) { ?>
-                                <li><img width="15%" src="{{Session::get('customer_picture')}}"> {{Session::get('customer_name')}}
-                                    <a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng xuất</a>
+
+                                <li><a href="{{ URL::to('history') }}"><i class="fa fa-history"></i>History</a>
                                 </li>
 
+                                <li><img width="15%" src="{{ Session::get('customer_picture') }}">
+                                    {{ Session::get('customer_name') }}
+                                    <a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng
+                                        xuất</a>
+                                </li>
 
                                 <?php } else { ?>
-                                <li><a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng nhập</a>
+                                <li><a href="{{ URL::to('login-checkout') }}"><i class="fa fa-lock"></i> Đăng
+                                        nhập</a>
                                 </li>
                                 <?php }
                                 ?>
-
-
-
 
                             </ul>
                         </div>
@@ -932,7 +935,7 @@
                             var order_coupon = $('.order_coupon').val();
                             var total_final = $('.total_final').val();
                             var _token = $('input[name="_token"]').val();
-                          
+
                             $.ajax({
                                 url: '{{ url('/confirm-order') }}',
                                 method: 'POST',
@@ -945,7 +948,7 @@
                                     _token: _token,
                                     order_fee: order_fee,
                                     order_coupon: order_coupon,
-                                    total_final:total_final,
+                                    total_final: total_final,
                                     shipping_method: shipping_method
                                 },
                                 success: function() {

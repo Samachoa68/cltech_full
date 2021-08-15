@@ -309,11 +309,15 @@ class CheckoutController extends Controller
 		$password = md5($request->password_account);
 		$result = Customer::where('customer_email', $email)->where('customer_password', $password)->first();
 
+		if(Session::get('coupon')==true){
+			Session::forget('coupon');
+		  }
+
 		if ($result) {
 			Session::put('customer_id', $result->customer_id);
 			Session::put('customer_picture', $result->customer_picture);
 			Session::put('customer_name', $result->customer_name);
-			return Redirect::to('checkout');
+			return Redirect::to('trang-chu')->with('message', 'Đăng nhập thành công');
 		} else {
 			return Redirect::to('login-checkout')->with('error', 'Email hooặc mật khẩu không đúng');
 		}

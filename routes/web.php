@@ -185,6 +185,7 @@ Route::get('manage-order','OrderController@manage_order');
 Route::get('view-order/{order_code}','OrderController@view_order');
 Route::post('update-order-status','OrderController@update_order_status');
 Route::post('update-qty','OrderController@update_qty');
+Route::get('history','OrderController@history');
 
 //Delivery
 Route::get('delivery','DeliveryController@delivery');

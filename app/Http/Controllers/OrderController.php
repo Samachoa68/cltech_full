@@ -16,6 +16,10 @@ use Illuminate\Support\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Models\Slider;
+use App\Models\CategoryPost;
+use App\Models\Category;
+Use App\Models\Brand;
 
 
 class OrderController extends Controller
@@ -388,5 +392,31 @@ class OrderController extends Controller
 		}
 
 		return view('admin.order.view_order')->with(compact('order', 'order_details', 'customer', 'shipping', 'order_code', 'order_status', 'coupon_condition', 'coupon_number', 'product_feeship'));
+	}
+
+	public function history(Request $request)
+	{
+		if(!Session::get('customer_id')){
+			return redirect('/login-checkout')->with('error','Vui lòng đăng nhập để xem lịch sử đơn hàng');
+		}
+		else{
+		$slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
+    	$meta_desc = "Lịch sử mua hàng";
+    	$meta_keywords = "Lịch sử mua hàng";
+    	$meta_title = "Home | LamGiaTech";
+    	$url_canonical = $request->url();
+
+        $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+
+        $cate_product = Category::where('category_status','1')->orderBy('category_order','ASC')->get();
+
+        $cate_pro_tabs = Category::where('category_status','1')->where('category_parent','<>',0)->orderBy('category_order','ASC')->get();
+
+        $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
+        $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
+
+		$order = Order::where('customer_id',Session::get('customer_id'))->orderBy('customer_id','Desc')->paginate(10);
+        return view('pages.history.history_order_cus')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs','order'));
+		}
 	}
 }

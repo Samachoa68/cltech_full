@@ -331,7 +331,6 @@
                                                 </ul>
                                             @endforeach
                                         @else
-
                                             <ul>
                                                 <li>Tổng tiền<span>{{ number_format($total, 0, ',', '.') }}đ</span></li>
                                                 <li>Mã giảm <span></span></li>
