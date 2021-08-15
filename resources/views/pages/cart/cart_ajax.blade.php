@@ -119,15 +119,23 @@
 						@csrf
 
 						<div class="field-input-wrapper">
-							<label class="field-label" for="discount.code">Mã giảm giá</label>
-							<input placeholder="Mã giảm giá" size="20" type="text"  name="coupon" value="">
-							<button type="submit" class="field-input-btn btn btn-default" name="check_coupon">
-								<span class="btn-content">Sử dụng</span>
-								<i class="btn-spinner icon icon-button-spinner"></i>						
-							</button>
-							@if(Session::get('coupon'))
-							<a class="btn btn-default check_out" href="{{URL::to('/unset-coupon')}}">Xóa mã</a>
-							@endif
+							<label class="field-label" for="discount.code">Mã giảm giá: </label>
+                                        @if (Session::get('coupon'))
+                                            @foreach (Session::get('coupon') as $key => $cou)
+                                                <input placeholder="{{ $cou['coupon_code'] }}" type="text" name="coupon"
+                                                    value="">
+                                            @endforeach
+                                            <a class="btn btn-default check_out"
+                                                href="{{ URL::to('/unset-coupon') }}">Xóa mã</a>
+                                        @else
+                                            <input placeholder="Nhập mã" size="20" type="text" name="coupon" value="">
+                                            <button type="submit" class="field-input-btn btn btn-default"
+                                                name="check_coupon">
+                                                <span class="btn-content">Sử dụng</span>
+                                                <i class="btn-spinner icon icon-button-spinner"></i>
+                                            </button>
+
+                                        @endif
 						</div><br>
 
 					</form>

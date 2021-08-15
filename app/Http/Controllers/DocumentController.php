@@ -140,16 +140,6 @@ class DocumentController extends Controller
     public function create_folder(){
         Storage::cloud()->makeDirectory('Storage 3');
         dd('created folder');
-    }
-    
-    public function delete_folder(){
-
-        $folderinfo = collect(Storage::cloud()->listContents('/', false))
-        ->where('type', 'dir')
-        ->where('name', 'Storage')
-        ->first();
-
-        Storage::cloud()->delete($folderinfo['path']);
-        dd('deleted folder');
-    }
+    }    
+ 
 }

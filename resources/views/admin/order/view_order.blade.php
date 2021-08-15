@@ -178,12 +178,11 @@
                   <option id="{{$v_order->order_id}}" value="2">Đã xử lý - Đã giao hàng</option>       
                 </select>
               </form>
-              @else($v_order->order_status==2)
+              @else
               <form >
                 @csrf
-                <select  class="form-control order_details ">
-                  <option id="{{$v_order->order_id}}"  value="1">Chưa xử lý</option>
-                  <option id="{{$v_order->order_id}}" selected value="2">Đã xử lý - Đã giao hàng</option>   
+                <select  class="form-control">                  
+                  <option  disabled selected value="2">Đã xử lý - Đã giao hàng</option>   
                 </select>
               </form>            
               @endif                      

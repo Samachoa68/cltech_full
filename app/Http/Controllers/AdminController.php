@@ -87,16 +87,17 @@ class AdminController extends Controller
     {
         $provider = Socialite::driver('facebook')->stateless()->user();
         $account = Social::where('provider', 'facebook')->where('provider_user_id', $provider->getId())->first();
-        if ($account) {
+        if ($account!=NULL) {
             //login in vao trang quan tri  
             $account_name = Login::where('admin_id', $account->user)->first();
             Session::put('admin_name', $account_name->admin_name);
             Session::put('admin_id', $account_name->admin_id);
             return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
-        } else {
+        } elseif($account!=NULL) {
 
             $face_social = new Social([
                 'provider_user_id' => $provider->getId(),
+                'provider_user_email' => $provider->getEmail(),
                 'provider' => 'facebook'
             ]);
 

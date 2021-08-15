@@ -183,7 +183,7 @@ Route::post('insert-coupon-code','CouponController@insert_coupon_code');
 Route::get('print-order/{checkuot_order}','OrderController@print_order');
 Route::get('manage-order','OrderController@manage_order');
 Route::get('view-order/{order_code}','OrderController@view_order');
-Route::post('update-order-qty','OrderController@update_order_qty');
+Route::post('update-order-status','OrderController@update_order_status');
 Route::post('update-qty','OrderController@update_qty');
 
 //Delivery

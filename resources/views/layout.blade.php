@@ -930,7 +930,9 @@
                             var shipping_method = $('.payment_select').val();
                             var order_fee = $('.order_fee').val();
                             var order_coupon = $('.order_coupon').val();
+                            var total_final = $('.total_final').val();
                             var _token = $('input[name="_token"]').val();
+                          
                             $.ajax({
                                 url: '{{ url('/confirm-order') }}',
                                 method: 'POST',
@@ -943,6 +945,7 @@
                                     _token: _token,
                                     order_fee: order_fee,
                                     order_coupon: order_coupon,
+                                    total_final:total_final,
                                     shipping_method: shipping_method
                                 },
                                 success: function() {

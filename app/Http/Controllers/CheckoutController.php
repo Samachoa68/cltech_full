@@ -19,34 +19,46 @@ use App\Models\Order;
 use App\Models\Customer;
 use App\Models\OrderDetails;
 use App\Models\CategoryPost;
-use Validator;  
+use Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Cart;
+
 session_start();
 
 class CheckoutController extends Controller
 {
-	
+
 	public function login_checkout(request $request)
 	{
-		$all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
-		$slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
+		$all_category_post = CategoryPost::orderBy('cate_post_id', 'ASC')->get();
+		$slider = Slider::OrderBy('slider_stt', 'ASC')->where('slider_status', '1')->take(4)->get();
 		$meta_desc = "Chuyên bán và lắp đặt máy tính, camera, phụ kiện máy tính thương hiệu";
 		$meta_keywords = "máy tính, camera, lắp đặt, phụ kiện máy tính";
 		$meta_title = "Home | LamGiaTech";
 		$url_canonical = $request->url();
 
-		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
-		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
-		Session::put('customer_id',null);
-		return view('pages.checkout.login_checkout')->with(compact('all_category_post','slider','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product'));
-
+		$cate_product = Category::where('category_status', '1')->orderby('category_id', 'desc')->get();
+		$brand_product = Brand::where('brand_status', '1')->orderby('brand_id', 'desc')->get();
+		Session::put('customer_id', null);
+		return view('pages.checkout.login_checkout')->with(compact('all_category_post', 'slider', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'cate_product', 'brand_product'));
 	}
 
 	public function confirm_order(request $request)
 	{
 		$data = $request->all();
+		//get coupon
+		if ($data['order_coupon'] != 'no') {
+			$coupon = Coupon::where('coupon_code', $data['order_coupon'])->first();
+			$coupon->coupon_used = $coupon->coupon_used . ',' . Session::get('customer_id');
+			$coupon->coupon_time = $coupon->coupon_time - 1;
+			$coupon_mail = $coupon->coupon_code;
+			$coupon->save();
+		} else {
+			$coupon_mail = 'không có sử dụng';
+		}
+
 		$shipping = new Shipping();
 		$shipping->shipping_name = $data['shipping_name'];
 		$shipping->shipping_email = $data['shipping_email'];
@@ -57,26 +69,21 @@ class CheckoutController extends Controller
 		$shipping->save();
 		$shipping_id = $shipping->shipping_id;
 
-		$checkout_code = substr(md5(microtime()),rand(0,26),5);
+		$checkout_code = substr(md5(microtime()), rand(0, 26), 5);
 
-		//coupon
-		$coupon = Coupon::where('coupon_code',$data['order_coupon'])->first();
-		$coupon->coupon_used = $coupon->coupon_used.','.Session::get('customer_id');
-		$coupon->coupon_time = $coupon->coupon_time - 1;
-		$coupon->save();
 
-    	//get order
+		//get order
 		$order = new Order;
 		$order->customer_id = Session::get('customer_id');
 		$order->shipping_id = $shipping_id;
 		$order->order_status = 1;
 		$order->order_code = $checkout_code;
-		$order->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');		
+		$order->order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
 		$order->created_at = Carbon::now('Asia/Ho_Chi_Minh');
 		$order->save();
 
-		if(Session::get('cart')==true){
-			foreach(Session::get('cart') as $key => $cart){
+		if (Session::get('cart') == true) {
+			foreach (Session::get('cart') as $key => $cart) {
 				$order_details = new OrderDetails;
 				$order_details->order_code = $checkout_code;
 				$order_details->product_id = $cart['product_id'];
@@ -88,49 +95,101 @@ class CheckoutController extends Controller
 				$order_details->save();
 			}
 		}
-		Session::forget('fee');
+
+		//send mail confirm
+		$now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+
+		$title_mail = "[Lamgiatech.com] Đơn hàng xác nhận ngày" . ' ' . $now;
+
+		$customer = Customer::find(Session::get('customer_id'));
+
+		$data['email'][] = $customer->customer_email;
+		//lay gio hang
+		if (Session::get('cart') == true) {
+
+			foreach (Session::get('cart') as $key => $cart_mail) {
+
+				$cart_array[] = array(
+					'product_name' => $cart_mail['product_name'],
+					'product_price' => $cart_mail['product_price'],
+					'product_qty' => $cart_mail['product_qty'],
+					
+				);
+			}
+		}
+		//lay shipping
+		if (Session::get('fee') == true) {
+			$fee = Session::get('fee') . 'k';
+		} else {
+			$fee = '25k';
+		}
+
+		$shipping_array = array(
+			'fee' =>  $fee,
+			'customer_name' => $customer->customer_name,
+			'shipping_name' => $data['shipping_name'],
+			'shipping_email' => $data['shipping_email'],
+			'shipping_phone' => $data['shipping_phone'],
+			'shipping_address' => $data['shipping_address'],
+			'shipping_notes' => $data['shipping_notes'],
+			'shipping_method' => $data['shipping_method']
+
+		);
+		//lay ma giam gia, lay coupon code
+		$ordercode_mail = array(
+			'coupon_code' => $coupon_mail,
+			'order_code' => $checkout_code,
+		);
+
+		
+
+		Mail::send('pages.mail.mail_order',  ['cart_array' => $cart_array, 'shipping_array' => $shipping_array, 'code' => $ordercode_mail], function ($message) use ($title_mail, $data) {
+			$message->to($data['email'])->subject($title_mail); //send this mail with subject
+			$message->from($data['email'], $title_mail); //send from this mail
+		});
 		Session::forget('coupon');
+		Session::forget('fee');
 		Session::forget('cart');
+
 	}
 
 	public function select_delivery_home(request $request)
 	{
 		$data = $request->all();
-		if($data['action']){
+		if ($data['action']) {
 			$output = '';
-			if($data['action']=="city"){
-				$select_province = Province::where('matp',$data['ma_id'])->OrderBy('maqh','ASC')->get();
-				$output.='<option>---Chọn quận huyện---</option>';
-				foreach($select_province as $key => $v_province){
-					$output.='<option value="'.$v_province->maqh.'">'.$v_province->name_quanhuyen.'</option>';
+			if ($data['action'] == "city") {
+				$select_province = Province::where('matp', $data['ma_id'])->OrderBy('maqh', 'ASC')->get();
+				$output .= '<option>---Chọn quận huyện---</option>';
+				foreach ($select_province as $key => $v_province) {
+					$output .= '<option value="' . $v_province->maqh . '">' . $v_province->name_quanhuyen . '</option>';
 				}
-			}else{
-				$select_wards = Wards::where('maqh',$data['ma_id'])->OrderBy('xaid','ASC')->get();
-				$output.='<option>---Chọn xã phường---</option>';
-				foreach($select_wards as $key => $v_wards){
-					$output.='<option value="'.$v_wards->xaid.'">'.$v_wards->name_xaphuong.'</option>';
+			} else {
+				$select_wards = Wards::where('maqh', $data['ma_id'])->OrderBy('xaid', 'ASC')->get();
+				$output .= '<option>---Chọn xã phường---</option>';
+				foreach ($select_wards as $key => $v_wards) {
+					$output .= '<option value="' . $v_wards->xaid . '">' . $v_wards->name_xaphuong . '</option>';
 				}
 			}
 		}
-		echo $output;    	
+		echo $output;
 	}
 
 	public function calculate_fee(request $request)
 	{
 		$data = $request->all();
-		if($data['matp']){
-			$feeship = Feeship::where('fee_matp',$data['matp'])->where('fee_maqh',$data['maqh'])->where('fee_xaid',$data['xaid'])->get();
+		if ($data['matp']) {
+			$feeship = Feeship::where('fee_matp', $data['matp'])->where('fee_maqh', $data['maqh'])->where('fee_xaid', $data['xaid'])->get();
 			$count_feeship = $feeship->count();
-			if($count_feeship>0){
-				foreach($feeship as $key => $fee){
-					Session::put('fee',$fee->fee_feeship);
+			if ($count_feeship > 0) {
+				foreach ($feeship as $key => $fee) {
+					Session::put('fee', $fee->fee_feeship);
 					Session::save();
 				}
-			}else{
-				Session::put('fee',10000);
+			} else {
+				Session::put('fee', 10000);
 				Session::save();
 			}
-
 		}
 	}
 
@@ -149,8 +208,8 @@ class CheckoutController extends Controller
 			'customer_email' => 'required',
 			'customer_password' => 'required',
 			'customer_phone' => 'required',
-        //    'g-recaptcha-response' => new Captcha(), 		//dòng kiểm tra Captcha
-       ]);
+			//    'g-recaptcha-response' => new Captcha(), 		//dòng kiểm tra Captcha
+		]);
 
 		$data['customer_name'] = $request->customer_name;
 		$data['customer_email'] = $request->customer_email;
@@ -159,24 +218,24 @@ class CheckoutController extends Controller
 
 		$customer_id = DB::table('tbl_customers')->insertGetId($data);
 
-		Session::put('customer_id',$customer_id);
-		Session::put('customer_name',$request->customer_name);
+		Session::put('customer_id', $customer_id);
+		Session::put('customer_name', $request->customer_name);
 
 		return Redirect::to('/checkout');
 	}
 
 	public function checkout(request $request)
 	{
-		$all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+		$all_category_post = CategoryPost::orderBy('cate_post_id', 'ASC')->get();
 		$meta_desc = "Chuyên bán và lắp đặt máy tính, camera, phụ kiện máy tính thương hiệu";
 		$meta_keywords = "máy tính, camera, lắp đặt, phụ kiện máy tính";
 		$meta_title = "Home | LamGiaTech";
 		$url_canonical = $request->url();
 
-		$city = City::orderby('matp','ASC')->get();
-		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
-		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
-		return view('pages.checkout.show_checkout')->with(compact('all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product','city'));
+		$city = City::orderby('matp', 'ASC')->get();
+		$cate_product = Category::where('category_status', '1')->orderby('category_id', 'desc')->get();
+		$brand_product = Brand::where('brand_status', '1')->orderby('brand_id', 'desc')->get();
+		return view('pages.checkout.show_checkout')->with(compact('all_category_post', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'cate_product', 'brand_product', 'city'));
 	}
 
 	public function save_checkout_customer(request $request)
@@ -187,23 +246,23 @@ class CheckoutController extends Controller
 		$data['shipping_phone'] = $request->shipping_phone;
 		$data['shipping_notes'] = $request->shipping_notes;
 
-		if ($data['shipping_name'] != Null && $data['shipping_address'] != Null && $data['shipping_phone'] != Null ) {
+		if ($data['shipping_name'] != Null && $data['shipping_address'] != Null && $data['shipping_phone'] != Null) {
 			$shipping_id = DB::table('tbl_shipping')->insertGetId($data);
 
-			Session::put('shipping_id', $shipping_id);		
+			Session::put('shipping_id', $shipping_id);
 
 			return Redirect::to('/payment');
-		}else{
+		} else {
 
 			return Redirect::to('/checkout');
-		}		
+		}
 	}
 
 	public function payment()
 	{
-		$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
-		$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
-		return view('pages.checkout.payment')->with('category',$cate_product)->with('brand',$brand_product);
+		$cate_product = Category::where('category_status', '1')->orderby('category_id', 'desc')->get();
+		$brand_product = Brand::where('brand_status', '1')->orderby('brand_id', 'desc')->get();
+		return view('pages.checkout.payment')->with('category', $cate_product)->with('brand', $brand_product);
 	}
 
 	public function order_place(request $request)
@@ -225,7 +284,7 @@ class CheckoutController extends Controller
 
 		//Insert order_details
 		$cartcontent = Cart::content();
-		foreach($cartcontent as $v_cartcontent){
+		foreach ($cartcontent as $v_cartcontent) {
 
 			$order_d_data['order_id'] = $order_id;
 			$order_d_data['product_id'] = $v_cartcontent->id;
@@ -234,35 +293,29 @@ class CheckoutController extends Controller
 		}
 		if ($data['payment_method'] == 1) {
 			Cart::destroy();
-			$cate_product = Category::where('category_status','1')->orderby('category_id','desc')->get();
-			$brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
-			return view('pages.checkout.handcash')->with('category',$cate_product)->with('brand',$brand_product);
-
-		}elseif ($data['payment_method'] == 2) {
+			$cate_product = Category::where('category_status', '1')->orderby('category_id', 'desc')->get();
+			$brand_product = Brand::where('brand_status', '1')->orderby('brand_id', 'desc')->get();
+			return view('pages.checkout.handcash')->with('category', $cate_product)->with('brand', $brand_product);
+		} elseif ($data['payment_method'] == 2) {
 			echo "Chuyển khoản ngân hàng";
-		}else{
+		} else {
 			echo "Thanh toán thẻ ghi nợ";
 		}
 	}
 
 	public function login_customer(request $request)
 	{
+		$email = $request->email_account;
+		$password = md5($request->password_account);
+		$result = Customer::where('customer_email', $email)->where('customer_password', $password)->first();
 
-       $email = $request->email_account;
-       $password = md5($request->password_account);
-
-
-       $result = Customer::where('customer_email',$email)->where('customer_password',$password)->first();
-
-       if ($result) {
-       	Session::put('customer_id',$result->customer_id);
-		Session::put('customer_picture',$result->customer_picture);
-		Session::put('customer_name',$result->customer_name);
-       	return Redirect::to('/checkout');
-       }else{
-       	return Redirect::to('login-checkout');
-       }
-
-   }
-
+		if ($result) {
+			Session::put('customer_id', $result->customer_id);
+			Session::put('customer_picture', $result->customer_picture);
+			Session::put('customer_name', $result->customer_name);
+			return Redirect::to('checkout');
+		} else {
+			return Redirect::to('login-checkout')->with('error', 'Email hooặc mật khẩu không đúng');
+		}
+	}
 }

@@ -1150,7 +1150,7 @@
                     order_product_id: order_product_id
                 },
                 success: function(data) {
-                    alert('Cập nhật số lượng đơn hàng thành công 2');
+                    alert('Cập nhật số lượng của đơn hàng thành công');
                     location.reload();
                 }
             });
@@ -1191,7 +1191,7 @@
             }
             if (j == 0) {
                 $.ajax({
-                    url: '{{ url('/update-order-qty') }}',
+                    url: '{{ url('/update-order-status') }}',
                     method: 'POST',
                     data: {
                         _token: _token,
@@ -1201,7 +1201,7 @@
                         order_product_id: order_product_id
                     },
                     success: function(data) {
-                        alert('Cập nhật số lượng đơn hàng thành công ');
+                        alert('Xử lý và giao hàng thành công ');
                         location.reload();
                     }
                 });
