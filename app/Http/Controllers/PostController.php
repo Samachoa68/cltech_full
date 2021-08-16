@@ -155,6 +155,7 @@ class PostController extends Controller
 			$post_id = $v_post->post_id;
 			$url_canonical = $request->url();
 			$cate_post_id = $v_post->cate_post_id;
+			$share_image = url('/frontend/images/home/'.$v_post->post_image);
 		}
 
 		$postv = PostM::find($post_id);
@@ -166,6 +167,6 @@ class PostController extends Controller
 
 		$related_post = PostM::where('post_status', '1')->where('cate_post_id', $cate_post_id)->whereNotIn('post_id', [$post_id])->orderBy('post_id', 'ASC')->get();
 
-		return view('pages.baiviet.details_post')->with(compact('slider', 'cate_product', 'brand_product', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'all_category_post', 'all_post', 'related_post'));
+		return view('pages.baiviet.details_post')->with(compact('slider', 'cate_product', 'brand_product', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'all_category_post', 'all_post', 'related_post','share_image'));
 	}
 }

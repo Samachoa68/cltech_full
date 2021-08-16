@@ -43,8 +43,9 @@ class AppServiceProvider extends ServiceProvider
             $app_order = Order::all()->count();
             $app_video = Video::all()->count();
             $app_customer = Customer::all()->count();
+            $share_image = '';
 
-            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range','app_product', 'app_post', 'app_order', 'app_video', 'app_customer'));
+            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range','app_product', 'app_post', 'app_order', 'app_video', 'app_customer','share_image'));
         });
     }
 }

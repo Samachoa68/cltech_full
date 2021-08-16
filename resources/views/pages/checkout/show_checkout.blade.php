@@ -347,6 +347,15 @@
                                                 <li>Thành tiền
                                                     <span>{{ number_format($total - Session::get('fee'), 0, ',', '.') }}đ</span>
                                                 </li>
+<br>
+                                                <div class="col-sm-12">
+                                                    @php
+                                                       $vnd_to_usd= ($total - Session::get('fee'))/23000;
+                                                    @endphp
+                                                    <div id="paypal-button"></div>
+                                                    <input type="hidden" id="vnd_to_usd" value="{{round($vnd_to_usd,2)}}">
+                                                </div>
+
                                             </ul>
 
                                         @endif

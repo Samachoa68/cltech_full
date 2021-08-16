@@ -47,6 +47,8 @@
 <div class="features_items"><!--features_items-->
     <h2 class="title text-center">{{$meta_title}}</h2>
 
+    <div class="fb-share-button" data-href="{{$url_canonical}}" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{$url_canonical}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>   
+
     <div class="product-image-wrapper" style="border: none;">
         @foreach($all_post as $key => $v_post)
         <div class="single-products" style="margin:10px 0;padding: 2px">

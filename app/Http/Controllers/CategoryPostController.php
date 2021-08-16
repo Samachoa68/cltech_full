@@ -125,9 +125,11 @@ class CategoryPostController extends Controller
 			$url_canonical = $request->url();
 		}
 
+		$share_image = url('/frontend/images/home/logo.jpg');
+
 		$all_post = PostM::with('categorypost')->where('post_status','1')->where('cate_post_id',$cate_post_id)->orderBy('post_id','ASC')->paginate(5);
 
-		return view('pages.baiviet.show_cate_post')->with(compact('slider','cate_product','brand_product','meta_desc','meta_keywords','meta_title','url_canonical','all_category_post', 'all_post'));
+		return view('pages.baiviet.show_cate_post')->with(compact('slider','cate_product','brand_product','meta_desc','meta_keywords','meta_title','url_canonical','all_category_post', 'all_post','share_image'));
 	}
 
 

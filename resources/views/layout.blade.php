@@ -27,12 +27,13 @@
 
 
     <!------------Share fb------------------>
-    <!--     <meta property="og:url"                content="{{ $url_canonical }}" />
-    <meta property="og:type"               content="articles" />
-    <meta property="og:title"              content="{{ $meta_title }}" />
-    <meta property="og:site_name" content="{{ $meta_title }}"/>
-    <meta property="og:description"        content="{{ $meta_desc }}" />
--->
+
+    <meta property="og:url" content="{{ $url_canonical }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ $meta_title }}" />
+    <meta property="og:description" content="{{ $meta_desc }}" />
+    <meta property="og:image" content="{{ $share_image }}" />
+
     <!--//-------Seo--------->
 
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -495,6 +496,51 @@
 
     <script src="{{ asset('frontend/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('frontend/js/simple.money.format.js') }}"></script>
+
+
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+
+        var usd = document.getElementById("vnd_to_usd").value;
+        paypal.Button.render({
+            // Configure environment
+            env: 'sandbox',
+            client: {
+                sandbox: 'AZQIDGONDPckdpt6vvTf6DeU8WhOnGo13yP14wGUl9UrJC4JmJYyw5rg0eisjnvRHsmEjf19FqQHznPR',
+                production: 'demo_production_client_id'
+            },
+            // Customize button (optional)
+            locale: 'en_US',
+            style: {
+                size: 'small',
+                color: 'gold',
+                shape: 'pill',
+            },
+
+            // Enable Pay Now checkout flow (optional)
+            commit: true,
+
+            // Set up a payment
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: `${usd}`,
+                            currency: 'USD'
+                        }
+                    }]
+                });
+            },
+            // Execute the payment
+            onAuthorize: function(data, actions) {
+                return actions.payment.execute().then(function() {
+                    // Show a confirmation message to the buyer
+                    window.alert('Cảm ơn, Bạn đã thanh toán đơn hàng thành công!');
+                });
+            }
+        }, '#paypal-button');
+    </script>
+
 
     <script type="text/javascript">
         $(document).ready(function() {
