@@ -36,7 +36,7 @@ class OrderController extends Controller
 
 	public function print_order($checkout_code)
 	{
-		$this->AuthLogin();
+		// $this->AuthLogin();
 		$pdf = \App::make('dompdf.wrapper');
 		$pdf->loadHTML($this->print_order_convert($checkout_code));
 		return $pdf->stream();
@@ -417,6 +417,58 @@ class OrderController extends Controller
 
 		$order = Order::where('customer_id',Session::get('customer_id'))->orderBy('customer_id','Desc')->paginate(10);
         return view('pages.history.history_order_cus')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs','order'));
+		}
+	}
+
+	public function view_history_order(Request $request,$order_code)
+	{
+		if(!Session::get('customer_id')){
+			return redirect('/login-checkout')->with('error','Vui lòng đăng nhập để xem lịch sử đơn hàng');
+		}
+		else{
+		$slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
+    	$meta_desc = "Lịch sử mua hàng";
+    	$meta_keywords = "Lịch sử mua hàng";
+    	$meta_title = "Home | LamGiaTech";
+    	$url_canonical = $request->url();
+
+        $all_category_post = CategoryPost::orderBy('cate_post_id','ASC')->get();
+
+        $cate_product = Category::where('category_status','1')->orderBy('category_order','ASC')->get();
+
+        $cate_pro_tabs = Category::where('category_status','1')->where('category_parent','<>',0)->orderBy('category_order','ASC')->get();
+
+        $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
+        $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
+
+		//
+
+		$order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();
+
+		$order = Order::where('order_code', $order_code)->first();
+
+			$customer_id = $order->customer_id;
+			$shipping_id = $order->shipping_id;
+			$order_status = $order->order_status;
+
+		$customer = Customer::where('customer_id', $customer_id)->first();
+		$shipping = Shipping::where('shipping_id', $shipping_id)->first();
+
+
+		foreach ($order_details as $key => $v_order_d) {
+			$product_coupon = $v_order_d->product_coupon;
+			$product_feeship = $v_order_d->product_feeship;
+		}
+		if ($product_coupon != 'no') {
+			$coupon = Coupon::where('coupon_code', $product_coupon)->first();
+			$coupon_condition = $coupon->coupon_condition;
+			$coupon_number = $coupon->coupon_number;
+		} else {
+			$coupon_condition = 2;
+			$coupon_number = 0;
+		}
+		
+        return view('pages.history.view_history_order')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs','order', 'order_details', 'customer', 'shipping', 'order_code', 'order_status', 'coupon_condition', 'coupon_number', 'product_feeship'));
 		}
 	}
 }

@@ -50,7 +50,7 @@
                                 </td>
                                 <td>{{ $order_all->created_at }}</td>
                                 <td>
-                                    <a href="{{ URL::to('/view-order/' . $order_all->order_code) }}"
+                                    <a href="{{ URL::to('/view-history-order/' . $order_all->order_code) }}"
                                         class="active styling-edit" ui-toggle-class="">Xem</a>
 
                                     {{-- <a onclick="return confirm('Are you sure to delete?')" href="{{URL::to('/delete-order/'.$order_all->order_id)}}" class ="active styling-edit" ui-toggle-class="">
