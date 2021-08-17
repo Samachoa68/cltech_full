@@ -29,7 +29,7 @@ class HomeController extends Controller
 
         $cate_product = Category::where('category_status','1')->orderBy('category_order','ASC')->get();
 
-        $cate_pro_tabs = Category::where('category_status','1')->where('category_parent','<>',0)->orderBy('category_order','ASC')->get();
+        $cate_pro_tabs = Category::where('category_status','1')->where('category_parent','=',0)->orderBy('category_order','ASC')->get();
 
         $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
         $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();

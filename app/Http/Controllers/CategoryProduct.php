@@ -206,7 +206,14 @@ class CategoryProduct extends Controller
 
 		$output = '';
 
-		$product = Product::where('category_id', $data['cate_id'])->orderBy('product_id', 'DESC')->get();
+		$sub_cate = Category::where('category_parent',$data['cate_id'])->get();
+		$cate_arr = array();
+		foreach($sub_cate as $key => $v_sub_cate){
+			$cate_arr[] = $v_sub_cate->category_id;
+		}
+		array_push($cate_arr,$data['cate_id']);
+		// print_r($cate_arr);
+		$product = Product::whereIn('category_id', $cate_arr)->orderBy('product_id', 'DESC')->get();
 
 		$product_count = $product->count();
 
@@ -224,6 +231,7 @@ class CategoryProduct extends Controller
 				<h2>' . number_format($val->product_price, 0, ',', '.') . ' VNĐ</h2>
 				<p>' . $val->product_name . '</p>
 				<a href="' . url('/details-product/' . $val->product_slug) . '" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Xem chi tiết</a>
+				
 				</div>
 				
 				</div>

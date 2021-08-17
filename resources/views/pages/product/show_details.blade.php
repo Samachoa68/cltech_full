@@ -37,11 +37,17 @@
 			<form action="{{URL::to('save-cart')}}" method="POST" >
 				@csrf
 
-				<input type="hidden" value="{{$detail_pro->product_id}}" class="cart_product_id_{{$detail_pro->product_id}}">
-				<input type="hidden" value="{{$detail_pro->product_name}}" class="cart_product_name_{{$detail_pro->product_id}}">
+				<input type="hidden" id="viewed_product_id" value="{{$detail_pro->product_id}}" class="cart_product_id_{{$detail_pro->product_id}}">
+
+				<input type="hidden" id="viewed_productname{{ $detail_pro->product_id }}" value="{{$detail_pro->product_name}}" class="cart_product_name_{{$detail_pro->product_id}}">
+
+				<input type="hidden" id="viewed_producturl{{ $detail_pro->product_id }}" value="{{ URL::to('details-product/' . $detail_pro->product_slug) }}" class="cart_product_url_{{$detail_pro->product_id}}">
+
 				<input type="hidden" value="{{$detail_pro->product_quantity}}" class="cart_product_quantity_{{$detail_pro->product_id}}">
-				<input type="hidden" value="{{$detail_pro->product_image}}" class="cart_product_image_{{$detail_pro->product_id}}">
-				<input type="hidden" value="{{$detail_pro->product_price}}" class="cart_product_price_{{$detail_pro->product_id}}">
+
+				<input type="hidden" id="viewed_productimage{{ $detail_pro->product_id }}" value="{{ URL::to('upload/product/' . $detail_pro->product_image) }}" class="cart_product_image_{{$detail_pro->product_id}}">
+
+				<input type="hidden" id="viewed_productprice{{ $detail_pro->product_id }}" value="{{$detail_pro->product_price}}" class="cart_product_price_{{$detail_pro->product_id}}">
 				
 
 				<span>

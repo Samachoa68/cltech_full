@@ -210,11 +210,21 @@
                                 <li><a href="{{ URL::to('/trang-chu') }}" class="active">Trang Chủ</a></li>
                                 <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-                                        <li><a href="product-details.html">Product Details</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="login.html">Login</a></li>
+                                        @foreach ($cate_product as $key => $v_cate_pro)
+                                            @if ($v_cate_pro->category_parent == 0) 
+                                            <li><a
+                                                    href="{{ URL::to('/danh-muc-san-pham/' . $v_cate_pro->slug_category_product) }}">{{ $v_cate_pro->category_name }}</a>
+                                                    @foreach($cate_product as $key => $sub_cate_pro)
+                                                    @if ($sub_cate_pro->category_parent == $v_cate_pro->category_id )
+                                                    <ul>
+                                                        <li><a
+                                                            href="{{ URL::to('/danh-muc-san-pham/' . $sub_cate_pro->slug_category_product) }}">{{ $sub_cate_pro->category_name }}</a></li>
+                                                    </ul>
+                                                    @endif
+                                                    @endforeach
+                                            </li>
+                                            @endif
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="#">Tin tức<i class="fa fa-angle-down"></i></a>
@@ -341,13 +351,18 @@
                         <!--/price-range-->
 
                         <div class="brands_products">
+                            <h2>Sản phẩm đã xem</h2>
+                            <div class="brands-name ">
+                                <div id="row_viewed" class="row">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="brands_products">
                             <h2>Sản phẩm yêu thích</h2>
                             <div class="brands-name ">
-
                                 <div id="row_wishlist" class="row">
-
                                 </div>
-
                             </div>
                         </div>
 
@@ -603,6 +618,82 @@
         });
     </script>
 
+<script type="text/javascript">
+    function viewed() {
+        if (localStorage.getItem('viewed') != null) {
+            var data = JSON.parse(localStorage.getItem('viewed'));
+            data.reverse();
+            document.getElementById('row_viewed').style.overflow = 'scroll';
+            document.getElementById('row_viewed').style.height = '500px';
+
+            for (i = 0; i < data.length; i++) {
+                var name = data[i].name;
+                var price = data[i].price;
+                var image = data[i].image;
+                var url = data[i].url;
+
+                $('#row_viewed').append(
+                    '<div class="row" style="margin:10px 0"><div class="col-md-4"><img width="100%" src="' +
+                    image + '"></div><div class="col-md-8 info_wishlist"><p>' + name +
+                    '</p><p style="color:#FE980F">' + price + '</p><a href="' + url + '">Đặt hàng</a></div>');
+            }
+
+        }
+
+    }
+
+    viewed();
+
+    product_viewed();
+
+    function product_viewed(clicked_id) {
+        var id_product = $('#viewed_product_id').val();
+        if(id_product != undefined){
+        var id = id_product;
+        var name = document.getElementById('viewed_productname' + id).value;
+        var price = document.getElementById('viewed_productprice' + id).value;
+        var image = document.getElementById('viewed_productimage' + id).value;
+        var url = document.getElementById('viewed_producturl' + id).value;
+
+        var newItem = {
+            'url': url,
+            'id': id,
+            'name': name,
+            'price': price,
+            'image': image
+        }
+
+        if (localStorage.getItem('viewed') == null) {
+            localStorage.setItem('viewed', '[]');
+        }
+
+        var old_data = JSON.parse(localStorage.getItem('viewed'));
+
+        var matches = $.grep(old_data, function(obj) {
+            return obj.id == id;
+        })
+
+        if (matches.length) {
+           
+
+        } else {
+
+            old_data.push(newItem);
+
+            $('#row_viewed').append(
+                '<div class="row" style="margin:10px 0"><div class="col-md-4"><img width="100%" src="' + newItem
+                .image + '"></div><div class="col-md-8 info_wishlist"><p>' + newItem.name +
+                '</p><p style="color:#FE980F">' + newItem.price + '</p><a href="' + newItem.url +
+                '">Xem ngay</a></div>');
+
+        }
+
+        localStorage.setItem('viewed', JSON.stringify(old_data));
+
+        }      
+
+    }
+</script>
     <script type="text/javascript">
         function view() {
             if (localStorage.getItem('data') != null) {
