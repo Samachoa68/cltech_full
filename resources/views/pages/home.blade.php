@@ -97,13 +97,43 @@
                                 <button class="button_wishlist" id="{{ $pro->product_id }}"
                                     onclick="add_wistlist(this.id);"><span>Yêu thích</span></button>
                             </li>
-                            <li><a href="#"><i class="fa fa-plus-square"></i>So sánh</a></li>
+                            <li><a style="cursor: pointer" onclick="add_compare({{ $pro->product_id }})"><i class="fa fa-plus-square"></i>So sánh</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         @endforeach
 
+
+  <!-- Modal -->
+<div class="modal fade" id="compare" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><Span id="compare_text"></Span></h5>          
+        </div>
+        <div class="modal-body">
+            <table class="table table-dark" id="row_compare">
+                <thead>
+                  <tr>                  
+                    <th scope="col">Tên Sản phẩm</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Chi tiết</th>
+                    <th scope="col">Xóa</th>
+                  </tr>
+                </thead>
+                <tbody>                 
+                  <img src="" alt="">
+                </tbody>
+              </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     </div>
     <!--features_items-->

@@ -211,18 +211,19 @@
                                 <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         @foreach ($cate_product as $key => $v_cate_pro)
-                                            @if ($v_cate_pro->category_parent == 0) 
-                                            <li><a
-                                                    href="{{ URL::to('/danh-muc-san-pham/' . $v_cate_pro->slug_category_product) }}">{{ $v_cate_pro->category_name }}</a>
-                                                    @foreach($cate_product as $key => $sub_cate_pro)
-                                                    @if ($sub_cate_pro->category_parent == $v_cate_pro->category_id )
-                                                    <ul>
-                                                        <li><a
-                                                            href="{{ URL::to('/danh-muc-san-pham/' . $sub_cate_pro->slug_category_product) }}">{{ $sub_cate_pro->category_name }}</a></li>
-                                                    </ul>
-                                                    @endif
+                                            @if ($v_cate_pro->category_parent == 0)
+                                                <li><a
+                                                        href="{{ URL::to('/danh-muc-san-pham/' . $v_cate_pro->slug_category_product) }}">{{ $v_cate_pro->category_name }}</a>
+                                                    @foreach ($cate_product as $key => $sub_cate_pro)
+                                                        @if ($sub_cate_pro->category_parent == $v_cate_pro->category_id)
+                                                            <ul>
+                                                                <li><a
+                                                                        href="{{ URL::to('/danh-muc-san-pham/' . $sub_cate_pro->slug_category_product) }}">{{ $sub_cate_pro->category_name }}</a>
+                                                                </li>
+                                                            </ul>
+                                                        @endif
                                                     @endforeach
-                                            </li>
+                                                </li>
                                             @endif
                                         @endforeach
                                     </ul>
@@ -515,7 +516,6 @@
 
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     <script>
-
         var usd = document.getElementById("vnd_to_usd").value;
         paypal.Button.render({
             // Configure environment
@@ -618,82 +618,170 @@
         });
     </script>
 
-<script type="text/javascript">
-    function viewed() {
-        if (localStorage.getItem('viewed') != null) {
-            var data = JSON.parse(localStorage.getItem('viewed'));
-            data.reverse();
-            document.getElementById('row_viewed').style.overflow = 'scroll';
-            document.getElementById('row_viewed').style.height = '500px';
+    <script>
+        function delete_compare(id) {
+            if (localStorage.getItem('compare') != null) {
+                var data = JSON.parse(localStorage.getItem('compare'));
+                var index = data.findIndex(item => item.id === id);
+                data.splice(index, 1);
+                localStorage.setItem('compare', JSON.stringify(data));
+                //Remove element by id
+                document.getElementById('row_compare' + id).remove();
+            }
+        }
+        compare();
 
-            for (i = 0; i < data.length; i++) {
-                var name = data[i].name;
-                var price = data[i].price;
-                var image = data[i].image;
-                var url = data[i].url;
+        function compare() {
+            if (localStorage.getItem('compare') != null) {
+                var data = JSON.parse(localStorage.getItem('compare'));                
 
-                $('#row_viewed').append(
-                    '<div class="row" style="margin:10px 0"><div class="col-md-4"><img width="100%" src="' +
-                    image + '"></div><div class="col-md-8 info_wishlist"><p>' + name +
-                    '</p><p style="color:#FE980F">' + price + '</p><a href="' + url + '">Đặt hàng</a></div>');
+                for (i = 0; i < data.length; i++) {
+                    var name = data[i].name;
+                    var price = data[i].price;
+                    var image = data[i].image;
+                    var url = data[i].url;
+                    var id = data[i].id;
+
+                    $('#row_compare').find('tbody').append(`
+                    <tr id="row_compare` + id + `">                 
+                    <td>` + name + `</td>
+                    <td>` + price + `</td>
+                    <td><img width="200px" src="` + image + `" alt=""></td>
+                    <td><a href="` + url + `">Xem</a></td>
+                    <td><a style="cursor: pointer" onclick="delete_compare(` + id + `)">Xóa</a></td>
+                  </tr>
+                `);
+                }
+            }
+        }
+
+        function add_compare(product_id) {
+            document.getElementById('compare_text').innerText = ("Chỉ so sánh 3 sản phẩm");
+            var id = product_id;
+            var name = document.getElementById('wishlist_productname' + id).value;
+            var price = document.getElementById('wishlist_productprice' + id).value;
+            var image = document.getElementById('wishlist_productimage' + id).src;
+            var url = document.getElementById('wishlist_producturl' + id).href;
+
+            var newItem = {
+                'url': url,
+                'id': id,
+                'name': name,
+                'price': price,
+                'image': image
+            }
+
+            if (localStorage.getItem('compare') == null) {
+                localStorage.setItem('compare', '[]');
+            }
+
+            var old_data = JSON.parse(localStorage.getItem('compare'));
+
+            var matches = $.grep(old_data, function(obj) {
+                return obj.id == id;
+            })
+
+            if (matches.length) {
+            } else {
+
+                if (old_data.length <= 3) {
+                    old_data.push(newItem);
+
+                    $('#row_compare').find('tbody').append(`
+                    <tr id="row_compare` + id + `">                 
+                    <td>` + newItem.name + `</td>
+                    <td>` + newItem.price + `</td>
+                    <td><img width="200px" src="` + newItem.image + `" alt=""></td>
+                    <td><a href="` + url + `">Xem</a></td>
+                    <td><a style="cursor: pointer" onclick="delete_compare(` + id + `)">Xóa</a></td>
+                  </tr>
+                `);
+
+                }
+
+            }
+
+            localStorage.setItem('compare', JSON.stringify(old_data));
+            $('#compare').modal();
+        }
+    </script>
+
+    <script type="text/javascript">
+        function viewed() {
+            if (localStorage.getItem('viewed') != null) {
+                var data = JSON.parse(localStorage.getItem('viewed'));
+                data.reverse();
+                document.getElementById('row_viewed').style.overflow = 'scroll';
+                document.getElementById('row_viewed').style.height = '500px';
+
+                for (i = 0; i < data.length; i++) {
+                    var name = data[i].name;
+                    var price = data[i].price;
+                    var image = data[i].image;
+                    var url = data[i].url;
+
+                    $('#row_viewed').append(
+                        '<div class="row" style="margin:10px 0"><div class="col-md-4"><img width="100%" src="' +
+                        image + '"></div><div class="col-md-8 info_wishlist"><p>' + name +
+                        '</p><p style="color:#FE980F">' + price + '</p><a href="' + url + '">Đặt hàng</a></div>');
+                }
+
             }
 
         }
 
-    }
+        viewed();
 
-    viewed();
+        product_viewed();
 
-    product_viewed();
+        function product_viewed(clicked_id) {
+            var id_product = $('#viewed_product_id').val();
+            if (id_product != undefined) {
+                var id = id_product;
+                var name = document.getElementById('viewed_productname' + id).value;
+                var price = document.getElementById('viewed_productprice' + id).value;
+                var image = document.getElementById('viewed_productimage' + id).value;
+                var url = document.getElementById('viewed_producturl' + id).value;
 
-    function product_viewed(clicked_id) {
-        var id_product = $('#viewed_product_id').val();
-        if(id_product != undefined){
-        var id = id_product;
-        var name = document.getElementById('viewed_productname' + id).value;
-        var price = document.getElementById('viewed_productprice' + id).value;
-        var image = document.getElementById('viewed_productimage' + id).value;
-        var url = document.getElementById('viewed_producturl' + id).value;
+                var newItem = {
+                    'url': url,
+                    'id': id,
+                    'name': name,
+                    'price': price,
+                    'image': image
+                }
 
-        var newItem = {
-            'url': url,
-            'id': id,
-            'name': name,
-            'price': price,
-            'image': image
+                if (localStorage.getItem('viewed') == null) {
+                    localStorage.setItem('viewed', '[]');
+                }
+
+                var old_data = JSON.parse(localStorage.getItem('viewed'));
+
+                var matches = $.grep(old_data, function(obj) {
+                    return obj.id == id;
+                })
+
+                if (matches.length) {
+
+
+                } else {
+
+                    old_data.push(newItem);
+
+                    $('#row_viewed').append(
+                        '<div class="row" style="margin:10px 0"><div class="col-md-4"><img width="100%" src="' + newItem
+                        .image + '"></div><div class="col-md-8 info_wishlist"><p>' + newItem.name +
+                        '</p><p style="color:#FE980F">' + newItem.price + '</p><a href="' + newItem.url +
+                        '">Xem ngay</a></div>');
+
+                }
+
+                localStorage.setItem('viewed', JSON.stringify(old_data));
+
+            }
+
         }
-
-        if (localStorage.getItem('viewed') == null) {
-            localStorage.setItem('viewed', '[]');
-        }
-
-        var old_data = JSON.parse(localStorage.getItem('viewed'));
-
-        var matches = $.grep(old_data, function(obj) {
-            return obj.id == id;
-        })
-
-        if (matches.length) {
-           
-
-        } else {
-
-            old_data.push(newItem);
-
-            $('#row_viewed').append(
-                '<div class="row" style="margin:10px 0"><div class="col-md-4"><img width="100%" src="' + newItem
-                .image + '"></div><div class="col-md-8 info_wishlist"><p>' + newItem.name +
-                '</p><p style="color:#FE980F">' + newItem.price + '</p><a href="' + newItem.url +
-                '">Xem ngay</a></div>');
-
-        }
-
-        localStorage.setItem('viewed', JSON.stringify(old_data));
-
-        }      
-
-    }
-</script>
+    </script>
     <script type="text/javascript">
         function view() {
             if (localStorage.getItem('data') != null) {
