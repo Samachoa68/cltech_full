@@ -1,4 +1,7 @@
 @extends('layout')
+@section('attribute')
+    @include('pages.include.attribute')
+@endsection
 @section('content')
     <div class="features_items">
         <!--features_items-->

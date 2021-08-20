@@ -255,8 +255,14 @@ Route::post('insert-rating','ProductController@insert_rating');
 //Contact
 Route::get('contact','ContactController@contact');
 Route::get('add-contact','ContactController@add_contact');
+Route::get('list-icon','ContactController@list_icon');
+Route::get('list-partner','ContactController@list_partner');
+Route::get('delete-partner','ContactController@delete_partner');
+Route::get('delete-icon','ContactController@delete_icon');
 Route::post('save-contact','ContactController@save_contact');
 Route::post('update-contact','ContactController@update_contact');
+Route::post('add-icon','ContactController@add_icon');
+Route::post('add-partner','ContactController@add_partner');
 
 //Ckeditor
 Route::post('uploads-ckeditor','CkeditorController@ckeditor_image');

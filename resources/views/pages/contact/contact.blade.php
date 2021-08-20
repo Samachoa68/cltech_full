@@ -54,13 +54,16 @@
         <div class="row">
             <div class="col-sm-12">
                 {!!$contact->info_contact!!}
-                {!!$contact->info_fanpage!!}
             </div>                       
 
             <div class="col-sm-12">
                 <h4>Bản đồ</h4>
                 {!!$contact->info_map!!}
             </div>
+            <div class="col-sm-12">   
+                <h4>Fanpage</h4>           
+                {!!$contact->info_fanpage!!}
+            </div>  
         </div>
     </div>
     <!--features_items-->

@@ -53,6 +53,9 @@
     <link href="{{ asset('frontend/css/prettify.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/lightgallery.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/jquery-ui.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('frontend/css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/owl.theme.default.min.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -80,14 +83,27 @@
                             </ul>
                         </div>
                     </div>
+                    <Style>
+                        ul.style-icon li{                            
+                            margin: 5px;
+                        }
+                    </Style>
                     <div class="col-sm-6">
                         <div class="social-icons pull-right">
-                            <ul class="nav navbar-nav">
+                            {{-- <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                 <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul> --}}
+                            <ul class="nav navbar-nav style-icon">
+                                @foreach ($icons as $key =>$v_icon)
+                                <li><a target="_blank" href="{{$v_icon->icon_link}}">
+                                    <img width="20px" height="20px" src="{{url('frontend/images/icons/'.$v_icon->icon_image)}}" alt="{{$v_icon->icon_name}}">
+                                </a></li>
+                                @endforeach                             
+                                
                             </ul>
                         </div>
                     </div>
@@ -95,7 +111,6 @@
             </div>
         </div>
         <!--/header_top-->
-
 
         <div class="header-middle">
             <!--header-middle-->
@@ -267,6 +282,10 @@
     <section id="slider">
         <!--slider-->
         @yield('slider')
+
+         <!--slider-->
+         @yield('attribute')
+
     </section>
     <!--/slider-->
 
@@ -377,11 +396,30 @@
                 </div>
 
                 <div class="col-sm-9 padding-right">
-
                     @yield('content')
+                </div>
 
+                <div class="col-md-12">
+                    <h4 class="doitac">Đối tác của chúng tôi</h4>
+                   
+                    <div class="owl-carousel owl-theme">                       
+                        @foreach($partners as $key => $v_partner)
+                        <div class="item" style="padding-left: 0 !important;">
+                            <a target="_blank" href="{{$v_partner->partner_link}}">
+                            <img src="{{url('frontend/images/partners/'.$v_partner->partner_image)}}" alt="{{$v_partner->partner_name}}">
+                            <h4 class="doitac_name">{{$v_partner->partner_name}}</h4></a>
+                        </div>                                        
+                        @endforeach
+                    </div>
+                   
+                    {{-- <h4 class="doitac">Đối tác của chúng tôi</h4>
+                    <div class="owl-carousel owl-theme">
+                        <div class="item"><h4>1</h4></div>
+                        
+                    </div> --}}
 
                 </div>
+                
             </div>
         </div>
     </section>
@@ -513,6 +551,7 @@
     <script src="{{ asset('frontend/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('frontend/js/simple.money.format.js') }}"></script>
 
+    <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
 
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     <script>
@@ -556,6 +595,24 @@
         }, '#paypal-button');
     </script>
 
+<script>
+    $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:5
+        }
+    }
+});
+</script>
 
     <script type="text/javascript">
         $(document).ready(function() {

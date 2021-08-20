@@ -7,7 +7,8 @@ use App\Models\Video;
 use App\Models\Order;
 use App\Models\PostM;
 use App\Models\Customer;
-
+use App\Models\IconM;
+use App\Models\PartnerM;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -44,8 +45,10 @@ class AppServiceProvider extends ServiceProvider
             $app_video = Video::all()->count();
             $app_customer = Customer::all()->count();
             $share_image = '';
+            $icons = IconM::OrderBy('icon_id','ASC')->get();
+            $partners = PartnerM::OrderBy('partner_id','ASC')->get();
 
-            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range','app_product', 'app_post', 'app_order', 'app_video', 'app_customer','share_image'));
+            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range','app_product', 'app_post', 'app_order', 'app_video', 'app_customer','share_image','icons','partners'));
         });
     }
 }

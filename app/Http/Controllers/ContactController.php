@@ -9,9 +9,110 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\CategoryPost;
+use App\Models\IconM;
+use App\Models\PartnerM;
 
 class ContactController extends Controller
 {
+    public function add_partner(Request $request){
+        $data = $request->all();
+        $partner = new PartnerM();
+        $partner->partner_name = $data['name'];
+        $partner->partner_link = $data['link'];
+
+        $path = 'frontend/images/partners/';
+        $get_image = $request->file('file');
+		if ($get_image) {
+			$get_image_name = $get_image->getClientOriginalName();
+			$image_name = current(explode('.', $get_image_name));
+			$new_image = $image_name . rand('0', '100') . '.' . $get_image->getClientOriginalExtension();
+			$get_image->move($path, $new_image);
+			$partner->partner_image = $new_image;
+		}
+        $partner->save();
+    }
+    public function delete_partner(){
+        $id = $_GET['id'];
+        $partner = PartnerM::find($id);
+        $partner->delete();
+    }
+    public function list_partner(){
+        $partners = PartnerM::OrderBy('partner_id',"DESC")->get();
+        $output = '';
+        $output .='
+        <br>
+        <table class="table">
+            <thead>
+                <tr>              
+                <th scope="col">Tên đối tác</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Link</th>
+                <th scope="col">Quản lý</th>
+                </tr>
+            </thead>
+            <tbody>';
+        foreach($partners as $key => $v_partner){
+            $output .='   
+                <tr>                
+                <td>'.$v_partner->partner_name.'</td>
+                <td><img  width="50px" height="50px" src="'.url('frontend/images/partners/'.$v_partner->partner_image).'" alt="'.$v_partner->partner_name.'"></td>
+                <td>'.$v_partner->partner_link.'</td>
+                <td><button class="btn btn-danger" id="'.$v_partner->partner_id.'" onclick="delete_partner(this.id)">Xóa</button></td>
+                </tr>';
+        }        
+        $output .='</tbody></table>';
+        echo $output;
+    }
+
+    public function add_icon(Request $request){
+        $data = $request->all();
+        $icon = new IconM();
+        $icon->icon_name = $data['name'];
+        $icon->icon_link = $data['link'];
+
+        $path = 'frontend/images/icons/';
+        $get_image = $request->file('file');
+		if ($get_image) {
+			$get_image_name = $get_image->getClientOriginalName();
+			$image_name = current(explode('.', $get_image_name));
+			$new_image = $image_name . rand('0', '100') . '.' . $get_image->getClientOriginalExtension();
+			$get_image->move($path, $new_image);
+			$icon->icon_image = $new_image;
+		}
+        $icon->save();
+    }
+    public function delete_icon(){
+        $id = $_GET['id'];
+        $icon = IconM::find($id);
+        $icon->delete();
+    }
+    public function list_icon(){
+        $icons = IconM::OrderBy('icon_id',"DESC")->get();
+        $output = '';
+        $output .='
+        <br>
+        <table class="table">
+            <thead>
+                <tr>              
+                <th scope="col">Tên Icon</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Link</th>
+                <th scope="col">Quản lý</th>
+                </tr>
+            </thead>
+            <tbody>';
+        foreach($icons as $key => $v_icon){
+            $output .='   
+                <tr>                
+                <td>'.$v_icon->icon_name.'</td>
+                <td><img  width="22px" height="22px" src="'.url('frontend/images/icons/'.$v_icon->icon_image).'" alt="'.$v_icon->icon_name.'"></td>
+                <td>'.$v_icon->icon_link.'</td>
+                <td><button class="btn btn-danger" id="'.$v_icon->icon_id.'" onclick="delete_icon(this.id)">Xóa</button></td>
+                </tr>';
+        }        
+        $output .='</tbody></table>';
+        echo $output;
+    }
     public function contact(Request $request)
     {
         $slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();

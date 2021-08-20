@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryPost;
+use App\Models\IconM;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 session_start();
@@ -18,7 +19,7 @@ class HomeController extends Controller
 {
 
     public function index(request $request)
-    {	
+    {	$icons = IconM::OrderBy('icon_id','ASC')->get();
         $slider = Slider::OrderBy('slider_stt','ASC')->where('slider_status','1')->take(4)->get();
     	$meta_desc = "Chuyên bán và lắp đặt máy tính, camera, phụ kiện máy tính";
     	$meta_keywords = "Chuyên bán và lắp đặt máy tính, camera, phụ kiện máy tính";
@@ -34,7 +35,7 @@ class HomeController extends Controller
         $brand_product = Brand::where('brand_status','1')->orderby('brand_id','desc')->get();
         $all_product = Product::where('product_status','1')->orderby('product_id','desc')->limit(4)->get();
 
-        return view('pages.home')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs'));
+        return view('pages.home')->with(compact('slider','cate_product','brand_product','all_product','meta_desc','meta_keywords','meta_title','url_canonical', 'all_category_post','cate_pro_tabs','icons'));
     }
 
     public function search(request $request)

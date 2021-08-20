@@ -2513,3 +2513,29 @@ ul.list-login li {
     display: inline;
     margin: 5px;
 }
+
+h4.doitac {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 20px;
+    color: #0083C9;
+}
+
+h4.doitac_name {
+    font-size: 15px;
+    text-align: center;
+}
+
+.item img {
+    height: 150px;
+    width: 100%;
+}
+
+button.owl-prev {
+    font-size: 36px !important;
+}
+
+button.owl-next {
+    font-size: 36px !important;
+}

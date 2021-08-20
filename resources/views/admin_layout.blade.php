@@ -590,6 +590,108 @@
     });
 </script>
 
+<script>
+    list_partner();
+    function delete_partner(id){
+        var id = id;
+        $.ajax({
+                    url: "{{ url('/delete-partner') }}",
+                    method: "GET",  
+                    data: {id:id},  
+                    success: function(data) {
+                        list_partner();
+                    }
+                });
+    }
+    function list_partner(){
+        $.ajax({
+                    url: "{{ url('/list-partner') }}",
+                    method: "GET", 
+                    success: function(data) {
+                        $('#list_partner').html(data);
+                    }
+                });
+    }
+    $('.add-partner').click(function(){
+        var name = $('#partner_name').val();
+        var link = $('#partner_link').val();
+        var image = $('#partner_image')[0].files[0];
+        var form_data = new FormData();
+
+        form_data.append("name", name);
+        form_data.append("link", link);
+        form_data.append("file", image);
+
+        $.ajax({
+                    url: "{{ url('/add-partner') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        alert('Thêm đối tác thành công');
+                        list_partner();                        
+                    }
+                });
+       
+    });
+</script>
+
+<script>
+    list_icon();
+    function delete_icon(id){
+        var id = id;
+        $.ajax({
+                    url: "{{ url('/delete-icon') }}",
+                    method: "GET",  
+                    data: {id:id},  
+                    success: function(data) {
+                        list_icon();
+                    }
+                });
+    }
+    function list_icon(){
+        $.ajax({
+                    url: "{{ url('/list-icon') }}",
+                    method: "GET", 
+                    success: function(data) {
+                        $('#list_icon').html(data);
+                    }
+                });
+    }
+    $('.add-icon').click(function(){
+        var name = $('#icon_name').val();
+        var link = $('#icon_link').val();
+        var image = $('#icon_image')[0].files[0];
+        var form_data = new FormData();
+
+        form_data.append("name", name);
+        form_data.append("link", link);
+        form_data.append("file", image);
+
+        $.ajax({
+                    url: "{{ url('/add-icon') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        alert('Thêm icon mạng xã hội thành công');
+                        list_icon();                        
+                    }
+                });
+       
+    });
+</script>
+
     <Script>
         $('.btn-delete-document').click(function(){
             var product_id = $(this).data('document_id');

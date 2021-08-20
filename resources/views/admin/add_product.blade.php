@@ -65,7 +65,15 @@
                             <select name="product_cate" class="form-control m-bot15">
 
                                 @foreach($cate_product as $key => $cate)
+                                @if ($cate->category_parent == 0)
                                 <option value="{{$cate->category_id}}">{{$cate->category_name}}</option>
+                                @foreach($cate_product as $key => $cate_sub)
+                                @if ($cate_sub->category_parent != 0 && $cate_sub->category_parent == $cate->category_id)
+                                <option style="color: red" value="{{$cate_sub->category_id}}">-- {{$cate_sub->category_name}}</option>
+                                @endif
+                                @endforeach
+                                @endif
+                                
 
                                 @endforeach
 
