@@ -226,7 +226,7 @@
                                 <?php
                                 $name = Auth::user()->admin_name;
                                 if ($name) {
-                                echo $name;
+                                    echo $name;
                                 } else {
                                 }
                                 ?>
@@ -526,6 +526,8 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="js/scripts.js"></script>
+    {{-- <script src="js/jquery.js"></script>
+    <script src="js/jquery.min.js"></script> --}}
     <script src="js/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
@@ -547,7 +549,19 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    
+
+    <script>
+        var options = {
+          filebrowserImageBrowseUrl: 'laravel-filemanager?type=Images',
+          filebrowserImageUploadUrl: 'laravel-filemanager/upload?type=Images&_token=',
+          filebrowserBrowseUrl: 'laravel-filemanager?type=Files',
+          filebrowserUploadUrl: 'laravel-filemanager/upload?type=Files&_token='
+        };
+        </script>
+
+    <script>
+    CKEDITOR.replace('my-editor', options);
+    </script>
 
     <script>
         CKEDITOR.replace('ckeditor_1', {
@@ -568,148 +582,273 @@
 
     <script>
         $('.price_format').simpleMoneyFormat();
-
     </script>
 
-<script>
-    $(function() {
-        $("#coupon_start").datepicker({
-            prevText: "Tháng trước",
-            nextText: "Tháng sau",
-            dateFormat: "yy/mm/dd",
-            dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
-            duration: "slow"
+    <script>
+        $(function() {
+            $("#coupon_start").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "yy/mm/dd",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+                duration: "slow"
+            });
+            $("#coupon_end").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "yy/mm/dd",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+                duration: "slow"
+            });
         });
-        $("#coupon_end").datepicker({
-            prevText: "Tháng trước",
-            nextText: "Tháng sau",
-            dateFormat: "yy/mm/dd",
-            dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
-            duration: "slow"
+    </script>
+
+    <script>
+        load_gallery();
+
+        function load_gallery() {
+            var pro_id = $('.pro_id').val();
+            var _token = $('input[name="_token"]').val();
+            // alert(pro_id);
+
+            $.ajax({
+                url: "{{ url('/select-gallery') }}",
+                method: "POST",
+                data: {
+                    pro_id: pro_id,
+                    _token: _token
+                },
+                success: function(data) {
+                    $('#gallery_load').html(data);
+                }
+            });
+        }
+        $('#file').change(function() {
+            var error = '';
+            var files = $('#file')[0].files;
+
+            if (files.length > 5) {
+                error += '<p>Chọn tối đa 5 ảnh</p>';
+            } else if (files.length == '') {
+                error += '<p>Bạn không được bỏ trống ảnh</p>';
+            } else if (files.size > 2000000) {
+                error += '<p>File ảnh không được lớn hơn 2MB</p>';
+            }
+
+            if (error == '') {
+
+            } else {
+                $('#file').val('');
+                $('#error_gallery').html('<span class="text-danger">' + error + '</span>');
+                return false;
+            }
+
         });
-    });
-</script>
 
-<script>
-    list_partner();
-    function delete_partner(id){
-        var id = id;
-        $.ajax({
-                    url: "{{ url('/delete-partner') }}",
-                    method: "GET",  
-                    data: {id:id},  
-                    success: function(data) {
-                        list_partner();
-                    }
-                });
-    }
-    function list_partner(){
-        $.ajax({
-                    url: "{{ url('/list-partner') }}",
-                    method: "GET", 
-                    success: function(data) {
-                        $('#list_partner').html(data);
-                    }
-                });
-    }
-    $('.add-partner').click(function(){
-        var name = $('#partner_name').val();
-        var link = $('#partner_link').val();
-        var image = $('#partner_image')[0].files[0];
-        var form_data = new FormData();
+        $(document).on('blur', '.edit_gal_name', function() {
+            var gal_id = $(this).data('gal_id');
+            var gal_text = $(this).text();
+            var _token = $('input[name="_token"]').val();
 
-        form_data.append("name", name);
-        form_data.append("link", link);
-        form_data.append("file", image);
+            $.ajax({
+                url: "{{ url('/update-gallery-name') }}",
+                method: "POST",
+                data: {
+                    gal_id: gal_id,
+                    gal_text: gal_text,
+                    _token: _token
+                },
+                success: function(data) {
+                    load_gallery();
+                    $('#error_gallery').html(
+                        '<span class="text-danger">Cập nhật tên hình ảnh thành công</span>'
+                    );
+                }
 
-        $.ajax({
-                    url: "{{ url('/add-partner') }}",
+            });
+        });
+
+        $(document).on('click', '.delete-gallery', function() {
+            var gal_id = $(this).data('gal_id');
+
+            var _token = $('input[name="_token"]').val();
+            if (confirm('Bạn muốn xóa hình ảnh này không?')) {
+                $.ajax({
+                    url: "{{ url('/delete-gallery') }}",
                     method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    data: {
+                        gal_id: gal_id,
+                        _token: _token
                     },
-                    data: form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
                     success: function(data) {
-                        alert('Thêm đối tác thành công');
-                        list_partner();                        
+                        load_gallery();
+                        $('#error_gallery').html(
+                            '<span class="text-danger">Xóa hình ảnh thành công</span>');
                     }
                 });
-       
-    });
-</script>
+            }
+        });
 
-<script>
-    list_icon();
-    function delete_icon(id){
-        var id = id;
-        $.ajax({
-                    url: "{{ url('/delete-icon') }}",
-                    method: "GET",  
-                    data: {id:id},  
-                    success: function(data) {
-                        list_icon();
-                    }
-                });
-    }
-    function list_icon(){
-        $.ajax({
-                    url: "{{ url('/list-icon') }}",
-                    method: "GET", 
-                    success: function(data) {
-                        $('#list_icon').html(data);
-                    }
-                });
-    }
-    $('.add-icon').click(function(){
-        var name = $('#icon_name').val();
-        var link = $('#icon_link').val();
-        var image = $('#icon_image')[0].files[0];
-        var form_data = new FormData();
+        $(document).on('change', '.file_image', function() {
 
-        form_data.append("name", name);
-        form_data.append("link", link);
-        form_data.append("file", image);
+            var gal_id = $(this).data('gal_id');
+            var image = document.getElementById("file-" + gal_id).files[0];
 
-        $.ajax({
-                    url: "{{ url('/add-icon') }}",
-                    method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(data) {
-                        alert('Thêm icon mạng xã hội thành công');
-                        list_icon();                        
-                    }
-                });
-       
-    });
-</script>
+            var form_data = new FormData();
 
-    <Script>
-        $('.btn-delete-document').click(function(){
+            form_data.append("file", document.getElementById("file-" + gal_id).files[0]);
+            form_data.append("gal_id", gal_id);
+
+            $.ajax({
+                url: "{{ url('/update-gallery') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    load_gallery();
+                    $('#error_gallery').html(
+                        '<span class="text-danger">Cập nhật hình ảnh thành công</span>');
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+        list_partner();
+
+        function delete_partner(id) {
+            var id = id;
+            $.ajax({
+                url: "{{ url('/delete-partner') }}",
+                method: "GET",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    list_partner();
+                }
+            });
+        }
+
+        function list_partner() {
+            $.ajax({
+                url: "{{ url('/list-partner') }}",
+                method: "GET",
+                success: function(data) {
+                    $('#list_partner').html(data);
+                }
+            });
+        }
+        $('.add-partner').click(function() {
+            var name = $('#partner_name').val();
+            var link = $('#partner_link').val();
+            var image = $('#partner_image')[0].files[0];
+            var form_data = new FormData();
+
+            form_data.append("name", name);
+            form_data.append("link", link);
+            form_data.append("file", image);
+
+            $.ajax({
+                url: "{{ url('/add-partner') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    alert('Thêm đối tác thành công');
+                    list_partner();
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+        list_icon();
+
+        function delete_icon(id) {
+            var id = id;
+            $.ajax({
+                url: "{{ url('/delete-icon') }}",
+                method: "GET",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    list_icon();
+                }
+            });
+        }
+
+        function list_icon() {
+            $.ajax({
+                url: "{{ url('/list-icon') }}",
+                method: "GET",
+                success: function(data) {
+                    $('#list_icon').html(data);
+                }
+            });
+        }
+        $('.add-icon').click(function() {
+            var name = $('#icon_name').val();
+            var link = $('#icon_link').val();
+            var image = $('#icon_image')[0].files[0];
+            var form_data = new FormData();
+
+            form_data.append("name", name);
+            form_data.append("link", link);
+            form_data.append("file", image);
+
+            $.ajax({
+                url: "{{ url('/add-icon') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    alert('Thêm icon mạng xã hội thành công');
+                    list_icon();
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+        $('.btn-delete-document').click(function() {
             var product_id = $(this).data('document_id');
             var _token = $('input[name="_token"]').val();
 
-                $.ajax({
-                    url: "{{ url('/delete-document') }}",
-                    method: "POST",
-                    data: {
-                        _token: _token,product_id
-                    },
-                    success: function(data) {
-                        alert ("Xóa file document thành công");
-                        location.reload();
-                    }
-                });
+            $.ajax({
+                url: "{{ url('/delete-document') }}",
+                method: "POST",
+                data: {
+                    _token: _token,
+                    product_id
+                },
+                success: function(data) {
+                    alert("Xóa file document thành công");
+                    location.reload();
+                }
+            });
         });
-    </Script>
+    </script>
 
     <script>
         $(function() {
@@ -1026,127 +1165,8 @@
         })
     </script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            load_gallery();
 
-            function load_gallery() {
-                var pro_id = $('.pro_id').val();
-                var _token = $('input[name="_token"]').val();
-                // alert(pro_id);
-
-                $.ajax({
-                    url: "{{ url('/select-gallery') }}",
-                    method: "POST",
-                    data: {
-                        pro_id: pro_id,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        $('#gallery_load').html(data);
-                    }
-                });
-            }
-            $('#file').change(function() {
-                var error = '';
-                var files = $('#file')[0].files;
-
-                if (files.length > 5) {
-                    error += '<p>Chọn tối đa 5 ảnh</p>';
-                } else if (files.length == '') {
-                    error += '<p>Bạn không được bỏ trống ảnh</p>';
-                } else if (files.size > 2000000) {
-                    error += '<p>File ảnh không được lớn hơn 2MB</p>';
-                }
-
-                if (error == '') {
-
-                } else {
-                    $('#file').val('');
-                    $('#error_gallery').html('<span class="text-danger">' + error + '</span>');
-                    return false;
-                }
-
-            });
-
-            $(document).on('blur', '.edit_gal_name', function() {
-                var gal_id = $(this).data('gal_id');
-                var gal_text = $(this).text();
-                var _token = $('input[name="_token"]').val();
-
-                $.ajax({
-                    url: "{{ url('/update-gallery-name') }}",
-                    method: "POST",
-                    data: {
-                        gal_id: gal_id,
-                        gal_text: gal_text,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        load_gallery();
-                        $('#error_gallery').html(
-                            '<span class="text-danger">Cập nhật tên hình ảnh thành công</span>'
-                        );
-                    }
-
-                });
-            });
-
-            $(document).on('click', '.delete-gallery', function() {
-                var gal_id = $(this).data('gal_id');
-
-                var _token = $('input[name="_token"]').val();
-                if (confirm('Bạn muốn xóa hình ảnh này không?')) {
-                    $.ajax({
-                        url: "{{ url('/delete-gallery') }}",
-                        method: "POST",
-                        data: {
-                            gal_id: gal_id,
-                            _token: _token
-                        },
-                        success: function(data) {
-                            load_gallery();
-                            $('#error_gallery').html(
-                                '<span class="text-danger">Xóa hình ảnh thành công</span>');
-                        }
-                    });
-                }
-            });
-
-            $(document).on('change', '.file_image', function() {
-
-                var gal_id = $(this).data('gal_id');
-                var image = document.getElementById("file-" + gal_id).files[0];
-
-                var form_data = new FormData();
-
-                form_data.append("file", document.getElementById("file-" + gal_id).files[0]);
-                form_data.append("gal_id", gal_id);
-
-                $.ajax({
-                    url: "{{ url('/update-gallery') }}",
-                    method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: form_data,
-
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(data) {
-                        load_gallery();
-                        $('#error_gallery').html(
-                            '<span class="text-danger">Cập nhật hình ảnh thành công</span>');
-                    }
-                });
-
-            });
-
-        })
-    </script>
-
-    <!--Slug-->
+    //Slug
     <script type="text/javascript">
         function ChangeToSlug() {
             var slug;
@@ -1373,7 +1393,6 @@
                     }
                 });
 
-
             });
 
             $('.choose').on('change', function() {
@@ -1406,9 +1425,9 @@
         })
     </script>
 
-    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+    //[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
     <script src="js/jquery.scrollTo.js"></script>
-    <!-- morris JavaScript -->
+    //morris JavaScript -->
     <script>
         $(document).ready(function() {
             //BOX BUTTON SHOW AND CLOSE
@@ -1510,7 +1529,7 @@
     </script>
 
 
-    <!-- calendar -->
+    // calendar
     <script type="text/javascript" src="js/monthly.js"></script>
     <script type="text/javascript">
         $(window).load(function() {
@@ -1541,7 +1560,7 @@
 
         });
     </script>
-    <!-- //calendar -->
+    //calendar
 </body>
 
 </html>

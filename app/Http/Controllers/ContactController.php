@@ -166,6 +166,7 @@ class ContactController extends Controller
         $contact->info_contact = $data['info_contact'];
         $contact->info_fanpage = $data['info_fanpage'];
         $contact->info_map = $data['info_map'];
+        $contact->info_slogan = $data['info_slogan'];
 
         $path = 'upload/contact/';
         $get_image = $request->file('info_logo');

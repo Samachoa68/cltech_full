@@ -9,6 +9,7 @@ use App\Models\PostM;
 use App\Models\Customer;
 use App\Models\IconM;
 use App\Models\PartnerM;
+use App\Models\ContactM;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,8 +48,9 @@ class AppServiceProvider extends ServiceProvider
             $share_image = '';
             $icons = IconM::OrderBy('icon_id','ASC')->get();
             $partners = PartnerM::OrderBy('partner_id','ASC')->get();
+            $contact = ContactM::find(1);
 
-            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range','app_product', 'app_post', 'app_order', 'app_video', 'app_customer','share_image','icons','partners'));
+            $view->with(compact('min_price', 'max_price', 'min_price_range', 'max_price_range','app_product', 'app_post', 'app_order', 'app_video', 'app_customer','share_image','icons','partners','contact'));
         });
     }
 }

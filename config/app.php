@@ -182,6 +182,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
 
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -237,6 +239,8 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,       //cho alias
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

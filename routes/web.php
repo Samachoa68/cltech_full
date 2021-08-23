@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Change Language
+Route::get('lang/{locale}',function($locale){
+	if(! in_array($locale,['en','vi'])){
+		abort(404);
+	}
+	session()->put('locale',$locale);
+	return redirect()->back();
+});
 
 //Frontend
 Route::get('/','HomeController@index');
@@ -284,3 +292,7 @@ Route::get('delete-folder','DocumentController@delete_folder');
 Route::get('create_folder','DocumentController@create_folder');
 
 Route::get('read-data','DocumentController@read_data');
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware'], function () {
+	\UniSharp\LaravelFilemanager\Lfm::routes();
+});

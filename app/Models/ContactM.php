@@ -10,7 +10,7 @@ class ContactM extends Model
     use HasFactory;
     public $timestamp = false;
     protected $fillable = [
-    	'info_contact', 'info_map', 'info_fanpage', 'info_logo'
+    	'info_contact', 'info_map', 'info_fanpage', 'info_logo','info_slogan'
     ];
     protected $primaryKey = 'info_id';
     protected $table = 'tbl_information';

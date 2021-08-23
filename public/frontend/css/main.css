@@ -2539,3 +2539,7 @@ button.owl-prev {
 button.owl-next {
     font-size: 36px !important;
 }
+
+.single-widget.map-footer li iframe {
+    height: 250px !important;
+}

@@ -19,6 +19,7 @@ class CreateTblInformation extends Migration
             $table->text('info_contact');
             $table->text('info_map');
             $table->text('info_fanpage');
+            $table->text('info_slogan');
             $table->timestamps();
         });
     }

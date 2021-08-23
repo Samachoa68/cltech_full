@@ -42,6 +42,11 @@
                                 <img src="{{ url::to('upload/contact/' . $contact->info_logo) }}" alt="Hình ảnh liên hệ">
                             </div>
 
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Slogan Footer</label>
+                                <input type="text" class="form-control" name="info_slogan" id="info_slogan">
+                            </div>
+
                             <button type="submit" class="btn btn-info" name="add_contact">Cập nhật liên hệ</button>
                         </form>
 
