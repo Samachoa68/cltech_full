@@ -163,7 +163,8 @@ Route::get('cart','CartController@cart');
 Route::get('delete-to-cart/{rowId}','CartController@delete_to_cart');
 Route::get('delete-product-cart/{session_id}','CartController@delete_product_cart');
 Route::get('delete-all-product-cart','CartController@delete_all_product_cart');
-
+Route::get('show-cart-menu','CartController@show_cart_menu');
+Route::get('cart-hover-menu','CartController@cart_hover_menu');
 
 //Checkout
 Route::post('confirm-order','CheckoutController@confirm_order');

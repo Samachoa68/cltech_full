@@ -30,6 +30,37 @@ class CartController extends Controller
         return view('pages.cart.cart_ajax')->with(compact('all_category_post','meta_desc','meta_keywords','meta_title','url_canonical','cate_product','brand_product'));
     }
 
+    public function show_cart_menu(){
+        $cart = count(Session::get('cart'));
+        $output ='';        
+        $output .='<span class="badges">('.$cart.')</span>';                               
+        echo $output;
+    }
+
+    public function cart_hover_menu(){
+        $c_cart = count(Session::get('cart'));
+        $cart = Session::get('cart');
+        $output ='';
+
+        if($c_cart>0){
+            $output .='<ul class="hover-cart">';
+            foreach(Session::get('cart') as $key => $cart){
+            $output .='<li>
+            <a class="cart_hover_delete" href="'.url('/delete-product-cart/'.$cart['session_id']).'"><i class="fa fa-times"></i></a>
+            <a href=""><img src="'.URL('upload/product/'.$cart['product_image']).'">
+            <p>Giá:'.number_format($cart['product_price'],0,',','.').'đ</p>
+            <p>Số lượng: '.$cart['product_qty'].'</p>
+            </a>
+            
+            </li>';
+        }
+            $output .='</ul>';
+        }else{
+            // $output .='<li>Giỏ hàng trống</li>';
+        } 
+        echo $output;
+    }
+
     public function add_cart_ajax(Request $request){
         $data = $request->all();
         $session_id = substr(md5(microtime()),rand(0,26),5);

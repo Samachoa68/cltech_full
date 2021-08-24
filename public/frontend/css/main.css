@@ -198,7 +198,7 @@ a#scrollUp i {
 }
 
 .shop-menu ul li a {
-    background: #FFFFFF;
+    /* background: #FFFFFF; */
     color: #696763;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
@@ -2542,4 +2542,39 @@ button.owl-next {
 
 .single-widget.map-footer li iframe {
     height: 250px !important;
+}
+
+span.badges {
+    /* background: red;
+    padding: 5px;
+    border-radius: 10px; */
+    color: red;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.shop-menu .hover-cart {
+    display: inline-grid;
+    display: none;
+    background: beige;
+    position: absolute;
+    z-index: 9999;
+    padding: 0;
+    margin: 0;
+}
+
+li.cart-hover:hover .hover-cart {
+    display: inherit;
+}
+
+ul.hover-cart li {
+    padding: 10px;
+    border-bottom: 1px solid;
+}
+
+ul.hover-cart li img {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    display: block;
 }

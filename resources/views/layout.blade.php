@@ -149,6 +149,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
+                            
                             <ul class="nav navbar-nav">
                                 <li><a href="{{ URL::to('login-checkout') }}"><i class="fa fa-user"></i> Tài
                                         khoản</a>
@@ -175,8 +176,11 @@
                                 ?>
 
 
-                                <li><a href="{{ URL::to('cart') }}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a>
-                                </li>
+                                <li class="cart-hover"><a href="{{URL('cart')}}"><i class="fa fa-shopping-cart"></i>Giỏ hàng<span class="show_cart_menu"></span></a>
+                                   
+                                    <span class="cart_hover_menu"></span>                             
+                                    
+                                    </li>
 
                                 <?php
                                 $customer_id = Session::get('customer_id');
@@ -253,7 +257,8 @@
                                         @endforeach
                                     </ul>
                                 </li>
-                                <li><a href="404.html">Giỏ hàng</a></li>
+                                <li><a href="{{url('cart')}}">Giỏ hàng<span class="show_cart_menu" ></span></a>
+                                </li>
                                 <li><a href="{{ URL::to('/show-video') }}">Video</a></li>
                                 <li><a href="{{ URL::to('/contact') }}">Liên hệ</a></li>
                             </ul>
@@ -1262,6 +1267,28 @@
     </script>
 
     <script type="text/javascript">
+        show_cart_menu();
+        cart_hover_menu();
+        function cart_hover_menu(){
+            $.ajax({
+                    url: '{{ url('/cart-hover-menu') }}',
+                    method: 'GET',
+                    
+                    success: function(data) {
+                        $('.cart_hover_menu').html(data);
+                    }
+                });
+        }
+        function show_cart_menu(){
+            $.ajax({
+                    url: '{{ url('/show-cart-menu') }}',
+                    method: 'GET',
+                    
+                    success: function(data) {
+                        $('.show_cart_menu').html(data);
+                    }
+                });
+        }
         $(document).ready(function() {
             $('.add-to-cart').click(function() {
                 var id = $(this).data('id_product');
@@ -1303,6 +1330,7 @@
                                 function() {
                                     window.location.href = "{{ url('/cart') }}";
                                 });
+                                show_cart_menu();
 
                         }
                     });
